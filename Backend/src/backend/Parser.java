@@ -5,6 +5,9 @@
  */
 package backend;
 
+import DAO.DaoFactoryJpa;
+import DAO.JpaTypeItemDao;
+import DAO.TypeItemDao;
 import Model.TypeItem;
 import java.util.ArrayList;
 
@@ -82,11 +85,15 @@ public class Parser {
         
         Integer i = 2;
         Integer nbProduct =1;
-        ArrayList<TypeItem> products = new ArrayList();
+        TypeItemDao typeItemManager = DaoFactoryJpa.getInstance(JpaTypeItemDao.class);
         
         while(lines[i].length() != 0){
             System.out.println(lines[i]);
             String[] productInfos = lines[i].split("   ");
+            
+            for(Integer j=0;j<10;j++){
+                System.out.println(productInfos[j]);
+            }
             
             TypeItem product = new TypeItem(productInfos[0],
                     Integer.parseInt(productInfos[1]),
@@ -94,7 +101,7 @@ public class Parser {
                     Integer.parseInt(productInfos[3]),
                     Integer.parseInt(productInfos[4]),
                     Integer.parseInt(productInfos[5]));
-            products.add(product);
+            typeItemManager.create(product);
             i++;
         }
     }
