@@ -9,10 +9,11 @@ From database:
 - From orders :
   - Penalty
   - Planned shipping
-  - 
+  - Stock minimal
 - Real shipping - Planned shipping -> We need result
 - Previous * Penalty -> Total price of each orders penalties (We need that too)
-
+- For each commands, boxes id corresponding
+- For each check, send OK message
 
 
 
@@ -20,3 +21,4 @@ FrontEnd:
 
 Timeline : vis.js (http://visjs.org/)
 Box drawing : Javascript
+Servlet : JSP
