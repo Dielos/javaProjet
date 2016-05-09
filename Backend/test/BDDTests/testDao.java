@@ -34,6 +34,8 @@ public class testDao {
         Command c1 = new Command("c001", 42, 33, 98);
         
         TypeItem ti1 = new TypeItem("i001", 42, 42, 42, 42, 42);
+        
+        c1.addCommandLine(new CommandLine(42, ti1));
                 
         boxTypeManager.create(bt1);
         
