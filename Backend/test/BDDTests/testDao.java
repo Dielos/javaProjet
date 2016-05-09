@@ -7,13 +7,16 @@ package BDDTests;
 
 import DAO.BoxTypeDao;
 import DAO.CommandDao;
+import DAO.CommandLineDao;
 import DAO.DaoFactoryJpa;
 import DAO.JpaBoxTypeDao;
 import DAO.JpaCommandDao;
+import DAO.JpaCommandLineDao;
 import DAO.JpaTypeItemDao;
 import DAO.TypeItemDao;
 import Model.BoxType;
 import Model.Command;
+import Model.CommandLine;
 import Model.TypeItem;
 
 /**
@@ -25,12 +28,15 @@ public class testDao {
         BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
         CommandDao commandManager = DaoFactoryJpa.getInstance(JpaCommandDao.class);
         TypeItemDao typeItemManager = DaoFactoryJpa.getInstance(JpaTypeItemDao.class);
+        CommandLineDao commandLineManager = DaoFactoryJpa.getInstance(JpaCommandLineDao.class);
         
         BoxType bt1 = new BoxType("b001", 42, 34, 1337);
         
         Command c1 = new Command("c001", 42, 33, 98);
         
         TypeItem ti1 = new TypeItem("i001", 42, 42, 42, 42, 42);
+        
+        /*CommandLine cl1*/c1.addCommandLine(new CommandLine(10, ti1));
                 
         boxTypeManager.create(bt1);
         
@@ -42,10 +48,15 @@ public class testDao {
             System.out.println(i);
         }
         
-        for (Command i : commandManager.findAll())
+        for (Command i : commandManager.findAll()) {
             System.out.println(i);
+            for (CommandLine j : i.getCommandLines())
+                System.out.println(j);
+        }
         
         for (TypeItem i : typeItemManager.findAll())
             System.out.println(i);
+        
+        
     }
 }
