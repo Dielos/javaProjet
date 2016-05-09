@@ -68,7 +68,7 @@ public class TypeItem {
     }
 
     public boolean addItem(Item obj) {
-        if (obj.getTypeItem != null)
+        if (obj.getTypeItem() != null)
             return false;
         
         items.add(obj);
