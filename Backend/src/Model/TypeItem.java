@@ -6,7 +6,9 @@
 
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,4 +40,141 @@ public class TypeItem {
     List<Item> items;
     
     // other
+    
+    // method
+    
+    private void init() {
+        items = new ArrayList<Item>();
+    }
+
+    public TypeItem() {
+        init();
+    }
+
+    public TypeItem(int setupTime, int prodTime, int height, int width, int empileMax) {
+        init();
+        
+        this.setupTime = setupTime;
+        this.prodTime = prodTime;
+        this.height = height;
+        this.width = width;
+        this.empileMax = empileMax;
+    }
+
+    public boolean removeItem(Item obj) {
+        return items.remove(obj);
+    }
+
+    public boolean addItem(Item obj) {
+        if (obj.typeItem != null)
+            return false;
+        
+        items.add(obj);
+        obj.typeItem = this;
+        return true;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getSetupTime() {
+        return setupTime;
+    }
+
+    public int getProdTime() {
+        return prodTime;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getEmpileMax() {
+        return empileMax;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setSetupTime(int setupTime) {
+        this.setupTime = setupTime;
+    }
+
+    public void setProdTime(int prodTime) {
+        this.prodTime = prodTime;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setEmpileMax(int empileMax) {
+        this.empileMax = empileMax;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + this.id;
+        hash = 37 * hash + this.setupTime;
+        hash = 37 * hash + this.prodTime;
+        hash = 37 * hash + this.height;
+        hash = 37 * hash + this.width;
+        hash = 37 * hash + this.empileMax;
+        hash = 37 * hash + Objects.hashCode(this.items);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TypeItem other = (TypeItem) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.setupTime != other.setupTime) {
+            return false;
+        }
+        if (this.prodTime != other.prodTime) {
+            return false;
+        }
+        if (this.height != other.height) {
+            return false;
+        }
+        if (this.width != other.width) {
+            return false;
+        }
+        if (this.empileMax != other.empileMax) {
+            return false;
+        }
+        if (!Objects.equals(this.items, other.items)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "TypeItem{" + "id=" + id + ", setupTime=" + setupTime + ", prodTime=" + prodTime + ", height=" + height + ", width=" + width + ", empileMax=" + empileMax + '}';
+    }
+    
+    
 }

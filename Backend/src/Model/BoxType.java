@@ -6,7 +6,9 @@
 
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,5 +38,112 @@ public class BoxType {
     List<Box> boxs;
     
     // other
+    
+    // method
+    
+    private void init() {
+        boxs = new ArrayList<Box>();
+    }
+    
+    public BoxType(int height, int width, int cost) {
+        this.height = height;
+        this.width = width;
+        this.cost = cost;
+    }
+
+    public BoxType() {
+    }
+    
+    public boolean removeBox(Box obj) {
+        return boxs.remove(obj);
+    }
+
+    public boolean addBox(Box obj) {
+        if (obj.boxType != null)
+            return false;
+        
+        boxs.add(obj);
+        obj.boxType = this;
+        return true;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public List<Box> getBoxs() {
+        return boxs;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 11 * hash + this.id;
+        hash = 11 * hash + this.height;
+        hash = 11 * hash + this.width;
+        hash = 11 * hash + this.cost;
+        hash = 11 * hash + Objects.hashCode(this.boxs);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final BoxType other = (BoxType) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.height != other.height) {
+            return false;
+        }
+        if (this.width != other.width) {
+            return false;
+        }
+        if (this.cost != other.cost) {
+            return false;
+        }
+        if (!Objects.equals(this.boxs, other.boxs)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "BoxType{" + "id=" + id + ", height=" + height + ", width=" + width + ", cost=" + cost + '}';
+    }
+    
     
 }
