@@ -28,17 +28,18 @@ public class Command {
     private int id;
     
     // from file
-    int stockMin;
-    int dateLimit;
-    int penality;
+    private String commandName;
+    private int stockMin;
+    private int dateLimit;
+    private int penality;
     
     // links
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NCOMMAND")
-    List<CommandLine> commandLines;
+    private List<CommandLine> commandLines;
 
     // other
-    int startProductionDate;
+    private int startProductionDate;
     
     // method
     
@@ -46,9 +47,10 @@ public class Command {
         commandLines = new ArrayList<CommandLine>();
     }
 
-    public Command(int stockMin, int dateLimit, int penality, int startProductionDate) {
+    public Command(String commandName, int stockMin, int dateLimit, int penality, int startProductionDate) {
         init();
         
+        this.commandName = commandName;
         this.stockMin = stockMin;
         this.dateLimit = dateLimit;
         this.penality = penality;
@@ -64,16 +66,20 @@ public class Command {
     }
 
     public boolean addCommandLine(CommandLine obj) {
-        if (obj.command != null)
+        if (obj.getCommand() != null)
             return false;
         
         commandLines.add(obj);
-        obj.command = this;
+        obj.setCommand(this);
         return true;
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getCommandName() {
+        return commandName;
     }
 
     public int getStockMin() {
@@ -94,6 +100,10 @@ public class Command {
 
     public int getStartProductionDate() {
         return startProductionDate;
+    }
+
+    public void setCommandName(String commandName) {
+        this.commandName = commandName;
     }
 
     public void setStockMin(int stockMin) {

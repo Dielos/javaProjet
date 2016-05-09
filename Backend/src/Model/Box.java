@@ -33,18 +33,18 @@ public class Box {
     // links
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NBOXTYPE")
-    BoxType boxType;
+    private BoxType boxType;
     
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NCOMMAND")
-    Command command; //could be replaced by a boolean. Represent the command that is using the box (only used during scheduling, should be `null` after scheduling process)
+    private Command command; //could be replaced by a boolean. Represent the command that is using the box (only used during scheduling, should be `null` after scheduling process)
     
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NBOX")
-    List<Item> items;
+    private List<Item> items;
     
     // other
-    int num;
+    private int num;
 
     // methods
     
@@ -54,11 +54,9 @@ public class Box {
         items = new ArrayList<Item>();
     }
     
-    public Box(BoxType boxType, Command command, List<Item> items, int num) {
+    public Box(List<Item> items, int num) {
         init();
         
-        this.boxType = boxType;
-        this.command = command;
         this.items = items;
         this.num = num;
     }
@@ -72,11 +70,11 @@ public class Box {
     }
     
     public boolean addItem(Item obj) {
-        if (obj.box != null)
+        if (obj.getBox() != null)
             return false;
         
         items.add(obj);
-        obj.box = this;
+        obj.setBox(this);
         return true;
     }
     

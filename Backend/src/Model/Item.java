@@ -30,24 +30,24 @@ public class Item {
     // links
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NCOMMANDLINE")
-    CommandLine commandLine;
+    private CommandLine commandLine;
     
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NTYPEITEM")
-    TypeItem typeItem;
+    private TypeItem typeItem;
     
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NBOX")
-    Box box;
+    private Box box;
     
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NCOMMAND")
-    ProductionLine productionLine;
+    private ProductionLine productionLine;
     
     @OneToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NPRODUCTIONLINE")
-    Item item;
+    private Item item;
     
     // other
-    int DateStart;
+    private int DateStart;
 }

@@ -28,16 +28,17 @@ public class TypeItem {
     private int id;
     
     // from file
-    int setupTime;
-    int prodTime;
-    int height;
-    int width;
-    int empileMax;
+    private String itemName;
+    private int setupTime;
+    private int prodTime;
+    private int height;
+    private int width;
+    private int empileMax;
 
     // links
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NTYPEITEM")
-    List<Item> items;
+    private List<Item> items;
     
     // other
     
@@ -51,9 +52,10 @@ public class TypeItem {
         init();
     }
 
-    public TypeItem(int setupTime, int prodTime, int height, int width, int empileMax) {
+    public TypeItem(String itemName, int setupTime, int prodTime, int height, int width, int empileMax) {
         init();
         
+        this.itemName = itemName;
         this.setupTime = setupTime;
         this.prodTime = prodTime;
         this.height = height;
@@ -66,16 +68,20 @@ public class TypeItem {
     }
 
     public boolean addItem(Item obj) {
-        if (obj.typeItem != null)
+        if (obj.getTypeItem != null)
             return false;
         
         items.add(obj);
-        obj.typeItem = this;
+        obj.setTypeItem(this);
         return true;
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getItemName() {
+        return itemName;
     }
 
     public int getSetupTime() {
@@ -100,6 +106,10 @@ public class TypeItem {
 
     public List<Item> getItems() {
         return items;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public void setSetupTime(int setupTime) {

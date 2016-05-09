@@ -25,13 +25,13 @@ public class ProductionLine {
     private int id;
     
     // from file
-    int num; // could be replaced by the id
+    private int num; // could be replaced by the id
     
     // links
     @OneToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NPRODUCTIONLINE")
-    Item item;
+    private Item item;
     
     // other
-    int dateAvailable;
+    private int dateAvailable;
 }

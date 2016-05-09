@@ -27,16 +27,16 @@ public class CommandLine {
     private int id;
     
     // from file
-    int quantity;
+    private int quantity;
     
     // links
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NCOMMAND")
-    Command command;
+    private Command command;
     
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NCOMMANDLINE")
-    List<Item> items;
+    private List<Item> items;
 
     // other
 }

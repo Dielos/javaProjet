@@ -28,14 +28,15 @@ public class BoxType {
     private int id;
     
     // from file
-    int height;
-    int width;
-    int cost;
+    private String boxName;
+    private int height;
+    private int width;
+    private int cost;
     
     // links
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NBOXTYPE")
-    List<Box> boxs;
+    private List<Box> boxs;
     
     // other
     
@@ -45,7 +46,8 @@ public class BoxType {
         boxs = new ArrayList<Box>();
     }
     
-    public BoxType(int height, int width, int cost) {
+    public BoxType(String boxName, int height, int width, int cost) {
+        this.boxName = boxName;
         this.height = height;
         this.width = width;
         this.cost = cost;
@@ -59,11 +61,11 @@ public class BoxType {
     }
 
     public boolean addBox(Box obj) {
-        if (obj.boxType != null)
+        if (obj.getBoxType() != null)
             return false;
         
         boxs.add(obj);
-        obj.boxType = this;
+        obj.setBoxType(this);
         return true;
     }
 
