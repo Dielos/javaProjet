@@ -47,14 +47,13 @@ public class Command {
         commandLines = new ArrayList<CommandLine>();
     }
 
-    public Command(String commandName, int stockMin, int dateLimit, int penality, int startProductionDate) {
+    public Command(String commandName, int stockMin, int dateLimit, int penality) {
         init();
         
         this.commandName = commandName;
         this.stockMin = stockMin;
         this.dateLimit = dateLimit;
         this.penality = penality;
-        this.startProductionDate = startProductionDate;
     }
 
     public Command() {
