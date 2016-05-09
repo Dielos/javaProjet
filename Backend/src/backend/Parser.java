@@ -5,7 +5,7 @@
  */
 package backend;
 
-import Model.TypeItem;
+import Model.ProductType;
 import java.util.ArrayList;
 
 /**
@@ -82,13 +82,13 @@ public class Parser {
         
         Integer i = 2;
         Integer nbProduct =1;
-        ArrayList<TypeItem> products = new ArrayList();
+        ArrayList<ProductType> products = new ArrayList();
         
         while(lines[i].length() != 0){
             System.out.println(lines[i]);
             String[] productInfos = lines[i].split("   ");
             
-            TypeItem product = new TypeItem(productInfos[0],
+            ProductType product = new ProductType(productInfos[0],
                     Integer.parseInt(productInfos[1]),
                     Integer.parseInt(productInfos[2]),
                     Integer.parseInt(productInfos[3]),

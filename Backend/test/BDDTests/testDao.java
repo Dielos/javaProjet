@@ -6,18 +6,18 @@
 package BDDTests;
 
 import DAO.BoxTypeDao;
-import DAO.CommandDao;
-import DAO.CommandLineDao;
 import DAO.DaoFactoryJpa;
 import DAO.JpaBoxTypeDao;
-import DAO.JpaCommandDao;
-import DAO.JpaCommandLineDao;
-import DAO.JpaTypeItemDao;
-import DAO.TypeItemDao;
+import DAO.JpaOrderDao;
+import DAO.JpaOrderLineDao;
+import DAO.JpaProductTypeDao;
 import Model.BoxType;
-import Model.Command;
-import Model.CommandLine;
-import Model.TypeItem;
+import Model.Order;
+import Model.OrderLine;
+import Model.ProductType;
+import DAO.OrderDao;
+import DAO.OrderLineDao;
+import DAO.ProductTypeDao;
 
 /**
  *
@@ -26,16 +26,16 @@ import Model.TypeItem;
 public class testDao {
     public static void main(String[] args) {
         BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
-        CommandDao commandManager = DaoFactoryJpa.getInstance(JpaCommandDao.class);
-        TypeItemDao typeItemManager = DaoFactoryJpa.getInstance(JpaTypeItemDao.class);
+        OrderDao commandManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
+        ProductTypeDao typeItemManager = DaoFactoryJpa.getInstance(JpaProductTypeDao.class);
         
         BoxType bt1 = new BoxType("b001", 42, 34, 1337);
         
-        Command c1 = new Command("c001", 42, 33, 98);
+        Order c1 = new Order("c001", 42, 33, 98);
         
-        TypeItem ti1 = new TypeItem("i001", 42, 42, 42, 42, 42);
+        ProductType ti1 = new ProductType("i001", 42, 42, 42, 42, 42);
         
-        c1.addCommandLine(new CommandLine(42, ti1));
+        c1.addOrderLine(new OrderLine(42, ti1));
                 
         boxTypeManager.create(bt1);
         
@@ -47,13 +47,13 @@ public class testDao {
             System.out.println(i);
         }
         
-        for (Command i : commandManager.findAll()) {
+        for (Order i : commandManager.findAll()) {
             System.out.println(i);
-            for (CommandLine j : i.getCommandLines())
+            for (OrderLine j : i.getOrderLines())
                 System.out.println(j);
         }
         
-        for (TypeItem i : typeItemManager.findAll())
+        for (ProductType i : typeItemManager.findAll())
             System.out.println(i);
         
         

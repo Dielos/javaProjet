@@ -32,7 +32,7 @@ public class ProductionLine {
     // links
     @OneToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NPRODUCTIONLINE")
-    private Item item;
+    private Product product;
     
     // other
     private int dateAvailable;
@@ -40,7 +40,7 @@ public class ProductionLine {
     // method
     
     private void init() {
-        item = null;
+        product = null;
     }
 
     public ProductionLine() {
@@ -62,8 +62,8 @@ public class ProductionLine {
         return num;
     }
 
-    public Item getItem() {
-        return item;
+    public Product getProduct() {
+        return product;
     }
 
     public int getDateAvailable() {
@@ -74,8 +74,8 @@ public class ProductionLine {
         this.num = num;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public void setDateAvailable(int dateAvailable) {
@@ -85,10 +85,10 @@ public class ProductionLine {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 61 * hash + this.id;
-        hash = 61 * hash + this.num;
-        hash = 61 * hash + Objects.hashCode(this.item);
-        hash = 61 * hash + this.dateAvailable;
+        hash = 67 * hash + this.id;
+        hash = 67 * hash + this.num;
+        hash = 67 * hash + Objects.hashCode(this.product);
+        hash = 67 * hash + this.dateAvailable;
         return hash;
     }
 
@@ -113,15 +113,17 @@ public class ProductionLine {
         if (this.dateAvailable != other.dateAvailable) {
             return false;
         }
-        if (!Objects.equals(this.item, other.item)) {
+        if (!Objects.equals(this.product, other.product)) {
             return false;
         }
         return true;
     }
 
+    
+
     @Override
     public String toString() {
-        return "ProductionLine{" + "id=" + id + ", num=" + num + ", item=" + item + ", dateAvailable=" + dateAvailable + '}';
+        return "ProductionLine{" + "id=" + id + ", num=" + num + ", product=" + product + ", dateAvailable=" + dateAvailable + '}';
     }
     
     
