@@ -36,6 +36,10 @@ public class CommandLine {
     @JoinColumn(name="NCOMMAND")
     private Command command;
     
+    @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+    @JoinColumn(name="NTYPEITEM")
+    private TypeItem typeItem;
+    
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NCOMMANDLINE")
     private List<Item> items;
@@ -49,9 +53,10 @@ public class CommandLine {
         items = new ArrayList<Item>();
     }
 
-    public CommandLine(int quantity) {
+    public CommandLine(int quantity, TypeItem typeItem) {
         init();
         this.quantity = quantity;
+        this.typeItem = typeItem;
     }
 
     public CommandLine() {
@@ -75,6 +80,10 @@ public class CommandLine {
         return id;
     }
 
+    public TypeItem getTypeItem() {
+        return typeItem;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -89,6 +98,10 @@ public class CommandLine {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public void setTypeItem(TypeItem typeItem) {
+        this.typeItem = typeItem;
     }
 
     public void setCommand(Command command) {

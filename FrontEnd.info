@@ -1,18 +1,18 @@
 From database:
 
-- Everything from solution
-- Product table
+- Everything from solution -> getSolutions()
+- Product type table -> getProduct()
 - From boxes
-  - Height
-  - Width
-- Total price of each bought boxes from solution
+  - Height -> Int getHeight()
+  - Width -> Int getWidth()
+- Total price of each bought boxes from solution -> Float getTotalPrice()
 - From orders :
-  - Penalty
-  - Planned shipping
-  - Stock minimal
-- Real shipping - Planned shipping -> We need result
-- Previous * Penalty -> Total price of each orders penalties (We need that too)
-- For each commands, boxes id corresponding
+  - Penalty -> Float getPenalty()
+  - Planned shipping -> Date getShipDate()
+  - Stock minimal -> Int getStockMin()
+- Real shipping - Planned shipping -> We need result -> Int getDatesDifferences()
+- Previous * Penalty -> Total price of each orders penalties (We need that too) -> Float getPenaltyPrice()
+- For each commands, boxes id corresponding -> ArrayList<Int> getBoxes()
 - For each check, send OK message
 
 
@@ -22,3 +22,33 @@ FrontEnd:
 Timeline : vis.js (http://visjs.org/)
 Box drawing : Javascript
 Servlet : JSP
+
+Menu :
+- Stats
+- Timeline
+- Test processes
+- Orders (drop-down menu)
+
+Homepage:
+- If first time:
+  - Button "Upload a file" -> show process -> go to Stat page
+- If file already uploaded:
+  - Go to stat page
+  
+Stat page
+- Show stat tables
+
+Timeline
+- TimeLine of production lines + each boxes
+
+Tests
+- Make tests and show results
+
+Orders
+- Clic on an order to show details about it (position in timeline, boxes used ...)
+
+
+  
+
+
+
