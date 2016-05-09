@@ -1,0 +1,22 @@
+From database:
+
+- Everything from solution
+- Product table
+- From boxes
+  - Height
+  - Width
+- Total price of each bought boxes from solution
+- From orders :
+  - Penalty
+  - Planned shipping
+  - 
+- Real shipping - Planned shipping -> We need result
+- Previous * Penalty -> Total price of each orders penalties (We need that too)
+
+
+
+
+FrontEnd:
+
+Timeline : vis.js (http://visjs.org/)
+Box drawing : Javascript
