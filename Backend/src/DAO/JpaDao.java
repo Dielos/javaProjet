@@ -22,17 +22,17 @@ import static org.apache.derby.impl.sql.compile.SQLParserConstants.T;
  * Implementation of interface Dao for Jpa
  */
 public abstract class JpaDao<T> implements Dao<T>{
-    protected EntityManagerFactory emf;
-    protected EntityManager em;
-    protected EntityTransaction et;
+    static protected EntityManagerFactory emf = Persistence.createEntityManagerFactory("BackendPU");
+    static protected EntityManager em = emf.createEntityManager();
+    static protected EntityTransaction et = em.getTransaction();
     protected Class<T> kek;
     
     //public abstract JpaDao getInstance ();
     
     protected JpaDao () {
-        emf = Persistence.createEntityManagerFactory("BackendPU");
-        em = emf.createEntityManager();
-        et = em.getTransaction();
+        //emf = Persistence.createEntityManagerFactory("BackendPU");
+        //em = emf.createEntityManager();
+        //et = em.getTransaction();
         
         //May look like quite tricky, this line simply get the class of parameter "T"
         kek = (Class<T>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -45,7 +45,7 @@ public abstract class JpaDao<T> implements Dao<T>{
         return true;
     }
     
-    public T find (Integer id) {
+    public T findId (Integer id) {
         return em.find(kek, id);
     }
     
