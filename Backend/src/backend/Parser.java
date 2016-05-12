@@ -82,18 +82,17 @@ public class Parser {
     public void getEntityInFile() {
         String[] lines = instanceFile.split("\n");
         String[] generalInfos = lines[0].split(" ");
+        String regex = " +|\t";
         
         Integer i = 2;
         Integer nbProduct =1;
         TypeItemDao typeItemManager = DaoFactoryJpa.getInstance(JpaTypeItemDao.class);
         
         while(lines[i].length() != 0){
-            System.out.println(lines[i]);
-            String[] productInfos = lines[i].split("   ");
             
-            for(Integer j=0;j<10;j++){
-                System.out.println(productInfos[j]);
-            }
+            
+            lines[i]=lines[i].replaceAll(regex, "\t");
+            String[] productInfos = lines[i].split("\t");
             
             TypeItem product = new TypeItem(productInfos[0],
                     Integer.parseInt(productInfos[1]),
@@ -102,6 +101,24 @@ public class Parser {
                     Integer.parseInt(productInfos[4]),
                     Integer.parseInt(productInfos[5]));
             typeItemManager.create(product);
+            System.out.println(product);
+            i++;
+        }
+        //we are in the next paragraph : all the orders
+        i++;
+        
+        while(lines[i].length() != 0){
+            lines[i]=lines[i].replaceAll(regex, "\t");
+            String[] productInfos = lines[i].split("\t");
+            
+            TypeItem product = new TypeItem(productInfos[0],
+                    Integer.parseInt(productInfos[1]),
+                    Integer.parseInt(productInfos[2]),
+                    Integer.parseInt(productInfos[3]),
+                    Integer.parseInt(productInfos[4]),
+                    Integer.parseInt(productInfos[5]));
+            typeItemManager.create(product);
+            System.out.println(product);
             i++;
         }
     }
