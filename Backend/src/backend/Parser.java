@@ -7,8 +7,11 @@ package backend;
 
 
 import DAO.DaoFactoryJpa;
+import DAO.JpaOrderDao;
 import DAO.JpaProductTypeDao;
+import DAO.OrderDao;
 import DAO.ProductTypeDao;
+import Model.Order;
 import Model.ProductType;
 
 import Model.ProductType;
@@ -92,10 +95,11 @@ public class Parser {
         Integer nbProduct =1;
 
         ProductTypeDao ProductTypeManager = DaoFactoryJpa.getInstance(JpaProductTypeDao.class);
-
+        OrderDao orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
+        
         ArrayList<ProductType> products = new ArrayList();
 
-        
+        //TODO: add product in array
         while(lines[i].length() != 0){
             
             
@@ -114,21 +118,19 @@ public class Parser {
         }
         //we are in the next paragraph : all the orders
         i++;
-        /*
+        
         while(lines[i].length() != 0){
             lines[i]=lines[i].replaceAll(regex, "\t");
-            String[] productInfos = lines[i].split("\t");
-            
-            ProductType product = new ProductType(productInfos[0],
-                    Integer.parseInt(productInfos[1]),
-                    Integer.parseInt(productInfos[2]),
-                    Integer.parseInt(productInfos[3]),
-                    Integer.parseInt(productInfos[4]),
-                    Integer.parseInt(productInfos[5]));
-            ProductTypeManager.create(product);
-            System.out.println(product);
+            String[] orderInfos = lines[i].split("\t");
+            System.out.println(orderInfos[3]);
+            Order order = new Order(orderInfos[0],
+                    Integer.parseInt(orderInfos[1]),
+                    Integer.parseInt(orderInfos[2]),
+                    Float.parseFloat(orderInfos[3]));
+            orderManager.create(order);
+            System.out.println(order);
             i++;
-        }*/
+        }
     }
     
     public static void main(String[] args) {
