@@ -5,12 +5,12 @@
  */
 package DAO;
 
-import Model.CommandLine;
+import Model.ProductType;
 
 /**
  *
  * @author Robin
  */
-public class JpaCommandLineDao extends JpaDao<CommandLine> implements CommandLineDao{
+public interface ProductTypeDao extends Dao<ProductType> {
     
 }

@@ -36,12 +36,12 @@ public class Box {
     private BoxType boxType;
     
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NCOMMAND")
-    private Command command; //could be replaced by a boolean. Represent the command that is using the box (only used during scheduling, should be `null` after scheduling process)
+    @JoinColumn(name="NORDER")
+    private Order order; //could be replaced by a boolean. Represent the order that is using the box (only used during scheduling, should be `null` after scheduling process)
     
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NBOX")
-    private List<Item> items;
+    private List<Product> products;
     
     // other
     private int num;
@@ -50,14 +50,14 @@ public class Box {
     
     private void init() {
         boxType = null;
-        command = null;
-        items = new ArrayList<Item>();
+        order = null;
+        products = new ArrayList<Product>();
     }
     
-    public Box(List<Item> items, int num) {
+    public Box(List<Product> products, int num) {
         init();
         
-        this.items = items;
+        this.products = products;
         this.num = num;
     }
 
@@ -65,15 +65,15 @@ public class Box {
         init();
     }
 
-    public boolean removeItem(Item obj) {
-        return items.remove(obj);
+    public boolean removeProduct(Product obj) {
+        return products.remove(obj);
     }
     
-    public boolean addItem(Item obj) {
+    public boolean addProduct(Product obj) {
         if (obj.getBox() != null)
             return false;
         
-        items.add(obj);
+        products.add(obj);
         obj.setBox(this);
         return true;
     }
@@ -86,12 +86,12 @@ public class Box {
         return boxType;
     }
 
-    public Command getCommand() {
-        return command;
+    public Order getOrder() {
+        return order;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Product> getProducts() {
+        return products;
     }
 
     public int getNum() {
@@ -102,8 +102,8 @@ public class Box {
         this.boxType = boxType;
     }
 
-    public void setCommand(Command command) {
-        this.command = command;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public void setNum(int num) {
@@ -112,12 +112,11 @@ public class Box {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + this.id;
-        hash = 89 * hash + Objects.hashCode(this.boxType);
-        hash = 89 * hash + Objects.hashCode(this.command);
-        hash = 89 * hash + Objects.hashCode(this.items);
-        hash = 89 * hash + this.num;
+        int hash = 5;
+        hash = 67 * hash + this.id;
+        hash = 67 * hash + Objects.hashCode(this.boxType);
+        hash = 67 * hash + Objects.hashCode(this.order);
+        hash = 67 * hash + this.num;
         return hash;
     }
 
@@ -142,18 +141,17 @@ public class Box {
         if (!Objects.equals(this.boxType, other.boxType)) {
             return false;
         }
-        if (!Objects.equals(this.command, other.command)) {
-            return false;
-        }
-        if (!Objects.equals(this.items, other.items)) {
+        if (!Objects.equals(this.order, other.order)) {
             return false;
         }
         return true;
     }
 
+    
+
     @Override
     public String toString() {
-        return "Box{" + "id=" + id + ", boxType=" + boxType + ", command=" + command + ", num=" + num + '}';
+        return "Box{" + "id=" + id + ", boxType=" + boxType + ", order=" + order + ", num=" + num + '}';
     }
     
     

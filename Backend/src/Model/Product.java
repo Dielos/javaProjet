@@ -22,7 +22,7 @@ import javax.persistence.OneToOne;
  * @author Robin
  */
 @Entity
-public class Item {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -31,24 +31,24 @@ public class Item {
     
     // links
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NCOMMANDLINE")
-    private CommandLine commandLine;
+    @JoinColumn(name="NORDERLINE")
+    private OrderLine orderLine;
     
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NTYPEITEM")
-    private TypeItem typeItem;
+    @JoinColumn(name="NPRODUCTTYPE")
+    private ProductType typeProduct;
     
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NBOX")
     private Box box;
     
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NCOMMAND")
+    @JoinColumn(name="NORDER")
     private ProductionLine productionLine;
     
     @OneToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NPRODUCTIONLINE")
-    private Item item;
+    private Product product;
     
     // other
     private int DateStart;
@@ -56,20 +56,20 @@ public class Item {
     // method
     
     private void init() {
-        commandLine = null;
-        typeItem = null;
+        orderLine = null;
+        typeProduct = null;
         box = null;
         productionLine = null;
-        item = null;
+        product = null;
     }
 
-    public Item(int DateStart) {
+    public Product(int DateStart) {
         init();
         
         this.DateStart = DateStart;
     }
 
-    public Item() {
+    public Product() {
         init();
     }
 
@@ -77,12 +77,12 @@ public class Item {
         return id;
     }
 
-    public CommandLine getCommandLine() {
-        return commandLine;
+    public OrderLine getOrderLine() {
+        return orderLine;
     }
 
-    public TypeItem getTypeItem() {
-        return typeItem;
+    public ProductType getTypeProduct() {
+        return typeProduct;
     }
 
     public Box getBox() {
@@ -93,20 +93,20 @@ public class Item {
         return productionLine;
     }
 
-    public Item getItem() {
-        return item;
+    public Product getProduct() {
+        return product;
     }
 
     public int getDateStart() {
         return DateStart;
     }
 
-    public void setCommandLine(CommandLine commandLine) {
-        this.commandLine = commandLine;
+    public void setOrderLine(OrderLine orderLine) {
+        this.orderLine = orderLine;
     }
 
-    public void setTypeItem(TypeItem typeItem) {
-        this.typeItem = typeItem;
+    public void setTypeProduct(ProductType typeProduct) {
+        this.typeProduct = typeProduct;
     }
 
     public void setBox(Box box) {
@@ -117,8 +117,8 @@ public class Item {
         this.productionLine = productionLine;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public void setDateStart(int DateStart) {
@@ -127,14 +127,14 @@ public class Item {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + this.id;
-        hash = 61 * hash + Objects.hashCode(this.commandLine);
-        hash = 61 * hash + Objects.hashCode(this.typeItem);
-        hash = 61 * hash + Objects.hashCode(this.box);
-        hash = 61 * hash + Objects.hashCode(this.productionLine);
-        hash = 61 * hash + Objects.hashCode(this.item);
-        hash = 61 * hash + this.DateStart;
+        int hash = 5;
+        hash = 17 * hash + this.id;
+        hash = 17 * hash + Objects.hashCode(this.orderLine);
+        hash = 17 * hash + Objects.hashCode(this.typeProduct);
+        hash = 17 * hash + Objects.hashCode(this.box);
+        hash = 17 * hash + Objects.hashCode(this.productionLine);
+        hash = 17 * hash + Objects.hashCode(this.product);
+        hash = 17 * hash + this.DateStart;
         return hash;
     }
 
@@ -149,17 +149,17 @@ public class Item {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Item other = (Item) obj;
+        final Product other = (Product) obj;
         if (this.id != other.id) {
             return false;
         }
         if (this.DateStart != other.DateStart) {
             return false;
         }
-        if (!Objects.equals(this.commandLine, other.commandLine)) {
+        if (!Objects.equals(this.orderLine, other.orderLine)) {
             return false;
         }
-        if (!Objects.equals(this.typeItem, other.typeItem)) {
+        if (!Objects.equals(this.typeProduct, other.typeProduct)) {
             return false;
         }
         if (!Objects.equals(this.box, other.box)) {
@@ -168,15 +168,17 @@ public class Item {
         if (!Objects.equals(this.productionLine, other.productionLine)) {
             return false;
         }
-        if (!Objects.equals(this.item, other.item)) {
+        if (!Objects.equals(this.product, other.product)) {
             return false;
         }
         return true;
     }
 
+    
+
     @Override
     public String toString() {
-        return "Item{" + "id=" + id + ", commandLine=" + commandLine + ", typeItem=" + typeItem + ", box=" + box + ", productionLine=" + productionLine + ", item=" + item + ", DateStart=" + DateStart + '}';
+        return "Product{" + "id=" + id + ", orderLine=" + orderLine + ", typeProduct=" + typeProduct + ", box=" + box + ", productionLine=" + productionLine + ", product=" + product + ", DateStart=" + DateStart + '}';
     }
     
     

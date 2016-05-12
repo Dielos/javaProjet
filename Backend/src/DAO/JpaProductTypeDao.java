@@ -5,12 +5,12 @@
  */
 package DAO;
 
-import Model.TypeItem;
+import Model.ProductType;
 
 /**
  *
  * @author Robin
  */
-public class JpaTypeItemDao extends JpaDao<TypeItem> implements TypeItemDao{
+public class JpaProductTypeDao extends JpaDao<ProductType> implements ProductTypeDao{
     
 }

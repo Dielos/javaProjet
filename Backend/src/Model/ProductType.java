@@ -22,13 +22,13 @@ import javax.persistence.OneToMany;
  * @author Robin
  */
 @Entity
-public class TypeItem {
+public class ProductType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
     // from file
-    private String itemName;
+    private String productName;
     private int setupTime;
     private int prodTime;
     private int height;
@@ -37,25 +37,25 @@ public class TypeItem {
 
     // links
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NTYPEITEM")
-    private List<Item> items;
+    @JoinColumn(name="NPRODUCTTYPE")
+    private List<Product> products;
     
     // other
     
     // method
     
     private void init() {
-        items = new ArrayList<Item>();
+        products = new ArrayList<Product>();
     }
 
-    public TypeItem() {
+    public ProductType() {
         init();
     }
 
-    public TypeItem(String itemName, int setupTime, int prodTime, int height, int width, int empileMax) {
+    public ProductType(String productName, int setupTime, int prodTime, int height, int width, int empileMax) {
         init();
         
-        this.itemName = itemName;
+        this.productName = productName;
         this.setupTime = setupTime;
         this.prodTime = prodTime;
         this.height = height;
@@ -63,16 +63,16 @@ public class TypeItem {
         this.empileMax = empileMax;
     }
 
-    public boolean removeItem(Item obj) {
-        return items.remove(obj);
+    public boolean removeProduct(Product obj) {
+        return products.remove(obj);
     }
 
-    public boolean addItem(Item obj) {
-        if (obj.getTypeItem() != null)
+    public boolean addProduct(Product obj) {
+        if (obj.getTypeProduct() != null)
             return false;
         
-        items.add(obj);
-        obj.setTypeItem(this);
+        products.add(obj);
+        obj.setTypeProduct(this);
         return true;
     }
 
@@ -80,8 +80,8 @@ public class TypeItem {
         return id;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getProductName() {
+        return productName;
     }
 
     public int getSetupTime() {
@@ -104,12 +104,12 @@ public class TypeItem {
         return empileMax;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public void setSetupTime(int setupTime) {
@@ -134,14 +134,14 @@ public class TypeItem {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + this.id;
-        hash = 37 * hash + this.setupTime;
-        hash = 37 * hash + this.prodTime;
-        hash = 37 * hash + this.height;
-        hash = 37 * hash + this.width;
-        hash = 37 * hash + this.empileMax;
-        hash = 37 * hash + Objects.hashCode(this.items);
+        int hash = 5;
+        hash = 41 * hash + this.id;
+        hash = 41 * hash + Objects.hashCode(this.productName);
+        hash = 41 * hash + this.setupTime;
+        hash = 41 * hash + this.prodTime;
+        hash = 41 * hash + this.height;
+        hash = 41 * hash + this.width;
+        hash = 41 * hash + this.empileMax;
         return hash;
     }
 
@@ -156,7 +156,7 @@ public class TypeItem {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TypeItem other = (TypeItem) obj;
+        final ProductType other = (ProductType) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -175,15 +175,17 @@ public class TypeItem {
         if (this.empileMax != other.empileMax) {
             return false;
         }
-        if (!Objects.equals(this.items, other.items)) {
+        if (!Objects.equals(this.productName, other.productName)) {
             return false;
         }
         return true;
     }
 
+    
+
     @Override
     public String toString() {
-        return "TypeItem{" + "id=" + id + ", setupTime=" + setupTime + ", prodTime=" + prodTime + ", height=" + height + ", width=" + width + ", empileMax=" + empileMax + '}';
+        return "TypeProduct{" + "id=" + id + ", setupTime=" + setupTime + ", prodTime=" + prodTime + ", height=" + height + ", width=" + width + ", empileMax=" + empileMax + '}';
     }
     
     

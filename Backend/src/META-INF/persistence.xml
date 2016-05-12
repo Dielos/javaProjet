@@ -5,7 +5,6 @@
     <class>Model.Box</class>
     <class>Model.BoxType</class>
     <class>Model.Command</class>
-    <class>Model.CommandLine</class>
     <class>Model.Item</class>
     <class>Model.ProductionLine</class>
     <class>Model.TypeItem</class>

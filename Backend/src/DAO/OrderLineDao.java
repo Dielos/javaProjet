@@ -5,12 +5,12 @@
  */
 package DAO;
 
-import Model.TypeItem;
+import Model.OrderLine;
 
 /**
  *
  * @author Robin
  */
-public interface TypeItemDao extends Dao<TypeItem> {
+public interface OrderLineDao extends Dao<OrderLine>{
     
 }

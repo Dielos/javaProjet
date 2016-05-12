@@ -1,7 +1,7 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.gi
+ * and open the template in the editor.
  */
 
 package Model;
@@ -23,7 +23,7 @@ import javax.persistence.OneToMany;
  * @author Robin
  */
 @Entity
-public class CommandLine {
+public class OrderLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -33,46 +33,46 @@ public class CommandLine {
     
     // links
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NCOMMAND")
-    private Command command;
+    @JoinColumn(name="NORDER")
+    private Order order;
     
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NTYPEITEM")
-    private TypeItem typeItem;
+    @JoinColumn(name="NPRODUCTTYPE")
+    private ProductType typeProduct;
     
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NCOMMANDLINE")
-    private List<Item> items;
+    @JoinColumn(name="NORDERLINE")
+    private List<Product> products;
 
     // other
     
     // method
     
     private void init() {
-        command = null;
-        items = new ArrayList<Item>();
+        order = null;
+        products = new ArrayList<Product>();
     }
 
-    public CommandLine(int quantity, TypeItem typeItem) {
+    public OrderLine(int quantity, ProductType typeProduct) {
         init();
         this.quantity = quantity;
-        this.typeItem = typeItem;
+        this.typeProduct = typeProduct;
     }
 
-    public CommandLine() {
+    public OrderLine() {
         init();
     }
 
-    public boolean removeItem(Item obj) {
-        return items.remove(obj);
+    public boolean removeProduct(Product obj) {
+        return products.remove(obj);
     }
 
-    public boolean addItem(Item obj) {
-        if (obj.getCommandLine() != null)
+    public boolean addProduct(Product obj) {
+        if (obj.getOrderLine() != null)
             return false;
         
-        items.add(obj);
-        obj.setCommandLine(this);
+        products.add(obj);
+        obj.setOrderLine(this);
         return true;
     }
 
@@ -80,41 +80,41 @@ public class CommandLine {
         return id;
     }
 
-    public TypeItem getTypeItem() {
-        return typeItem;
+    public ProductType getTypeProduct() {
+        return typeProduct;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public Command getCommand() {
-        return command;
+    public Order getOrder() {
+        return order;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Product> getProducts() {
+        return products;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public void setTypeItem(TypeItem typeItem) {
-        this.typeItem = typeItem;
+    public void setTypeProduct(ProductType typeProduct) {
+        this.typeProduct = typeProduct;
     }
 
-    public void setCommand(Command command) {
-        this.command = command;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 89 * hash + this.id;
-        hash = 89 * hash + this.quantity;
-        hash = 89 * hash + Objects.hashCode(this.command);
-        hash = 89 * hash + Objects.hashCode(this.items);
+        hash = 13 * hash + this.id;
+        hash = 13 * hash + this.quantity;
+        hash = 13 * hash + Objects.hashCode(this.order);
+        hash = 13 * hash + Objects.hashCode(this.typeProduct);
         return hash;
     }
 
@@ -129,25 +129,27 @@ public class CommandLine {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final CommandLine other = (CommandLine) obj;
+        final OrderLine other = (OrderLine) obj;
         if (this.id != other.id) {
             return false;
         }
         if (this.quantity != other.quantity) {
             return false;
         }
-        if (!Objects.equals(this.command, other.command)) {
+        if (!Objects.equals(this.order, other.order)) {
             return false;
         }
-        if (!Objects.equals(this.items, other.items)) {
+        if (!Objects.equals(this.typeProduct, other.typeProduct)) {
             return false;
         }
         return true;
     }
 
+    
+
     @Override
     public String toString() {
-        return "CommandLine{" + "id=" + id + ", quantity=" + quantity + ", command=" + command + '}';
+        return "OrderLine{" + "id=" + id + ", quantity=" + quantity + ", order=" + order + '}';
     }
     
     

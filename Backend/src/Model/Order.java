@@ -16,27 +16,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Robin
  */
-@Entity
-public class Command {
+@Entity()
+@Table(name="ORDER_")  // persistence doesn't seem to escape the table name in its request, leading to error with reserved word "ORDER"
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
     // from file
-    private String commandName;
+    private String orderName;
     private int stockMin;
     private int dateLimit;
     private int penality;
     
     // links
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NCOMMAND")
-    private List<CommandLine> commandLines;
+    @JoinColumn(name="NORDER")
+    private List<OrderLine> orderLines;
 
     // other
     private int startProductionDate;
@@ -44,32 +46,32 @@ public class Command {
     // method
     
     private void init() {
-        commandLines = new ArrayList<CommandLine>();
+        orderLines = new ArrayList<OrderLine>();
     }
 
-    public Command(String commandName, int stockMin, int dateLimit, int penality) {
+    public Order(String orderName, int stockMin, int dateLimit, int penality) {
         init();
         
-        this.commandName = commandName;
+        this.orderName = orderName;
         this.stockMin = stockMin;
         this.dateLimit = dateLimit;
         this.penality = penality;
     }
 
-    public Command() {
+    public Order() {
         init();
     }
 
-    public boolean removeCommandLine(CommandLine obj) {
-        return commandLines.remove(obj);
+    public boolean removeOrderLine(OrderLine obj) {
+        return orderLines.remove(obj);
     }
 
-    public boolean addCommandLine(CommandLine obj) {
-        if (obj.getCommand() != null)
+    public boolean addOrderLine(OrderLine obj) {
+        if (obj.getOrder() != null)
             return false;
         
-        commandLines.add(obj);
-        obj.setCommand(this);
+        orderLines.add(obj);
+        obj.setOrder(this);
         return true;
     }
 
@@ -77,8 +79,8 @@ public class Command {
         return id;
     }
 
-    public String getCommandName() {
-        return commandName;
+    public String getOrderName() {
+        return orderName;
     }
 
     public int getStockMin() {
@@ -93,16 +95,16 @@ public class Command {
         return penality;
     }
 
-    public List<CommandLine> getCommandLines() {
-        return commandLines;
+    public List<OrderLine> getOrderLines() {
+        return orderLines;
     }
 
     public int getStartProductionDate() {
         return startProductionDate;
     }
 
-    public void setCommandName(String commandName) {
-        this.commandName = commandName;
+    public void setOrderName(String orderName) {
+        this.orderName = orderName;
     }
 
     public void setStockMin(int stockMin) {
@@ -123,13 +125,13 @@ public class Command {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 59 * hash + this.id;
-        hash = 59 * hash + this.stockMin;
-        hash = 59 * hash + this.dateLimit;
-        hash = 59 * hash + this.penality;
-        hash = 59 * hash + Objects.hashCode(this.commandLines);
-        hash = 59 * hash + this.startProductionDate;
+        int hash = 7;
+        hash = 53 * hash + this.id;
+        hash = 53 * hash + Objects.hashCode(this.orderName);
+        hash = 53 * hash + this.stockMin;
+        hash = 53 * hash + this.dateLimit;
+        hash = 53 * hash + this.penality;
+        hash = 53 * hash + this.startProductionDate;
         return hash;
     }
 
@@ -144,7 +146,7 @@ public class Command {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Command other = (Command) obj;
+        final Order other = (Order) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -160,15 +162,17 @@ public class Command {
         if (this.startProductionDate != other.startProductionDate) {
             return false;
         }
-        if (!Objects.equals(this.commandLines, other.commandLines)) {
+        if (!Objects.equals(this.orderName, other.orderName)) {
             return false;
         }
         return true;
     }
 
+    
+
     @Override
     public String toString() {
-        return "Command{" + "id=" + id + ", stockMin=" + stockMin + ", dateLimit=" + dateLimit + ", penality=" + penality + ", startProductionDate=" + startProductionDate + '}';
+        return "Order{" + "id=" + id + ", stockMin=" + stockMin + ", dateLimit=" + dateLimit + ", penality=" + penality + ", startProductionDate=" + startProductionDate + '}';
     }
     
     

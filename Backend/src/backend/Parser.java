@@ -5,10 +5,14 @@
  */
 package backend;
 
+
 import DAO.DaoFactoryJpa;
-import DAO.JpaTypeItemDao;
-import DAO.TypeItemDao;
-import Model.TypeItem;
+import DAO.JpaProductTypeDao;
+import DAO.ProductTypeDao;
+import Model.ProductType;
+
+import Model.ProductType;
+
 import java.util.ArrayList;
 
 /**
@@ -86,7 +90,11 @@ public class Parser {
         
         Integer i = 2;
         Integer nbProduct =1;
-        TypeItemDao typeItemManager = DaoFactoryJpa.getInstance(JpaTypeItemDao.class);
+
+        ProductTypeDao ProductTypeManager = DaoFactoryJpa.getInstance(JpaProductTypeDao.class);
+
+        ArrayList<ProductType> products = new ArrayList();
+
         
         while(lines[i].length() != 0){
             
@@ -94,13 +102,13 @@ public class Parser {
             lines[i]=lines[i].replaceAll(regex, "\t");
             String[] productInfos = lines[i].split("\t");
             
-            TypeItem product = new TypeItem(productInfos[0],
+            ProductType product = new ProductType(productInfos[0],
                     Integer.parseInt(productInfos[1]),
                     Integer.parseInt(productInfos[2]),
                     Integer.parseInt(productInfos[3]),
                     Integer.parseInt(productInfos[4]),
                     Integer.parseInt(productInfos[5]));
-            typeItemManager.create(product);
+            ProductTypeManager.create(product);
             System.out.println(product);
             i++;
         }
@@ -111,13 +119,13 @@ public class Parser {
             lines[i]=lines[i].replaceAll(regex, "\t");
             String[] productInfos = lines[i].split("\t");
             
-            TypeItem product = new TypeItem(productInfos[0],
+            ProductType product = new ProductType(productInfos[0],
                     Integer.parseInt(productInfos[1]),
                     Integer.parseInt(productInfos[2]),
                     Integer.parseInt(productInfos[3]),
                     Integer.parseInt(productInfos[4]),
                     Integer.parseInt(productInfos[5]));
-            typeItemManager.create(product);
+            ProductTypeManager.create(product);
             System.out.println(product);
             i++;
         }

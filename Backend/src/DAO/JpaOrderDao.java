@@ -5,12 +5,12 @@
  */
 package DAO;
 
-import Model.CommandLine;
+import Model.Order;
 
 /**
  *
  * @author Robin
  */
-public interface CommandLineDao extends Dao<CommandLine>{
+public class JpaOrderDao extends JpaDao<Order> implements OrderDao{
     
 }

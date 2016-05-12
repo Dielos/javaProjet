@@ -5,12 +5,12 @@
  */
 package DAO;
 
-import Model.Command;
+import Model.Order;
 
 /**
  *
  * @author Robin
  */
-public class JpaCommandDao extends JpaDao<Command> implements CommandDao{
+public interface OrderDao extends Dao<Order>{
     
 }

@@ -103,12 +103,12 @@ public class BoxType {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 11 * hash + this.id;
-        hash = 11 * hash + this.height;
-        hash = 11 * hash + this.width;
-        hash = 11 * hash + this.cost;
-        hash = 11 * hash + Objects.hashCode(this.boxs);
+        int hash = 5;
+        hash = 67 * hash + this.id;
+        hash = 67 * hash + Objects.hashCode(this.boxName);
+        hash = 67 * hash + this.height;
+        hash = 67 * hash + this.width;
+        hash = 67 * hash + this.cost;
         return hash;
     }
 
@@ -136,11 +136,13 @@ public class BoxType {
         if (this.cost != other.cost) {
             return false;
         }
-        if (!Objects.equals(this.boxs, other.boxs)) {
+        if (!Objects.equals(this.boxName, other.boxName)) {
             return false;
         }
         return true;
     }
+
+    
 
     @Override
     public String toString() {
