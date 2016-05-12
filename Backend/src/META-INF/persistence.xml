@@ -4,10 +4,11 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Model.Box</class>
     <class>Model.BoxType</class>
-    <class>Model.Command</class>
-    <class>Model.Item</class>
+    <class>Model.Order</class>
+    <class>Model.OrderLine</class>
+    <class>Model.Product</class>
+    <class>Model.ProductType</class>
     <class>Model.ProductionLine</class>
-    <class>Model.TypeItem</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/db_project"/>
       <property name="javax.persistence.jdbc.password" value="test"/>

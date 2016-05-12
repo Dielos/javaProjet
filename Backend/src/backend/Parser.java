@@ -114,7 +114,7 @@ public class Parser {
         }
         //we are in the next paragraph : all the orders
         i++;
-        
+        /*
         while(lines[i].length() != 0){
             lines[i]=lines[i].replaceAll(regex, "\t");
             String[] productInfos = lines[i].split("\t");
@@ -128,7 +128,7 @@ public class Parser {
             ProductTypeManager.create(product);
             System.out.println(product);
             i++;
-        }
+        }*/
     }
     
     public static void main(String[] args) {
