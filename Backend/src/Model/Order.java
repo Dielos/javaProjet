@@ -33,7 +33,7 @@ public class Order {
     private String orderName;
     private int stockMin;
     private int dateLimit;
-    private int penality;
+    private float penality;
     
     // links
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
@@ -49,7 +49,7 @@ public class Order {
         orderLines = new ArrayList<OrderLine>();
     }
 
-    public Order(String orderName, int stockMin, int dateLimit, int penality) {
+    public Order(String orderName, int stockMin, int dateLimit, float penality) {
         init();
         
         this.orderName = orderName;
@@ -91,7 +91,7 @@ public class Order {
         return dateLimit;
     }
 
-    public int getPenality() {
+    public float getPenality() {
         return penality;
     }
 
@@ -115,7 +115,7 @@ public class Order {
         this.dateLimit = dateLimit;
     }
 
-    public void setPenality(int penality) {
+    public void setPenality(float penality) {
         this.penality = penality;
     }
 
@@ -125,13 +125,13 @@ public class Order {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + this.id;
-        hash = 53 * hash + Objects.hashCode(this.orderName);
-        hash = 53 * hash + this.stockMin;
-        hash = 53 * hash + this.dateLimit;
-        hash = 53 * hash + this.penality;
-        hash = 53 * hash + this.startProductionDate;
+        int hash = 5;
+        hash = 37 * hash + this.id;
+        hash = 37 * hash + Objects.hashCode(this.orderName);
+        hash = 37 * hash + this.stockMin;
+        hash = 37 * hash + this.dateLimit;
+        hash = 37 * hash + Float.floatToIntBits(this.penality);
+        hash = 37 * hash + this.startProductionDate;
         return hash;
     }
 
