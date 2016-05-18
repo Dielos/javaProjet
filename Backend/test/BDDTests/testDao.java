@@ -26,7 +26,7 @@ import DAO.ProductTypeDao;
 public class testDao {
     public static void main(String[] args) {
         BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
-        OrderDao commandManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
+        OrderDao orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
         ProductTypeDao typeItemManager = DaoFactoryJpa.getInstance(JpaProductTypeDao.class);
         
         BoxType bt1 = new BoxType("b001", 42, 34, 1337);
@@ -36,26 +36,27 @@ public class testDao {
         ProductType ti1 = new ProductType("i001", 42, 42, 42, 42, 42);
         
         c1.addOrderLine(new OrderLine(42, ti1));
-                
-        boxTypeManager.create(bt1);
-        
-        commandManager.create(c1);
-        
+           
         typeItemManager.create(ti1);
+        
+        orderManager.create(c1);
+        
+        boxTypeManager.create(bt1);
         
         for (BoxType i : boxTypeManager.findAll()) {
             System.out.println(i);
         }
         
-        for (Order i : commandManager.findAll()) {
+        for (Order i : orderManager.findAll()) {
             System.out.println(i);
             for (OrderLine j : i.getOrderLines())
                 System.out.println(j);
         }
-        
+        System.out.println("kek");
         for (ProductType i : typeItemManager.findAll())
             System.out.println(i);
         
-        
+        System.out.println("ze");
+        System.out.println(typeItemManager.findId(1));
     }
 }

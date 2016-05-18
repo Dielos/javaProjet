@@ -134,22 +134,18 @@ public class ProductType {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 41 * hash + this.id;
-        hash = 41 * hash + Objects.hashCode(this.productName);
-        hash = 41 * hash + this.setupTime;
-        hash = 41 * hash + this.prodTime;
-        hash = 41 * hash + this.height;
-        hash = 41 * hash + this.width;
-        hash = 41 * hash + this.empileMax;
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.productName);
+        hash = 53 * hash + this.setupTime;
+        hash = 53 * hash + this.prodTime;
+        hash = 53 * hash + this.height;
+        hash = 53 * hash + this.width;
+        hash = 53 * hash + this.empileMax;
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
         if (obj == null) {
             return false;
         }
@@ -157,7 +153,7 @@ public class ProductType {
             return false;
         }
         final ProductType other = (ProductType) obj;
-        if (this.id != other.id) {
+        if (!Objects.equals(this.productName, other.productName)) {
             return false;
         }
         if (this.setupTime != other.setupTime) {
@@ -175,11 +171,10 @@ public class ProductType {
         if (this.empileMax != other.empileMax) {
             return false;
         }
-        if (!Objects.equals(this.productName, other.productName)) {
-            return false;
-        }
         return true;
     }
+
+    
 
     
 
