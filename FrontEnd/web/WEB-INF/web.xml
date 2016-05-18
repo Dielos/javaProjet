@@ -19,6 +19,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/controleur.jsp?action=homepage</welcome-file>
+        <welcome-file>faces/controleur.jsp?action=timeline</welcome-file>
     </welcome-file-list>
 </web-app>
