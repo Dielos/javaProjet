@@ -36,7 +36,7 @@ public class Box {
     private BoxType boxType;
     
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NORDER")
+    @JoinColumn(name="NASSOCIATEDORDER")
     private Order order; //could be replaced by a boolean. Represent the order that is using the box (only used during scheduling, should be `null` after scheduling process)
     
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
@@ -54,10 +54,9 @@ public class Box {
         products = new ArrayList<Product>();
     }
     
-    public Box(List<Product> products, int num) {
+    public Box(int num) {
         init();
         
-        this.products = products;
         this.num = num;
     }
 

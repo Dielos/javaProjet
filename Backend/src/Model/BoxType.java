@@ -31,7 +31,7 @@ public class BoxType {
     private String boxName;
     private int height;
     private int width;
-    private int cost;
+    private float cost;
     
     // links
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
@@ -46,14 +46,17 @@ public class BoxType {
         boxs = new ArrayList<Box>();
     }
     
-    public BoxType(String boxName, int height, int width, int cost) {
+    public BoxType(String boxName, int height, int width, float cost) {
         this.boxName = boxName;
         this.height = height;
         this.width = width;
         this.cost = cost;
+        
+        init();
     }
 
     public BoxType() {
+        init();
     }
     
     public boolean removeBox(Box obj) {
@@ -81,7 +84,7 @@ public class BoxType {
         return width;
     }
 
-    public int getCost() {
+    public float getCost() {
         return cost;
     }
 
@@ -97,18 +100,18 @@ public class BoxType {
         this.width = width;
     }
 
-    public void setCost(int cost) {
+    public void setCost(float cost) {
         this.cost = cost;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + this.id;
-        hash = 67 * hash + Objects.hashCode(this.boxName);
-        hash = 67 * hash + this.height;
-        hash = 67 * hash + this.width;
-        hash = 67 * hash + this.cost;
+        int hash = 7;
+        hash = 41 * hash + this.id;
+        hash = 41 * hash + Objects.hashCode(this.boxName);
+        hash = 41 * hash + this.height;
+        hash = 41 * hash + this.width;
+        hash = 41 * hash + Float.floatToIntBits(this.cost);
         return hash;
     }
 
