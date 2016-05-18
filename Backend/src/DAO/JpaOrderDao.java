@@ -5,12 +5,22 @@
  */
 package DAO;
 
+import static DAO.JpaDao.em;
 import Model.Order;
+import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
  * @author Robin
  */
 public class JpaOrderDao extends JpaDao<Order> implements OrderDao{
+
+    @Override
+    public List<Order> findAllChrono() {
+        final String strQuery = "SELECT obj FROM " + kek.getSimpleName() + " obj ORDER BY dateLimit";
+        Query query = em.createQuery(strQuery);
+        return query.getResultList(); 
+    }
     
 }

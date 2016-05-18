@@ -6,11 +6,12 @@
 package DAO;
 
 import Model.Order;
+import java.util.List;
 
 /**
  *
  * @author Robin
  */
 public interface OrderDao extends Dao<Order>{
-    
+    public List<Order> findAllChrono();
 }

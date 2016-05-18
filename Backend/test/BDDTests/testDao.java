@@ -54,13 +54,13 @@ public class testDao {
         ProductionLine pl1 = new ProductionLine(1, 0);
         
         // ----- //
-        productItemManager.create(ti1);
+        /*productItemManager.create(ti1);
         
         orderManager.create(c1);
         
         boxTypeManager.create(bt1);
         
-        productionLineManager.create(pl1);
+        productionLineManager.create(pl1);*/
         
         // ----- //
         for (BoxType i : boxTypeManager.findAll()) {
