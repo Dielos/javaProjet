@@ -103,6 +103,7 @@ public class Product {
 
     public void setOrderLine(OrderLine orderLine) {
         this.orderLine = orderLine;
+        this.typeProduct = orderLine.getTypeProduct();
     }
 
     public void setTypeProduct(ProductType typeProduct) {
@@ -115,6 +116,9 @@ public class Product {
 
     public void setProductionLine(ProductionLine productionLine) {
         this.productionLine = productionLine;
+        this.DateStart = productionLine.produce(typeProduct);
+        if (orderLine.getOrder().getSendingDate() < DateStart)
+            orderLine.getOrder().setSendingDate(DateStart);
     }
 
     public void setProduct(Product product) {

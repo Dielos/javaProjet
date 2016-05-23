@@ -42,8 +42,17 @@ public class Order {
 
     // other
     private int startProductionDate;
+    private int sendingDate;
     
     // method
+    
+    public int getTotalProductsSize() {
+        int sum=0;
+        for (OrderLine o : orderLines)
+            sum += o.getTotalProductSize();
+        
+        return sum;
+    }
     
     private void init() {
         orderLines = new ArrayList<OrderLine>();
@@ -83,6 +92,12 @@ public class Order {
         return orderName;
     }
 
+    public int getSendingDate() {
+        return sendingDate;
+    }
+    
+    
+
     public int getStockMin() {
         return stockMin;
     }
@@ -101,6 +116,10 @@ public class Order {
 
     public int getStartProductionDate() {
         return startProductionDate;
+    }
+
+    public void setSendingDate(int sendingDate) {
+        this.sendingDate = sendingDate;
     }
 
     public void setOrderName(String orderName) {

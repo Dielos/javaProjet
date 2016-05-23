@@ -5,13 +5,12 @@
  */
 package DAO;
 
-import Model.Order;
-import java.util.List;
+import Model.Product;
 
 /**
  *
- * @author Robin
+ * @author Mélody
  */
-public interface OrderDao extends Dao<Order>{
-    public List<Order> findAllChrono();
+public class JpaProductDao extends JpaDao<Product> implements ProductDao{
+    
 }

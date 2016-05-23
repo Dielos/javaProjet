@@ -5,7 +5,24 @@
  */
 package backend;
 
+
+import DAO.BoxTypeDao;
+import DAO.DaoFactoryJpa;
+import DAO.JpaBoxTypeDao;
+import DAO.JpaOrderDao;
+import DAO.JpaProductTypeDao;
+import DAO.JpaProductionLineDao;
+import DAO.OrderDao;
+import DAO.ProductTypeDao;
+import DAO.ProductionLineDao;
+import Model.BoxType;
+import Model.Order;
+import Model.OrderLine;
 import Model.ProductType;
+
+import Model.ProductType;
+import Model.ProductionLine;
+
 import java.util.ArrayList;
 
 /**
@@ -76,17 +93,35 @@ public class Parser {
     /**
      * 
      */
+
     public void getEntityInFile() {
         String[] lines = instanceFile.split("\n");
         String[] generalInfos = lines[0].split(" ");
+        String regex = " +|\t";
         
-        Integer i = 2;
-        Integer nbProduct =1;
+        int i = 2;
+        int cpt=0;
+
+        ProductTypeDao ProductTypeManager = DaoFactoryJpa.getInstance(JpaProductTypeDao.class);
+        OrderDao orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
+        BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
+        ProductionLineDao productionLineManager = DaoFactoryJpa.getInstance(JpaProductionLineDao.class);
+        
         ArrayList<ProductType> products = new ArrayList();
+        System.out.println("coucou");
+        
+        for(int j=1; j<Integer.parseInt(generalInfos[3]);j++){
+            ProductionLine pl = new ProductionLine(j, 0);
+            productionLineManager.create(pl);
+        }
+        
+        
         
         while(lines[i].length() != 0){
-            System.out.println(lines[i]);
-            String[] productInfos = lines[i].split("   ");
+            
+            
+            lines[i]=lines[i].replaceAll(regex, "\t");
+            String[] productInfos = lines[i].split("\t");
             
             ProductType product = new ProductType(productInfos[0],
                     Integer.parseInt(productInfos[1]),
@@ -95,6 +130,39 @@ public class Parser {
                     Integer.parseInt(productInfos[4]),
                     Integer.parseInt(productInfos[5]));
             products.add(product);
+            ProductTypeManager.create(product);
+            //System.out.println(product);
+            i++;
+        }
+        //we are in the next paragraph : all the orders
+        i++;
+        while(lines[i].length() != 0){
+            cpt=0;
+            lines[i]=lines[i].replaceAll(regex, "\t");
+            String[] orderInfos = lines[i].split("\t");
+            Order order = new Order(orderInfos[0],
+                    Integer.parseInt(orderInfos[1]),
+                    Integer.parseInt(orderInfos[2]),
+                    Float.parseFloat(orderInfos[3]));
+            for(int k=4; k<orderInfos.length;k++){
+                if(Integer.parseInt(orderInfos[k]) != 0)
+                    order.addOrderLine(new OrderLine(Integer.parseInt(orderInfos[k]),products.get(cpt)));
+                cpt++;
+            }
+            orderManager.create(order);
+            for(OrderLine o: order.getOrderLines()){
+                System.out.println(o);
+            }
+            
+            //System.out.println(order);
+            i++;
+        }
+        i++;
+        while(lines.length!=i && lines[i].length() != 0){
+            lines[i]=lines[i].replaceAll(regex, "\t");
+            String[] boxInfos = lines[i].split("\t");
+            BoxType box = new BoxType(boxInfos[0],Integer.parseInt(boxInfos[1]),Integer.parseInt(boxInfos[2]),Float.parseFloat(boxInfos[3]));
+            boxTypeManager.create(box);         
             i++;
         }
     }
