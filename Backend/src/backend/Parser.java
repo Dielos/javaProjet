@@ -94,8 +94,6 @@ public class Parser {
      * 
      */
 
-    //TODO : check quantity always equal
-    //TODO : test quantity = 0 => do not create orderline
     public void getEntityInFile() {
         String[] lines = instanceFile.split("\n");
         String[] generalInfos = lines[0].split(" ");
@@ -146,16 +144,12 @@ public class Parser {
                     Integer.parseInt(orderInfos[1]),
                     Integer.parseInt(orderInfos[2]),
                     Float.parseFloat(orderInfos[3]));
-            System.out.println("");
             for(int k=4; k<orderInfos.length;k++){
-                System.out.println("Compteur: "+cpt);
-                System.out.println(products);
                 if(Integer.parseInt(orderInfos[k]) != 0)
                     order.addOrderLine(new OrderLine(Integer.parseInt(orderInfos[k]),products.get(cpt)));
                 cpt++;
             }
             orderManager.create(order);
-            System.out.println(order);
             for(OrderLine o: order.getOrderLines()){
                 System.out.println(o);
             }
@@ -165,7 +159,6 @@ public class Parser {
         }
         i++;
         while(lines.length!=i && lines[i].length() != 0){
-            System.out.println(lines[i]);
             lines[i]=lines[i].replaceAll(regex, "\t");
             String[] boxInfos = lines[i].split("\t");
             BoxType box = new BoxType(boxInfos[0],Integer.parseInt(boxInfos[1]),Integer.parseInt(boxInfos[2]),Float.parseFloat(boxInfos[3]));

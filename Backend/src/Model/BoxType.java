@@ -72,6 +72,12 @@ public class BoxType {
         return true;
     }
 
+    public String getBoxName() {
+        return boxName;
+    }
+    
+    
+
     public int getId() {
         return id;
     }
