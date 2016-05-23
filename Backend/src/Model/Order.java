@@ -45,6 +45,14 @@ public class Order {
     
     // method
     
+    public int getTotalProductsSize() {
+        int sum=0;
+        for (OrderLine o : orderLines)
+            sum += o.getTotalProductSize();
+        
+        return sum;
+    }
+    
     private void init() {
         orderLines = new ArrayList<OrderLine>();
     }

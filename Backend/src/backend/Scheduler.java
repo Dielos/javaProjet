@@ -11,8 +11,10 @@ import DAO.JpaOrderDao;
 import DAO.JpaProductionLineDao;
 import DAO.OrderDao;
 import DAO.ProductionLineDao;
+import Model.Instance;
 import Model.Order;
 import Model.OrderLine;
+import Model.Product;
 import Model.ProductionLine;
 import java.util.Collection;
 import java.util.List;
@@ -23,19 +25,33 @@ import java.util.List;
  */
 public class Scheduler {
     public static boolean run() {
-        ProductionLineDao productionLineManager = DaoFactoryJpa.getInstance(JpaProductionLineDao.class);
-        OrderDao orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
+        Parser.main(null);
+        Product product;
+        ProductionLine pl;
         
+        Instance instance = new Instance();
         
-        Collection<ProductionLine> plines = productionLineManager.findAll();
-        if (plines.isEmpty()) return false;
+        instance.load();
         
-        for (Order o : orderManager.findAllChrono())
-        {
+        for (Order o : instance.orders) {
             System.out.println(o);
-            for (OrderLine ol : o.getOrderLines())
-                System.out.println(ol);
+            
+            for (OrderLine ol : o.getOrderLines()) {
+                System.out.println("    "+ol);
+                pl = instance.getFirstLineAvailable();
+                int x = 0;
+                while (x!=ol.getQuantity()) {
+                    product = new Product();
+                    product.setOrderLine(ol);
+                    product.setProductionLine(pl);
+                    //product.setBox(box);
+                    instance.Products.add(product);
+                    System.out.println("        "+product);
+                    x++;
+                }
+            }
         }
+        
         return true;
     }
     

@@ -48,6 +48,10 @@ public class OrderLine {
     
     // method
     
+    public int getTotalProductSize() {
+        return typeProduct.getHeight()*typeProduct.getWidth()*quantity;
+    }
+    
     private void init() {
         order = null;
         products = new ArrayList<Product>();
@@ -145,12 +149,8 @@ public class OrderLine {
         return true;
     }
 
-    
-
     @Override
     public String toString() {
-        return "OrderLine{" + "id=" + id + ", quantity=" + quantity + ", order=" + order + '}';
+        return "OrderLine{" + "id=" + id + ", quantity=" + quantity + ", typeProduct=" + typeProduct + '}';
     }
-    
-    
 }

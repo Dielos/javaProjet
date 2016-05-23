@@ -18,7 +18,7 @@ public class JpaOrderDao extends JpaDao<Order> implements OrderDao{
 
     @Override
     public List<Order> findAllChrono() {
-        final String strQuery = "SELECT obj FROM " + kek.getSimpleName() + " obj ORDER BY dateLimit";
+        final String strQuery = "SELECT obj FROM " + kek.getSimpleName() + " obj ORDER BY obj.dateLimit";
         Query query = em.createQuery(strQuery);
         return query.getResultList(); 
     }

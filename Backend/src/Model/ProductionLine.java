@@ -32,7 +32,7 @@ public class ProductionLine {
     // links
     @OneToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NPRODUCTIONLINE")
-    private Product product;
+    private ProductType currentProduction;
     
     // other
     private int dateAvailable;
@@ -40,7 +40,7 @@ public class ProductionLine {
     // method
     
     private void init() {
-        product = null;
+        currentProduction = null;
     }
 
     public ProductionLine() {
@@ -53,6 +53,17 @@ public class ProductionLine {
         this.num = num;
         this.dateAvailable = dateAvailable;
     }
+    
+    public int produce(ProductType pt) {
+        if (currentProduction != pt) {
+            currentProduction = pt;
+            dateAvailable += pt.getSetupTime();
+        }
+        int tmp = dateAvailable;
+        dateAvailable += pt.getProdTime();
+        
+        return tmp;
+    }
 
     public int getId() {
         return id;
@@ -62,8 +73,8 @@ public class ProductionLine {
         return num;
     }
 
-    public Product getProduct() {
-        return product;
+    public ProductType getProduct() {
+        return currentProduction;
     }
 
     public int getDateAvailable() {
@@ -74,8 +85,8 @@ public class ProductionLine {
         this.num = num;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProduct(ProductType currentProduction) {
+        this.currentProduction = currentProduction;
     }
 
     public void setDateAvailable(int dateAvailable) {
@@ -85,10 +96,10 @@ public class ProductionLine {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + this.id;
-        hash = 67 * hash + this.num;
-        hash = 67 * hash + Objects.hashCode(this.product);
-        hash = 67 * hash + this.dateAvailable;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + this.num;
+        hash = 97 * hash + Objects.hashCode(this.currentProduction);
+        hash = 97 * hash + this.dateAvailable;
         return hash;
     }
 
@@ -113,7 +124,7 @@ public class ProductionLine {
         if (this.dateAvailable != other.dateAvailable) {
             return false;
         }
-        if (!Objects.equals(this.product, other.product)) {
+        if (!Objects.equals(this.currentProduction, other.currentProduction)) {
             return false;
         }
         return true;
@@ -123,7 +134,7 @@ public class ProductionLine {
 
     @Override
     public String toString() {
-        return "ProductionLine{" + "id=" + id + ", num=" + num + ", product=" + product + ", dateAvailable=" + dateAvailable + '}';
+        return "ProductionLine{" + "id=" + id + ", num=" + num + ", product=" + currentProduction + ", dateAvailable=" + dateAvailable + '}';
     }
     
     
