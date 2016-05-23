@@ -50,6 +50,8 @@ public class Scheduler {
                     x++;
                 }
             }
+            o.setSendingDate(o.getSendingDate()+o.getStockMin());
+            System.out.println(o);
         }
         
         return true;

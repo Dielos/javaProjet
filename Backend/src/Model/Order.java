@@ -191,7 +191,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" + "id=" + id + ", stockMin=" + stockMin + ", dateLimit=" + dateLimit + ", penality=" + penality + ", startProductionDate=" + startProductionDate + '}';
+        return "Order{" + "id=" + id + ", stockMin=" + stockMin + ", dateLimit=" + dateLimit + ", penality=" + penality + ", startProductionDate=" + startProductionDate + ", sendingDate="+ sendingDate + '}';
     }
     
     

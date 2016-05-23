@@ -117,6 +117,8 @@ public class Product {
     public void setProductionLine(ProductionLine productionLine) {
         this.productionLine = productionLine;
         this.DateStart = productionLine.produce(typeProduct);
+        if (orderLine.getOrder().getStartProductionDate() == 0)
+            orderLine.getOrder().setStartProductionDate(DateStart);
         if (orderLine.getOrder().getSendingDate() < DateStart)
             orderLine.getOrder().setSendingDate(DateStart);
     }
