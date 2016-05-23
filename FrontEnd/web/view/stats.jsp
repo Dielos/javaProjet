@@ -36,5 +36,25 @@
             </ul>
           </div><!-- /.navbar-collapse -->
       </nav>
+        <table style="margin-left:  5%;width:90%">
+            <tr>
+                <td style="width:25%;text-align:center;background-color: #ffcc00;border:3px solid white">Type de box</td>                
+                <td style="width:17%;text-align:center;background-color: #ffcc00;border:3px solid white" >Prix</td>                
+                <td style="width:17%;text-align:center;background-color: #ffcc00;border:3px solid white" >Achat</td>                
+                <td style="width:17%;text-align:center;background-color: #ffcc00;border:3px solid white" >Utilisés</td>                
+                <td style="width:22%;text-align:center;background-color: #ffcc00;border:3px solid white" >Coût</td>
+            </tr>
+            <tr>
+                <td style="width:25%;text-align:center;border:3px solid white">AAA</td>                
+                <td style="width:17%;text-align:center;border:3px solid white" >222</td>                
+                <td style="width:17%;text-align:center;border:3px solid white" >3</td>                
+                <td style="width:17%;text-align:center;border:3px solid white" >2</td>                
+                <td style="width:22%;text-align:center;border:3px solid white" >666</td>
+            </tr>
+        </table> 
+        
+        
+        
+        
     </body>
 </html>
