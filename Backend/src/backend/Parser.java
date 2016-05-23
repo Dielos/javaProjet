@@ -11,14 +11,17 @@ import DAO.DaoFactoryJpa;
 import DAO.JpaBoxTypeDao;
 import DAO.JpaOrderDao;
 import DAO.JpaProductTypeDao;
+import DAO.JpaProductionLineDao;
 import DAO.OrderDao;
 import DAO.ProductTypeDao;
+import DAO.ProductionLineDao;
 import Model.BoxType;
 import Model.Order;
 import Model.OrderLine;
 import Model.ProductType;
 
 import Model.ProductType;
+import Model.ProductionLine;
 
 import java.util.ArrayList;
 
@@ -90,22 +93,31 @@ public class Parser {
     /**
      * 
      */
-    //TODO : create ProductLine
-    
+
+    //TODO : check quantity always equal
+    //TODO : test quantity = 0 => do not create orderline
     public void getEntityInFile() {
         String[] lines = instanceFile.split("\n");
         String[] generalInfos = lines[0].split(" ");
         String regex = " +|\t";
         
         int i = 2;
-        int nbProduct =0;
+        int cpt=0;
 
         ProductTypeDao ProductTypeManager = DaoFactoryJpa.getInstance(JpaProductTypeDao.class);
         OrderDao orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
         BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
+        ProductionLineDao productionLineManager = DaoFactoryJpa.getInstance(JpaProductionLineDao.class);
         
         ArrayList<ProductType> products = new ArrayList();
         System.out.println("coucou");
+        
+        for(int j=1; j<Integer.parseInt(generalInfos[3]);j++){
+            ProductionLine pl = new ProductionLine(j, 0);
+            productionLineManager.create(pl);
+        }
+        
+        
         
         while(lines[i].length() != 0){
             
@@ -126,21 +138,29 @@ public class Parser {
         }
         //we are in the next paragraph : all the orders
         i++;
-        //System.out.println("taille products"+products.size());
         while(lines[i].length() != 0){
+            cpt=0;
             lines[i]=lines[i].replaceAll(regex, "\t");
             String[] orderInfos = lines[i].split("\t");
             Order order = new Order(orderInfos[0],
                     Integer.parseInt(orderInfos[1]),
                     Integer.parseInt(orderInfos[2]),
                     Float.parseFloat(orderInfos[3]));
-            for(ProductType p: products){
-                order.addOrderLine(new OrderLine(Integer.parseInt(orderInfos[4]),p));
+            System.out.println("");
+            for(int k=4; k<orderInfos.length;k++){
+                System.out.println("Compteur: "+cpt);
+                System.out.println(products);
+                if(Integer.parseInt(orderInfos[k]) != 0)
+                    order.addOrderLine(new OrderLine(Integer.parseInt(orderInfos[k]),products.get(cpt)));
+                cpt++;
             }
-          
             orderManager.create(order);
+            System.out.println(order);
+            for(OrderLine o: order.getOrderLines()){
+                System.out.println(o);
+            }
+            
             //System.out.println(order);
-            nbProduct++;
             i++;
         }
         i++;

@@ -20,7 +20,7 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="controleur.jsp?action=homepage">HomePage<span class="sr-only">(current)</span></a></li>
+              <li><a href="controleur.jsp?action=homepage">HomePage<span class="sr-only">(current)</span></a></li>
               <li><a href="controleur.jsp?action=process">Process</a></li>
               <li><a href="controleur.jsp?action=stats">Stats</a></li>
               <li><a href="controleur.jsp?action=timeline">Timeline</a></li>
