@@ -13,7 +13,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import static org.apache.derby.impl.sql.compile.SQLParserConstants.T;
 
 /**
  *
@@ -63,7 +62,7 @@ public abstract class JpaDao<T> implements Dao<T>{
     }
     
     public boolean delete (T obj) {
-        em.remove(T);
+        em.remove(obj);
         return true;
     }
     
