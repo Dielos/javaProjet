@@ -94,8 +94,6 @@ public class Parser {
      * 
      */
 
-    //TODO : check quantity always equal
-    //TODO : test quantity = 0 => do not create orderline
     public void getEntityInFile() {
         String[] lines = instanceFile.split("\n");
         String[] generalInfos = lines[0].split(" ");

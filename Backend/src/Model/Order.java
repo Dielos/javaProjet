@@ -42,6 +42,7 @@ public class Order {
 
     // other
     private int startProductionDate;
+    private int sendingDate;
     
     // method
     
@@ -82,6 +83,12 @@ public class Order {
     public String getOrderName() {
         return orderName;
     }
+
+    public int getSendingDate() {
+        return sendingDate;
+    }
+    
+    
 
     public int getStockMin() {
         return stockMin;
