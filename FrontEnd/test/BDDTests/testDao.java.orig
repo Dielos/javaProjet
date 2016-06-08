@@ -1,0 +1,85 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package BDDTests;
+
+import DAO.BoxTypeDao;
+import DAO.CommandDao;
+<<<<<<< HEAD
+import DAO.DaoFactoryJpa;
+import DAO.JpaBoxTypeDao;
+import DAO.JpaCommandDao;
+=======
+import DAO.CommandLineDao;
+import DAO.DaoFactoryJpa;
+import DAO.JpaBoxTypeDao;
+import DAO.JpaCommandDao;
+import DAO.JpaCommandLineDao;
+>>>>>>> 01eea24d7b9df201fcbc1c8954a69c7d1a934cca
+import DAO.JpaTypeItemDao;
+import DAO.TypeItemDao;
+import Model.BoxType;
+import Model.Command;
+<<<<<<< HEAD
+=======
+import Model.CommandLine;
+>>>>>>> 01eea24d7b9df201fcbc1c8954a69c7d1a934cca
+import Model.TypeItem;
+
+/**
+ *
+ * @author Robin
+ */
+public class testDao {
+    public static void main(String[] args) {
+        BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
+        CommandDao commandManager = DaoFactoryJpa.getInstance(JpaCommandDao.class);
+        TypeItemDao typeItemManager = DaoFactoryJpa.getInstance(JpaTypeItemDao.class);
+<<<<<<< HEAD
+=======
+        CommandLineDao commandLineManager = DaoFactoryJpa.getInstance(JpaCommandLineDao.class);
+>>>>>>> 01eea24d7b9df201fcbc1c8954a69c7d1a934cca
+        
+        BoxType bt1 = new BoxType("b001", 42, 34, 1337);
+        
+        Command c1 = new Command("c001", 42, 33, 98);
+        
+        TypeItem ti1 = new TypeItem("i001", 42, 42, 42, 42, 42);
+<<<<<<< HEAD
+=======
+        
+        /*CommandLine cl1*/c1.addCommandLine(new CommandLine(10, ti1));
+>>>>>>> 01eea24d7b9df201fcbc1c8954a69c7d1a934cca
+                
+        boxTypeManager.create(bt1);
+        
+        commandManager.create(c1);
+        
+        typeItemManager.create(ti1);
+        
+        for (BoxType i : boxTypeManager.findAll()) {
+            System.out.println(i);
+        }
+        
+<<<<<<< HEAD
+        for (Command i : commandManager.findAll())
+            System.out.println(i);
+        
+        for (TypeItem i : typeItemManager.findAll())
+            System.out.println(i);
+=======
+        for (Command i : commandManager.findAll()) {
+            System.out.println(i);
+            for (CommandLine j : i.getCommandLines())
+                System.out.println(j);
+        }
+        
+        for (TypeItem i : typeItemManager.findAll())
+            System.out.println(i);
+        
+        
+>>>>>>> 01eea24d7b9df201fcbc1c8954a69c7d1a934cca
+    }
+}

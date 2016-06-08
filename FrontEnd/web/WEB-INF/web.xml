@@ -5,13 +5,13 @@
         <param-value>Development</param-value>
     </context-param>
     <servlet>
-        <servlet-name>Faces Servlet</servlet-name>
-        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>Servlet.Controller</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/controller/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -19,6 +19,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/controleur.jsp?action=timeline</welcome-file>
+        <welcome-file>controller/action=timeline</welcome-file>
     </welcome-file-list>
 </web-app>
