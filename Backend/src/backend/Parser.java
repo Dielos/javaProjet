@@ -8,7 +8,9 @@ package backend;
 
 import DAO.BoxTypeDao;
 import DAO.DaoFactoryJpa;
+import DAO.InstanceDao;
 import DAO.JpaBoxTypeDao;
+import DAO.JpaInstanceDao;
 import DAO.JpaOrderDao;
 import DAO.JpaProductTypeDao;
 import DAO.JpaProductionLineDao;
@@ -16,6 +18,7 @@ import DAO.OrderDao;
 import DAO.ProductTypeDao;
 import DAO.ProductionLineDao;
 import Model.BoxType;
+import Model.Instance;
 import Model.Order;
 import Model.OrderLine;
 import Model.ProductType;
@@ -30,7 +33,7 @@ import java.util.ArrayList;
  * @author Mélody
  */
 public class Parser {
-    String instanceFile = "10 40 5 3\n" +
+    static String instanceFile = "10 40 5 3\n" +
     "\n" +
     "P001   10   20  100   50    2\n" +
     "P002    5    6   65   50    3\n" +
@@ -94,25 +97,28 @@ public class Parser {
      * 
      */
 
-    public void getEntityInFile() {
-        String[] lines = instanceFile.split("\n");
+    public void getEntityInFile(String input, String instanceName) {
+        String[] lines = input.split("\n");
         String[] generalInfos = lines[0].split(" ");
         String regex = " +|\t";
         
         int i = 2;
         int cpt=0;
 
-        ProductTypeDao ProductTypeManager = DaoFactoryJpa.getInstance(JpaProductTypeDao.class);
+        /*ProductTypeDao ProductTypeManager = DaoFactoryJpa.getInstance(JpaProductTypeDao.class);
         OrderDao orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
         BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
-        ProductionLineDao productionLineManager = DaoFactoryJpa.getInstance(JpaProductionLineDao.class);
+        ProductionLineDao productionLineManager = DaoFactoryJpa.getInstance(JpaProductionLineDao.class);*/
+        InstanceDao instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
+        Instance instance = new Instance(instanceName);
         
         ArrayList<ProductType> products = new ArrayList();
         System.out.println("coucou");
         
         for(int j=1; j<Integer.parseInt(generalInfos[3]);j++){
             ProductionLine pl = new ProductionLine(j, 0);
-            productionLineManager.create(pl);
+            //productionLineManager.create(pl);
+            instance.productionLines.add(pl);
         }
         
         
@@ -130,7 +136,8 @@ public class Parser {
                     Integer.parseInt(productInfos[4]),
                     Integer.parseInt(productInfos[5]));
             products.add(product);
-            ProductTypeManager.create(product);
+            //ProductTypeManager.create(product);
+            instance.products.add(product);
             //System.out.println(product);
             i++;
         }
@@ -149,9 +156,10 @@ public class Parser {
                     order.addOrderLine(new OrderLine(Integer.parseInt(orderInfos[k]),products.get(cpt)));
                 cpt++;
             }
-            orderManager.create(order);
+            //orderManager.create(order);
+            instance.orders.add(order);
             for(OrderLine o: order.getOrderLines()){
-                System.out.println(o);
+                //System.out.println(o);
             }
             
             //System.out.println(order);
@@ -162,15 +170,17 @@ public class Parser {
             lines[i]=lines[i].replaceAll(regex, "\t");
             String[] boxInfos = lines[i].split("\t");
             BoxType box = new BoxType(boxInfos[0],Integer.parseInt(boxInfos[1]),Integer.parseInt(boxInfos[2]),Float.parseFloat(boxInfos[3]));
-            boxTypeManager.create(box);         
+            //boxTypeManager.create(box);   
+            instance.boxTypes.add(box);
             i++;
         }
+        
+        
+        instanceManager.create(instance);
     }
     
     public static void main(String[] args) {
         Parser test = new Parser();
-        test.getEntityInFile();
+        test.getEntityInFile(instanceFile, "FileName1");
     }
-    
-    
 }

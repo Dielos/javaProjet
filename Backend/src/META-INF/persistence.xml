@@ -9,6 +9,7 @@
     <class>Model.Product</class>
     <class>Model.ProductType</class>
     <class>Model.ProductionLine</class>
+    <class>Model.Instance</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/db_project"/>
       <property name="javax.persistence.jdbc.password" value="test"/>

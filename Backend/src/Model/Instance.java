@@ -16,19 +16,49 @@ import DAO.ProductTypeDao;
 import DAO.ProductionLineDao;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author Robin
  */
+
+@Entity
 public class Instance {
-    public Collection<BoxType> BoxTypes;
-    public Collection<Order> orders;
-    public Collection<ProductType> products;
-    public Collection<ProductionLine> productionLines;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
     
-    public Collection<Product> Products;
+    public String instanceName;
+    
+    @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+    @JoinColumn(name="NBOXTYPES")
+    public List<BoxType> boxTypes;
+    
+    @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+    @JoinColumn(name="NORDERS")
+    public List<Order> orders;
+    
+    @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+    @JoinColumn(name="NPRODUCTS")
+    public List<ProductType> products;
+    
+    @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+    @JoinColumn(name="NPRODUCTIONLINES")
+    public List<ProductionLine> productionLines;
+    
+    @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+    @JoinColumn(name="NPRODUCTS")
+    public List<Product> Products;
     
     public ProductionLine getFirstLineAvailable() {
         ProductionLine plret=null;
@@ -42,15 +72,29 @@ public class Instance {
     
     
     private void init() {
-        /*BoxTypes = new ArrayList<>();
+        boxTypes = new ArrayList<>();
         orders = new ArrayList<>();
         products = new ArrayList<>();
-        productionLines = new ArrayList<>();*/
+        productionLines = new ArrayList<>();
         Products = new ArrayList<>();
     }
     
     public Instance () {
         init();
+    }
+    
+    public Instance (String instanceName) {
+        init();
+        this.instanceName = instanceName;
+    }
+    
+    public void sortOrders() {
+        Collections.sort(orders, new Comparator<Order>() {
+                                                        @Override
+                                                        public int compare(Order o1, Order o2){
+                                                            return Integer.compare(o1.getDateLimit(), o2.getDateLimit());
+                                                        }
+        });
     }
     
     public void load() {
@@ -59,10 +103,10 @@ public class Instance {
         BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
         ProductionLineDao productionLineManager = DaoFactoryJpa.getInstance(JpaProductionLineDao.class);
         
-        BoxTypes = boxTypeManager.findAll();
-        orders = orderManager.findAllChrono();
-        products = ProductTypeManager.findAll();
-        productionLines = productionLineManager.findAll();
+        boxTypes = new ArrayList(boxTypeManager.findAll());
+        //orders = orderManager.findAllChrono();
+        products = new ArrayList(ProductTypeManager.findAll());
+        productionLines = new ArrayList(productionLineManager.findAll());
     }
     
 }
