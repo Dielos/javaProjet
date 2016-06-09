@@ -92,10 +92,12 @@ public class Parser {
 
     /**
      * 
+     * @return 
      */
 
-    public void getEntityInFile() {
-        String[] lines = instanceFile.split("\n");
+    public boolean getEntityInFile(String oui) {
+        
+        String[] lines = oui.split("\n");
         String[] generalInfos = lines[0].split(" ");
         String regex = " +|\t";
         
@@ -165,12 +167,9 @@ public class Parser {
             boxTypeManager.create(box);         
             i++;
         }
+    return true;
     }
     
-    public static void main(String[] args) {
-        Parser test = new Parser();
-        test.getEntityInFile();
-    }
     
     
 }

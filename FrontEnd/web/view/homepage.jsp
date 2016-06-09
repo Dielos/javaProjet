@@ -21,20 +21,30 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <li class="active"><a href="controleur.jsp?action=homepage">HomePage<span class="sr-only">(current)</span></a></li>
-              <li><a href="controler?action=process">Process</a></li>
-              <li><a href="controler?action=stats">Stats</a></li>
-              <li><a href="controler?action=timeline">Timeline</a></li>
+              <li><a href="controller?action=process">Process</a></li>
+              <li><a href="controller?action=stats">Stats</a></li>
+              <li><a href="controller?action=timeline">Timeline</a></li>
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="controler?action=order&number=1">Order 1</a></li>
-                  <li><a href="controler?action=order&number=2">Order 2</a></li>
-                  <li><a href="controler?action=order&number=3">Order 3</a></li>
-                  <li><a href="controler?action=order&number=4">Order 4</a></li>
+                  <li><a href="controller?action=order&number=1">Order 1</a></li>
+                  <li><a href="controller?action=order&number=2">Order 2</a></li>
+                  <li><a href="controller?action=order&number=3">Order 3</a></li>
+                  <li><a href="controller?action=order&number=4">Order 4</a></li>
                 </ul>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
-      </nav>
+        </nav>
+        
+        <c:out value="${text}"/>
+        
+        
+        
+        <form action="controller" method="post" enctype="multipart/form-data">
+            <input type="text" name="description" />
+            <input type="file" name="file" />
+            <input type="submit" />
+        </form>
     </body>
 </html>

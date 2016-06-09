@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class Scheduler {
     public static boolean run() {
-        Parser.main(null);
+        //Parser.main(null);
         Product product;
         ProductionLine pl;
         
