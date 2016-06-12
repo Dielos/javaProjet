@@ -40,7 +40,7 @@
         
         <c:forEach items="${products}" var="product">
             <tr>
-                <td>${products.toString()}</td>
+                <td>${product.toString()}</td>
             </tr>
         </c:forEach>
         

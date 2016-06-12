@@ -37,7 +37,6 @@
           </div><!-- /.navbar-collapse -->
         </nav>
         
-        <c:out value="${text}"/>
         
         <a href="controller?action=download">Download link</a>
         
