@@ -39,6 +39,8 @@
         
         <c:out value="${text}"/>
         
+        <a href="controller?action=download">Download link</a>
+        
         
         
         <form action="controller" method="post" enctype="multipart/form-data">
