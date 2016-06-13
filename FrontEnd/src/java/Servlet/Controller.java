@@ -145,7 +145,7 @@ public class Controller extends HttpServlet {
         String fileText = getStringFromInputStream(fileContent);
         
         Parser test = new Parser();
-        test.getEntityInFile(fileText);
+        test.getEntityInFile(fileText, fileName);
         
         request.setAttribute("text", "Upload done");
         request.getRequestDispatcher("/view/homepage.jsp").forward(request, response);
