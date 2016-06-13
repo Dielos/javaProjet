@@ -22,7 +22,7 @@ import javax.persistence.Table;
  *
  * @author Robin
  */
-@Entity
+@Entity()
 @Table(name="ORDER_")  // persistence doesn't seem to escape the table name in its request, leading to error with reserved word "ORDER"
 public class Order {
     @Id
