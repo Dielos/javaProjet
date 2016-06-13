@@ -8,7 +8,10 @@ package Servlet;
 import DAO.BoxTypeDao;
 import DAO.DaoFactoryJpa;
 import DAO.JpaBoxTypeDao;
+import DAO.JpaOrderDao;
+import DAO.OrderDao;
 import Model.BoxType;
+import Model.Order;
 import backend.Parser;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -97,6 +100,7 @@ public class Controller extends HttpServlet {
 
 
     private BoxTypeDao boxTypeManager;
+    private OrderDao orderManager;
     private String action = "";
     static final long serialVersionUID = 1L;
     private static final int BUFSIZE = 4096;
@@ -105,6 +109,7 @@ public class Controller extends HttpServlet {
     @Override
     public void init() {
         boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
+        orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
         filePath = getServletContext().getRealPath("") + File.separator + "data.txt";
     }
 
@@ -130,6 +135,10 @@ public class Controller extends HttpServlet {
                 break;
                 
                 case "stats":
+                    Collection<BoxType> boxTypes = boxTypeManager.findAll();
+                    request.setAttribute("boxTypes", boxTypes);
+                    Collection<Order> orders = orderManager.findAll();
+                    request.setAttribute("boxTypes", boxTypes);
                     request.getRequestDispatcher("/view/stats.jsp").forward(request, response);
                 break;
                 
