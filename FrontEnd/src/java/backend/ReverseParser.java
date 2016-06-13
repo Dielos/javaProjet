@@ -10,10 +10,8 @@ import DAO.DaoFactoryJpa;
 import DAO.JpaBoxTypeDao;
 import DAO.JpaOrderDao;
 import DAO.JpaProductDao;
-import DAO.JpaProductTypeDao;
 import DAO.OrderDao;
 import DAO.ProductDao;
-import DAO.ProductTypeDao;
 import Model.BoxType;
 import Model.Order;
 import Model.Product;
@@ -21,9 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.util.Collection;
-import java.util.List;
 
 /**
  *

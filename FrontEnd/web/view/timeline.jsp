@@ -37,6 +37,7 @@
           </div><!-- /.navbar-collapse -->
         </nav>
        
+        ${text}
         
         <c:forEach items="${products}" var="product">
             <tr>
