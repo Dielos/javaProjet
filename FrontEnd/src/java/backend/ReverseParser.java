@@ -10,8 +10,10 @@ import DAO.DaoFactoryJpa;
 import DAO.JpaBoxTypeDao;
 import DAO.JpaOrderDao;
 import DAO.JpaProductDao;
+import DAO.JpaProductTypeDao;
 import DAO.OrderDao;
 import DAO.ProductDao;
+import DAO.ProductTypeDao;
 import Model.BoxType;
 import Model.Order;
 import Model.Product;
@@ -19,7 +21,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -37,7 +41,7 @@ public class ReverseParser {
         } 
     }
     
-    public String getTypeBoxInfos(){
+    public void getTypeBoxInfos(){
         //getTypeBoxInfos
         BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
         Collection<BoxType> tabBT = boxTypeManager.findAll();
@@ -64,7 +68,6 @@ public class ReverseParser {
         sol=sol+"\n";
         
         System.out.println(sol);
-        return sol;
     }
 
     
@@ -80,6 +83,5 @@ public class ReverseParser {
         test.getTypeBoxInfos();
        // test.createFile();
        // test.writeInFile();
-       
     }
 }
