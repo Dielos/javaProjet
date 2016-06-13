@@ -7,10 +7,13 @@ package Servlet;
 
 import DAO.BoxTypeDao;
 import DAO.DaoFactoryJpa;
+import DAO.InstanceDao;
 import DAO.JpaBoxTypeDao;
+import DAO.JpaInstanceDao;
 import DAO.JpaOrderDao;
 import DAO.OrderDao;
 import Model.BoxType;
+import Model.Instance;
 import Model.Order;
 import backend.Parser;
 import backend.ReverseParser;
@@ -41,7 +44,7 @@ public class Controller extends HttpServlet {
     
     private String solutionString;
     private BoxTypeDao boxTypeManager;
-    private OrderDao orderManager;
+    private InstanceDao instanceManager;
     private String action = "";
     static final long serialVersionUID = 1L;
     private static final int BUFSIZE = 4096;
@@ -50,7 +53,7 @@ public class Controller extends HttpServlet {
     @Override
     public void init() {
         boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
-        orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
+        instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
         filePath = getServletContext().getRealPath("") + File.separator + "data.txt";
     }
 
@@ -70,16 +73,16 @@ public class Controller extends HttpServlet {
                 case "timeline":
                     
                     Collection<BoxType> products = boxTypeManager.findAll();
-                    
                     request.setAttribute("products", products);
                     request.getRequestDispatcher("/view/timeline.jsp").forward(request, response);
                 break;
                 
                 case "stats":
-                    Collection<BoxType> boxTypes = boxTypeManager.findAll();
+                    Instance instance = instanceManager.getInstanceByName("FileName1");
+                    Collection<BoxType> boxTypes = instance.getBoxTypes();
+                    Collection<Order> orders = instance.getOrders();
                     request.setAttribute("boxTypes", boxTypes);
-                    Collection<Order> orders = orderManager.findAll();
-                    request.setAttribute("boxTypes", boxTypes);
+                    request.setAttribute("orders", boxTypes);
                     request.getRequestDispatcher("/view/stats.jsp").forward(request, response);
                 break;
                 
@@ -94,6 +97,14 @@ public class Controller extends HttpServlet {
                 case "hompage":
                     request.getRequestDispatcher("/view/hompage.jsp").forward(request, response);
                 break;
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 case "download":
                     

@@ -59,6 +59,7 @@
                         <th class="warning col-2">Utilisés</th>
                         <th class="warning col-2">Coût</th>
                     </tr>
+                    
                     <c:forEach var="boxType" items="${boxTypes}">
                         <tr>
                             <td>
@@ -68,13 +69,13 @@
                                 <c:out value="${boxType.cost}"/>
                             </td>
                             <td>
-                                <c:out value="${boxType.boxName}"/>
+                                <c:out value="${boxType.getBoxs().size()}"/>
                             </td>
                             <td>
-                                <c:out value="${boxType.boxName}"/>
+                                <c:out value="${boxType.getBoxs().size()}"/>
                             </td>
                             <td>
-                                <c:out value=""/>
+                                <c:out value="${boxType.getBoxs().size()*boxType.cost}€"/>
                             </td>
                         </tr>
                     </c:forEach>
@@ -90,13 +91,28 @@
                         <th class="warning col-2">Ecart</th>
                         <th class="warning col-2">Coût</th>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    <c:forEach var="order" items="${orders}">
+                        <tr>
+                            <td>
+                                <c:out value="${order.orderName}"/>
+                            </td>
+                            <td>
+                                <c:out value="${order.sendingDate}"/>
+                            </td>
+                            <td>
+                                <c:out value=""/>
+                            </td>
+                            <td>
+                                <c:out value="${order.penalty}"/>
+                            </td>
+                            <td>
+                                <c:out value="0-${order.sendingDate}"/>
+                            </td>
+                            <td>
+                                <c:out value="${order.getBoxs().size()*order.cost}€"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </div>
         </div>

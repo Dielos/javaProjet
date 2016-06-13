@@ -108,5 +108,52 @@ public class Instance {
         products = new ArrayList(ProductTypeManager.findAll());
         productionLines = new ArrayList(productionLineManager.findAll());
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getInstanceName() {
+        return instanceName;
+    }
+
+    public List<BoxType> getBoxTypes() {
+        return boxTypes;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public List<ProductType> getProducts() {
+        return products;
+    }
+
+    public List<ProductionLine> getProductionLines() {
+        return productionLines;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setInstanceName(String instanceName) {
+        this.instanceName = instanceName;
+    }
+
+    public void setBoxTypes(List<BoxType> boxTypes) {
+        this.boxTypes = boxTypes;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void setProductionLines(List<ProductionLine> productionLines) {
+        this.productionLines = productionLines;
+    }
+
+    
+    
     
 }
