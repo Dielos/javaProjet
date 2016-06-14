@@ -5,9 +5,9 @@
  */
 $( document ).ready(function() {
     //load navbar
-    $(function(){
-        $("#navbar").load("navbar.jsp"); 
-    });
+    /*$(function(){
+        $("#navbar").load("./view/navbar.jsp"); 
+    });*/
 });
 
 

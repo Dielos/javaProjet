@@ -21,16 +21,16 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li><a href="controller.jsp?action=homepage">HomePage<span class="sr-only">(current)</span></a></li>
-              <li><a href="controller.jsp?action=process">Process</a></li>
-              <li class="active"><a href="controller.jsp?action=stats">Stats</a></li>
-              <li><a href="controller.jsp?action=timeline">Timeline</a></li>
-              <li class="dropdown">
+              <li><a href="controller?action=homepage">HomePage<span class="sr-only">(current)</span></a></li>
+              <li><a href="controller?action=process">Process</a></li>
+              <li><a href="controller?action=stats">Stats</a></li>
+              <li><a href="controller?action=timeline">Timeline</a></li>
+              <li class="dropdown active">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <c:forEach var="order" items="${navOrders}">
-                        <li><a href="controller.jsp?action=${order.getOrderName}">
-                                <c:out value="${order.getOrderName}"/>
+                        <li><a href="controller.jsp?action=order&name=${order.getOrderName()}">
+                                <c:out value="${order.getOrderName()}"/>
                             </a>
                         </li>
                     </c:forEach>
@@ -42,7 +42,7 @@
       </nav>
     <div class="container">
         <div class ="row"
-            <h1> Commande XXX prévue à XXX envoyée à XXX</h1>
+            <h1> Commande <c:out value="${order.getOrderName()}"/> prévue à <c:out value="${order.getDateLimit()}"/> envoyée à <c:out value="${order.getSendingDate()}"/></h1>
             <h2>Production</h2>
         </div>
 

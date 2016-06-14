@@ -47,9 +47,11 @@ public class Controller extends HttpServlet {
     private InstanceDao instanceManager;
     private OrderDao orderManager;
     private String action = "";
+    private String name = "";
     static final long serialVersionUID = 1L;
     private static final int BUFSIZE = 4096;
     private String filePath;
+    private String instanceName="FileName1";
 
     @Override
     public void init() {
@@ -69,55 +71,63 @@ public class Controller extends HttpServlet {
         // ----- //
         
 	action = request.getParameter("action");
-       
+        if(request.getParameter("name")!=null){
+            name = request.getParameter("name");
+        }
+        Instance instance = instanceManager.getInstanceByName(instanceName);
+       //Collection<Order> ordersName = instance.getOrders();
         if (action != null)
             {
             switch(action) {
 
                 case "timeline":
                     //get all orders to fill navbar
-                   // Collection<Order> navOrders = orderManager.findAll();
+                    Collection<Order> navOrders = orderManager.findAll();
                     Collection<BoxType> products = boxTypeManager.findAll();
                     request.setAttribute("products", products);
-                   // request.setAttribute("navOrders", navOrders);
+                    request.setAttribute("navOrders", navOrders);
                     request.getRequestDispatcher("/view/timeline.jsp").forward(request, response);
                 break;
                 
                 case "stats":
                     //get all orders to fill navbar
-                  //  navOrders = orderManager.findAll();
-                    Instance instance = instanceManager.getInstanceByName("FileName1");
+                    navOrders = orderManager.findAll();
                     Collection<BoxType> boxTypes = instance.getBoxTypes();
                     Collection<Order> orders = instance.getOrders();
                     request.setAttribute("boxTypes", boxTypes);
+                    request.setAttribute("instanceName", instanceName);
                     request.setAttribute("orders", orders);
-                   /// request.setAttribute("navOrders", navOrders);
+                    request.setAttribute("navOrders", navOrders);
                     request.getRequestDispatcher("/view/stats.jsp").forward(request, response);
                 break;
                 
                 case "process":
                     //get all orders to fill navbar
-                   // navOrders = orderManager.findAll();
-                   // request.setAttribute("navOrders", navOrders);
+                    navOrders = orderManager.findAll();
+                    request.setAttribute("navOrders", navOrders);
                     request.getRequestDispatcher("/view/process.jsp").forward(request, response);
                 break;
                 
-                case "order":
-                    //get all orders to fill navbar
-                    //navOrders = orderManager.findAll();
-                    //request.setAttribute("navOrders", navOrders);
-                    Order order = orderManager.getOrderByName("C010");
-                    //instance = instanceManager.getInstanceByName("FileName1");
-                    //orders = instance.getOrders();
-                    request.setAttribute("order", order);
-                    request.getRequestDispatcher("/view/order.jsp").forward(request, response);
-                break;
                 
-                case "hompage":
+               // for(Order orderName : ordersName){
+                    case "order":
+                        //get all orders to fill navbar
+                        navOrders = orderManager.findAll();
+                        request.setAttribute("navOrders", navOrders);
+                        Order order = orderManager.getOrderByName(name);
+                        //instance = instanceManager.getInstanceByName("FileName1");
+                        //orders = instance.getOrders();
+                        
+                        request.setAttribute("order", order);
+                        request.getRequestDispatcher("/view/order.jsp").forward(request, response);
+                    break;
+              //  }
+                
+                case "homepage":
                     //get all orders to fill navbar
-                    //navOrders = orderManager.findAll();
-                    //request.setAttribute("navOrders", navOrders);
-                    request.getRequestDispatcher("/view/hompage.jsp").forward(request, response);
+                    navOrders = orderManager.findAll();
+                    request.setAttribute("navOrders", navOrders);
+                    request.getRequestDispatcher("/view/homepage.jsp").forward(request, response);
                 break;
 
                 case "download":
