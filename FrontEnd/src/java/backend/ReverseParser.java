@@ -41,7 +41,7 @@ public class ReverseParser {
         } 
     }
     
-    public void getTypeBoxInfos(){
+    public String getTypeBoxInfos(){
         //getTypeBoxInfos
         BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
         Collection<BoxType> tabBT = boxTypeManager.findAll();
@@ -67,7 +67,8 @@ public class ReverseParser {
         }
         sol=sol+"\n";
         
-        System.out.println(sol);
+        return sol;
+        
     }
 
     

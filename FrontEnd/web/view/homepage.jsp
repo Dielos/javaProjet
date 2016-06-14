@@ -44,7 +44,7 @@
         
         <form action="controller" method="post" enctype="multipart/form-data">
             <input type="file" name="file" />
-            <input type="submit" />
+            <input class="btn btn-lg btn-primary" type="submit" />
         </form>
     </body>
 </html>
