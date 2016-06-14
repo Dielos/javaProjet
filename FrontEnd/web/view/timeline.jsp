@@ -45,8 +45,8 @@
             <label>Line ${line.getId()}</label>
             </br>
             <div  style="margin: 0 0 0 20px; display:inline-block;"></div>
-            <c:forEach items="${instances}" var="instance">
-                <div  style="margin: 0 0 0 -5px; width: 30px; height: 20px; display:inline-block;background: ${colors[0]}; border:1px solid black "></div>
+            <c:forEach items="${colors}" var="color">
+                <div  style="margin: 0 0 0 -5px; width: 30px; height: 20px; display:inline-block;background: ${color}; border:1px solid black "></div>
             </c:forEach>
             </br>
         </c:forEach>

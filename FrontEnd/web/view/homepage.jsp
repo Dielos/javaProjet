@@ -14,6 +14,31 @@
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
         <title>Homepage</title>
+        
+        <style>
+            
+            input[type="file"] {
+                display: none;
+            }
+            
+            #homepage {
+                text-align: center;
+                margin-top: 5%;
+            }
+            
+            .custom-file-upload {
+                cursor: pointer;
+            }
+            
+            .submit-button {
+                margin-top: 2%;
+            }
+            
+            .link-to-download {
+                margin-top: 3%;
+            }
+        </style>
+
     </head>
     <body>
         <nav class="navbar navbar-inverse">
@@ -37,14 +62,18 @@
           </div><!-- /.navbar-collapse -->
         </nav>
         
-        
-        <a href="controller?action=download">Download link</a>
-        
-        
-        
-        <form action="controller" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" />
-            <input class="btn btn-lg btn-primary" type="submit" />
-        </form>
+        <div id="homepage">
+            <form action="controller" method="post" enctype="multipart/form-data">
+                <h1>
+                    <label class="label label-info custom-file-upload">
+                        <input type="file" name="file"/>
+                        Upload an instance 
+                    </label>
+                </h1>
+                <input class="btn btn-lg btn-primary submit-button" type="submit" />
+            </form>
+
+            <a class="btn btn-lg btn-link link-to-download" href="controller?action=download">Download the solution</a>
+        </div>
     </body>
 </html>
