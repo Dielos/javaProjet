@@ -95,15 +95,24 @@ public class Instance implements Serializable {
         o.setInstance(this);
     }
     
-    public int getTotalCost() {
-        int sum=0;
+    public int getOrderCost() {
+        int sumOrder=0;
         for (Order o: orders) {
-            sum += o.getPenalityCost();
+            sumOrder += o.getPenalityCost();
         }
+        return sumOrder;
+    }
+    
+    public int getBoxCost() {
+        int sumBox=0;
         for (BoxType b: boxTypes) {
-            sum += b.getTotalBoxesCost();
+            sumBox += b.getTotalBoxesCost();
         }
-        return sum;
+        return sumBox;
+    }
+    
+    public int getTotalCost() {
+        return getOrderCost()+getBoxCost();
     }
     
     public void sortOrders() {

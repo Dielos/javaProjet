@@ -63,6 +63,8 @@ public class Scheduler {
             System.out.println(o);
         }
         
+        System.out.println("Order cost : "+instance.getOrderCost());
+        System.out.println("Boxes cost : "+instance.getBoxCost());
         System.out.println("Total cost : "+instance.getTotalCost());
         
         return true;
