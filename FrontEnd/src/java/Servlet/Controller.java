@@ -57,6 +57,8 @@ public class Controller extends HttpServlet {
         instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
         orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
         filePath = getServletContext().getRealPath("") + File.separator + "data.txt";
+        
+        
     }
 
     @Override
@@ -73,26 +75,37 @@ public class Controller extends HttpServlet {
             switch(action) {
 
                 case "timeline":
-                    
+                    //get all orders to fill navbar
+                   // Collection<Order> navOrders = orderManager.findAll();
                     Collection<BoxType> products = boxTypeManager.findAll();
                     request.setAttribute("products", products);
+                   // request.setAttribute("navOrders", navOrders);
                     request.getRequestDispatcher("/view/timeline.jsp").forward(request, response);
                 break;
                 
                 case "stats":
+                    //get all orders to fill navbar
+                  //  navOrders = orderManager.findAll();
                     Instance instance = instanceManager.getInstanceByName("FileName1");
                     Collection<BoxType> boxTypes = instance.getBoxTypes();
                     Collection<Order> orders = instance.getOrders();
                     request.setAttribute("boxTypes", boxTypes);
                     request.setAttribute("orders", orders);
+                   /// request.setAttribute("navOrders", navOrders);
                     request.getRequestDispatcher("/view/stats.jsp").forward(request, response);
                 break;
                 
                 case "process":
+                    //get all orders to fill navbar
+                   // navOrders = orderManager.findAll();
+                   // request.setAttribute("navOrders", navOrders);
                     request.getRequestDispatcher("/view/process.jsp").forward(request, response);
                 break;
                 
                 case "order":
+                    //get all orders to fill navbar
+                    //navOrders = orderManager.findAll();
+                    //request.setAttribute("navOrders", navOrders);
                     Order order = orderManager.getOrderByName("C010");
                     //instance = instanceManager.getInstanceByName("FileName1");
                     //orders = instance.getOrders();
@@ -101,6 +114,9 @@ public class Controller extends HttpServlet {
                 break;
                 
                 case "hompage":
+                    //get all orders to fill navbar
+                    //navOrders = orderManager.findAll();
+                    //request.setAttribute("navOrders", navOrders);
                     request.getRequestDispatcher("/view/hompage.jsp").forward(request, response);
                 break;
 

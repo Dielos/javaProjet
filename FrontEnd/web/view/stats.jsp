@@ -31,10 +31,13 @@
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="controleur.jsp?action=order&number=1">Order 1</a></li>
-                  <li><a href="controleur.jsp?action=order&number=2">Order 2</a></li>
-                  <li><a href="controleur.jsp?action=order&number=3">Order 3</a></li>
-                  <li><a href="controleur.jsp?action=order&number=4">Order 4</a></li>
+                    <c:forEach var="order" items="${navOrders}">
+                        <li><a href="controleur.jsp?action=${order.getOrderName}">
+                                <c:out value="${order.getOrderName}"/>
+                            </a>
+                        </li>
+                    </c:forEach>
+                        
                 </ul>
               </li>
             </ul>
@@ -103,7 +106,7 @@
                                 <c:out value=""/>
                             </td>
                             <td>
-                                <c:out value="${order.penalty}"/>
+                                <c:out value="${order.penality}"/>
                             </td>
                             <td>
                                 <c:out value="0-${order.sendingDate}"/>

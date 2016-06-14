@@ -12,25 +12,29 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
         <title>Order</title>
     </head>
     <body>
-        <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse">
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li><a href="controller?action=homepage">HomePage<span class="sr-only">(current)</span></a></li>
-              <li><a href="controller?action=process">Process</a></li>
-              <li><a href="controller?action=stats">Stats</a></li>
-              <li><a href="controller?action=timeline">Timeline</a></li>
+              <li><a href="controleur.jsp?action=homepage">HomePage<span class="sr-only">(current)</span></a></li>
+              <li><a href="controleur.jsp?action=process">Process</a></li>
+              <li class="active"><a href="controleur.jsp?action=stats">Stats</a></li>
+              <li><a href="controleur.jsp?action=timeline">Timeline</a></li>
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="controller?action=order&number=1">Order 1</a></li>
-                  <li><a href="controller?action=order&number=2">Order 2</a></li>
-                  <li><a href="controller?action=order&number=3">Order 3</a></li>
-                  <li><a href="controller?action=order&number=4">Order 4</a></li>
+                    <c:forEach var="order" items="${navOrders}">
+                        <li><a href="controleur.jsp?action=${order.getOrderName}">
+                                <c:out value="${order.getOrderName}"/>
+                            </a>
+                        </li>
+                    </c:forEach>
+                        
                 </ul>
               </li>
             </ul>
@@ -44,12 +48,10 @@
 
         <div class="row">
             <h2>Utilisation des box</h2>
-            <c:forEach var="boxType" items="${order.getBoxType()}">
-                <c:forEach var="box" items="${boxType.getBoxs()}">
-                    <h3>yololo</h3>
-
-                </c:forEach>
-
+            <c:forEach var="box" items="${order.getBoxes()}">
+                <div class="row">
+                    <c:out value="Box ${box.getBoxType().getBoxName()}_${box.getNum()}"/>
+                </div>
             </c:forEach>
         </div>
     </div>
