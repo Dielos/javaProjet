@@ -49,7 +49,7 @@ public class Scheduler {
                     product = new Product();
                     product.setOrderLine(ol);
                     product.setProductionLine(pl);
-                    //product.setBox(box);
+                    product.setBox(o.getBoxForItem(ol.getTypeProduct()));
                     instance.Products.add(product);
                     System.out.println("        "+product);
                     x++;
@@ -58,6 +58,8 @@ public class Scheduler {
             o.setSendingDate(o.getSendingDate()+o.getStockMin());
             System.out.println(o);
         }
+        
+        System.out.println("Total cost : "+instance.getTotalCost());
         
         return true;
     }

@@ -74,6 +74,7 @@ public class Box {
         
         products.add(obj);
         obj.setBox(this);
+        this.order = obj.getOrderLine().getOrder();
         return true;
     }
     

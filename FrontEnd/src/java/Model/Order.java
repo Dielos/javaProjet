@@ -7,6 +7,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,7 +24,7 @@ import javax.persistence.Table;
  *
  * @author Robin
  */
-@Entity()
+@Entity
 @Table(name="ORDER_")  // persistence doesn't seem to escape the table name in its request, leading to error with reserved word "ORDER"
 public class Order {
     @Id
@@ -39,6 +41,14 @@ public class Order {
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NORDER")
     private List<OrderLine> orderLines;
+    
+    @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+    @JoinColumn(name="NASSOCIATEDORDER")
+    private List<Box> boxs;
+    
+    @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+    @JoinColumn(name="NORDERS")
+    private Instance instance;
 
     // other
     private int startProductionDate;
@@ -56,6 +66,8 @@ public class Order {
     
     private void init() {
         orderLines = new ArrayList<OrderLine>();
+        boxs = new ArrayList<Box>();
+        instance = null;
     }
 
     public Order(String orderName, int stockMin, int dateLimit, float penality) {
@@ -69,6 +81,93 @@ public class Order {
 
     public Order() {
         init();
+    }
+    
+    public float getPenalityCost() {
+        if (sendingDate>dateLimit)
+            return (sendingDate-dateLimit)*penality;
+        else
+            return 0;
+    }
+    
+    private void addInHashTable(HashMap<ProductType, Integer> table, ProductType p) {
+        if (table.containsKey(p))
+            table.put(p, table.get(p)+1);
+        else
+            table.put(p, 1);
+    }
+    
+    private int getBoxTotalWidth(HashMap<ProductType, Integer> table, Box b) {
+        int total=0;
+        int maxHeight;
+        float tmp;
+        
+        for (ProductType p : table.keySet()) {
+            maxHeight=p.getEmpileMax()*p.getHeight();
+            System.out.println("Max Height : " + maxHeight + "\nProduct height : "+p.getHeight());
+            if (maxHeight > b.getBoxType().getHeight()) {
+                maxHeight=b.getBoxType().getHeight() - b.getBoxType().getHeight()%p.getHeight();
+                System.out.println("Redef : "+maxHeight);
+            }
+ 
+            if (table.get(p)%maxHeight>0) tmp = table.get(p)/maxHeight +1;
+            else tmp = table.get(p)/maxHeight;
+            
+            System.out.println("nCol : "+tmp);
+            System.out.println("bWitdh : "+b.getBoxType().getWidth());
+            System.out.println("bHeight : "+b.getBoxType().getHeight());
+            total += p.getWidth() * tmp;
+        }
+        
+        return total;
+    }
+    
+    private Box getNewBox(ProductType p) {
+        for (BoxType bt : instance.getBoxTypes()) {
+            if (p.getHeight()<=bt.getHeight() && p.getWidth()<=bt.getWidth())
+            {
+                Box b = bt.getNewBox();
+                boxs.add(b);
+                b.setOrder(this);
+                return new Box();
+            }
+        }
+
+        return null; //not suppose to append
+    }
+    
+    public Box getBoxForItem(ProductType productType) {
+        System.out.println("Box");
+        for (Box b : boxs) {
+            HashMap<ProductType, Integer> table = new HashMap<ProductType, Integer>();
+            addInHashTable(table, productType);
+            for (Product p : b.getProducts()) {
+                addInHashTable(table, p.getTypeProduct());
+            }
+            
+            if (getBoxTotalWidth(table, b)<=b.getBoxType().getWidth()) {
+                System.out.println("OK");
+                return b;
+            }
+        }
+        return getNewBox(productType);
+    }
+
+    public Instance getInstance() {
+        return instance;
+    }
+
+    public void setInstance(Instance instance) {
+        this.instance = instance;
+    }
+    
+    public void addBox(Box box) {
+        boxs.add(box);
+        box.setOrder(this);
+    }
+    
+    public List<Box> getBoxs() {
+        return boxs;
     }
 
     public boolean removeOrderLine(OrderLine obj) {
