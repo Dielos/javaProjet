@@ -45,6 +45,7 @@ public class Controller extends HttpServlet {
     private String solutionString;
     private BoxTypeDao boxTypeManager;
     private InstanceDao instanceManager;
+    private OrderDao orderManager;
     private String action = "";
     static final long serialVersionUID = 1L;
     private static final int BUFSIZE = 4096;
@@ -54,6 +55,7 @@ public class Controller extends HttpServlet {
     public void init() {
         boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
         instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
+        orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
         filePath = getServletContext().getRealPath("") + File.separator + "data.txt";
     }
 
@@ -82,7 +84,7 @@ public class Controller extends HttpServlet {
                     Collection<BoxType> boxTypes = instance.getBoxTypes();
                     Collection<Order> orders = instance.getOrders();
                     request.setAttribute("boxTypes", boxTypes);
-                    request.setAttribute("orders", boxTypes);
+                    request.setAttribute("orders", orders);
                     request.getRequestDispatcher("/view/stats.jsp").forward(request, response);
                 break;
                 
@@ -91,21 +93,17 @@ public class Controller extends HttpServlet {
                 break;
                 
                 case "order":
+                    Order order = orderManager.getOrderByName("C010");
+                    //instance = instanceManager.getInstanceByName("FileName1");
+                    //orders = instance.getOrders();
+                    request.setAttribute("order", order);
                     request.getRequestDispatcher("/view/order.jsp").forward(request, response);
                 break;
                 
                 case "hompage":
                     request.getRequestDispatcher("/view/hompage.jsp").forward(request, response);
                 break;
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
                 case "download":
                     
                     ReverseParser reverseParser = new ReverseParser();

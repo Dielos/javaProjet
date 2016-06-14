@@ -39,6 +39,10 @@ public class Order {
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NORDER")
     private List<OrderLine> orderLines;
+    
+    @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+    @JoinColumn(name="NASSOCIATEDORDER")
+    private List<Box> boxes;
 
     // other
     private int startProductionDate;
@@ -88,6 +92,12 @@ public class Order {
         return id;
     }
 
+    public List<Box> getBoxes() {
+        return boxes;
+    }
+    
+    
+
     public String getOrderName() {
         return orderName;
     }
@@ -133,6 +143,16 @@ public class Order {
     public void setDateLimit(int dateLimit) {
         this.dateLimit = dateLimit;
     }
+
+    public void setOrderLines(List<OrderLine> orderLines) {
+        this.orderLines = orderLines;
+    }
+
+    public void setBoxes(List<Box> boxes) {
+        this.boxes = boxes;
+    }
+    
+    
 
     public void setPenality(float penality) {
         this.penality = penality;

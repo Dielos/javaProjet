@@ -36,5 +36,22 @@
             </ul>
           </div><!-- /.navbar-collapse -->
       </nav>
+    <div class="container">
+        <div class ="row"
+            <h1> Commande XXX prévue à XXX envoyée à XXX</h1>
+            <h2>Production</h2>
+        </div>
+
+        <div class="row">
+            <h2>Utilisation des box</h2>
+            <c:forEach var="boxType" items="${order.getBoxType()}">
+                <c:forEach var="box" items="${boxType.getBoxs()}">
+                    <h3>yololo</h3>
+
+                </c:forEach>
+
+            </c:forEach>
+        </div>
+    </div>
     </body>
 </html>

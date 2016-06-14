@@ -23,4 +23,11 @@ public class JpaOrderDao extends JpaDao<Order> implements OrderDao{
         return query.getResultList(); 
     }
     
+    public Order getOrderByName(String name) {
+        String strQuery = "SELECT obj FROM Order obj WHERE obj.orderName = :name";
+        Query query = em.createQuery(strQuery);
+        query.setParameter("name", name);
+        return (Order)query.getSingleResult();   
+    }
+    
 }
