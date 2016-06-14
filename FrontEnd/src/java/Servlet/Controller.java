@@ -51,7 +51,6 @@ public class Controller extends HttpServlet {
     @Override
     public void init() {
         productionLineManager = DaoFactoryJpa.getInstance(JpaProductionLineDao.class);
-        boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
         filePath = getServletContext().getRealPath("") + File.separator + "data.txt";
     }
 
@@ -72,7 +71,6 @@ public class Controller extends HttpServlet {
                     
                     Collection<ProductionLine> lines = productionLineManager.findAll();
                     
-                    tabBT = boxTypeManager.findAll();
                     request.setAttribute("lines", lines);
                     request.getRequestDispatcher("/view/timeline.jsp").forward(request, response);
                 break;
