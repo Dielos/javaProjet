@@ -60,8 +60,15 @@ public class BoxType {
     }
     
     public Box getNewBox () {
+        for (Box b : boxs) {
+            if (b.getOrder()==null) {
+                System.out.println("reUse");
+                return b;
+            }
+        }
         Box b = new Box(boxs.toArray().length+1);
-        b.setBoxType(this);
+        //b.setBoxType(this);
+        this.addBox(b);
         return b;
     }
     

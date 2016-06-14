@@ -83,6 +83,12 @@ public class Order {
         init();
     }
     
+    public void freeBoxes() {
+        for (Box b : boxs)
+            //b.setOrder(null);
+            b.free();
+    }
+    
     public float getPenalityCost() {
         if (sendingDate>dateLimit)
             return (sendingDate-dateLimit)*penality;
@@ -91,6 +97,7 @@ public class Order {
     }
     
     private void addInHashTable(HashMap<ProductType, Integer> table, ProductType p) {
+        System.out.println("call");
         if (table.containsKey(p))
             table.put(p, table.get(p)+1);
         else
@@ -102,20 +109,26 @@ public class Order {
         int maxHeight;
         float tmp;
         
+        System.out.println("bWitdh : "+b.getBoxType().getWidth());
+        System.out.println("bHeight : "+b.getBoxType().getHeight());
+        
         for (ProductType p : table.keySet()) {
+            System.out.println("\t-------\n\tProduct : "+p.getId()+"\n\tN : "+table.get(p));
+            
             maxHeight=p.getEmpileMax()*p.getHeight();
-            System.out.println("Max Height : " + maxHeight + "\nProduct height : "+p.getHeight());
+            System.out.println("\tMax Height : " + maxHeight + "\n\tProduct height : "+p.getHeight());
+            System.out.println("\tProduct witdh : "+p.getWidth());
+            
             if (maxHeight > b.getBoxType().getHeight()) {
                 maxHeight=b.getBoxType().getHeight() - b.getBoxType().getHeight()%p.getHeight();
-                System.out.println("Redef : "+maxHeight);
+                System.out.println("\tRedef : "+maxHeight);
             }
  
-            if (table.get(p)%maxHeight>0) tmp = table.get(p)/maxHeight +1;
-            else tmp = table.get(p)/maxHeight;
+            if ((table.get(p)*p.getHeight())%maxHeight>0) tmp = (table.get(p)*p.getHeight())/maxHeight +1;
+            else tmp = (table.get(p)*p.getHeight())/maxHeight;
             
-            System.out.println("nCol : "+tmp);
-            System.out.println("bWitdh : "+b.getBoxType().getWidth());
-            System.out.println("bHeight : "+b.getBoxType().getHeight());
+            System.out.println("\tnCol : "+tmp);
+            
             total += p.getWidth() * tmp;
         }
         
@@ -129,7 +142,7 @@ public class Order {
                 Box b = bt.getNewBox();
                 boxs.add(b);
                 b.setOrder(this);
-                return new Box();
+                return b;
             }
         }
 
@@ -150,6 +163,7 @@ public class Order {
                 return b;
             }
         }
+        System.out.println("NOK -> gettingNewBox");
         return getNewBox(productType);
     }
 

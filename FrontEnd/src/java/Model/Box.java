@@ -63,18 +63,23 @@ public class Box {
     public Box() {
         init();
     }
+    
+    public void free() {
+        this.order = null;
+        this.products.clear();
+    }
 
     public boolean removeProduct(Product obj) {
         return products.remove(obj);
     }
     
     public boolean addProduct(Product obj) {
-        if (obj.getBox() != null)
-            return false;
+        //if (obj.getBox() != null)
+        //    return false;
         
         products.add(obj);
         obj.setBox(this);
-        this.order = obj.getOrderLine().getOrder();
+        //this.order = obj.getOrderLine().getOrder();
         return true;
     }
     
