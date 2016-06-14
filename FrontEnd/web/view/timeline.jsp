@@ -39,15 +39,41 @@
        
         ${text}
         
-        <c:forEach items="${products}" var="product">
-            <tr>
-                <td>${product.toString()}</td>
-            </tr>
+        <c:forEach items="${lines}" var="line">
+            <label>Line ${line.getId()}</label>
+                <canvas id="${line.getId()}" width="3000" height="15" style="border:1px solid #d3d3d3; background-color: black"> 
+                    Your browser does not support the HTML5 canvas tag.
+                </canvas>
         </c:forEach>
+            
+            
+        <script>
+            
+        function addLine(begin, length, color, line) {
+          var lineNum = line;
+          var c = document.getElementById(lineNum);
+          var ctx = c.getContext("2d");
+          ctx.fillStyle = 'black';
+          ctx.beginPath();
+          ctx.rect(begin, 0, length, 15);
+          ctx.fillStyle = color;
+          ctx.fill();
+          ctx.stroke();
+        }
         
+        var val
+        
+        for(val of ${lines})
+            addLine(10, 15, 'red', val.getId());
+            addLine(25, 25, 'yellow', val.getId());
+            addLine(60, 10, 'blue', val.getId());
 
-      
- 
+            addLine(0, 30, 'green', val.getId());
+            addLine(45, 10, 'red', val.getId());
+            addLine(55, 5, 'blue', val.getId());
         
+        </script> 
+            
+            
     </body>
 </html>
