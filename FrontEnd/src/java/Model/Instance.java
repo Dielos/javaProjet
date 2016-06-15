@@ -132,6 +132,15 @@ public class Instance implements Serializable {
         });
     }
     
+    public void sortProducts() {
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return Integer.compare(o1.getDateStart(), o2.getDateStart());
+            }
+        });
+    }
+    
     public void load() {
         ProductTypeDao ProductTypeManager = DaoFactoryJpa.getInstance(JpaProductTypeDao.class);
         OrderDao orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
@@ -192,6 +201,11 @@ public class Instance implements Serializable {
     }
 
     public List<Product> getProducts() {
+        return products;
+    }
+    
+    public List<Product> getSortedProducts() {
+        sortProducts();
         return products;
     }
 }
