@@ -126,7 +126,7 @@ public class Controller extends HttpServlet {
                 break;
                 
                 case "order":
-                    Order order = instance.getOrderById(Integer.parseInt(id));
+                    Order order = instance.getOrderById(id);
                     //instance = instanceManager.getInstanceByName("FileName1");
                     //orders = instance.getOrders();
 
