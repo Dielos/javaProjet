@@ -18,6 +18,7 @@ import Model.Order;
 import DAO.JpaProductionLineDao;
 import DAO.ProductionLineDao;
 import Model.BoxType;
+import Model.Instance;
 import Model.ProductionLine;
 import backend.Parser;
 import backend.ReverseParser;
@@ -29,7 +30,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -65,6 +68,7 @@ public class Controller extends HttpServlet {
         instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
         orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
         productionLineManager = DaoFactoryJpa.getInstance(JpaProductionLineDao.class);
+        instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
         filePath = getServletContext().getRealPath("") + File.separator + "data.txt";
         
         
@@ -90,8 +94,13 @@ public class Controller extends HttpServlet {
                 case "timeline":
                     
                     Collection<ProductionLine> lines = productionLineManager.findAll();
+                   
+                    Collection<Instance> instances = instanceManager.findAll();
                     
+                    List<String> colors = Arrays.asList("red", "black");
                     request.setAttribute("lines", lines);
+                    request.setAttribute("colors", colors);
+                    request.setAttribute("instances", instances);
                     //get all orders to fill navbar
                     Collection<Order> navOrders = orderManager.findAll();
                     Collection<BoxType> products = boxTypeManager.findAll();

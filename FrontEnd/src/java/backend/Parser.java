@@ -121,7 +121,7 @@ public class Parser {
         for(int j=1; j<Integer.parseInt(generalInfos[3]);j++){
             ProductionLine pl = new ProductionLine(j, 0);
             //productionLineManager.create(pl);
-            instance.productionLines.add(pl);
+            instance.getProductionLines().add(pl);
         }
         
         
@@ -140,7 +140,7 @@ public class Parser {
                     Integer.parseInt(productInfos[5]));
             products.add(product);
             //ProductTypeManager.create(product);
-            instance.products.add(product);
+            instance.getProductTypes().add(product);
             //System.out.println(product);
             i++;
         }
@@ -174,7 +174,7 @@ public class Parser {
             String[] boxInfos = lines[i].split("\t");
             BoxType box = new BoxType(boxInfos[0],Integer.parseInt(boxInfos[1]),Integer.parseInt(boxInfos[2]),Float.parseFloat(boxInfos[3]));
             //boxTypeManager.create(box);   
-            instance.boxTypes.add(box);
+            instance.getBoxTypes().add(box);
             i++;
         }
         

@@ -40,27 +40,27 @@ public class Instance implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     
-    public String instanceName;
+    private String instanceName;
     
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NBOXTYPES")
-    public List<BoxType> boxTypes;
+    private List<BoxType> boxTypes;
     
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NORDERS")
-    public List<Order> orders;
+    private List<Order> orders;
     
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NPRODUCTS")
-    public List<ProductType> products;
+    @JoinColumn(name="NPRODUCTTYPES")
+    private List<ProductType> productTypes;
     
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NPRODUCTIONLINES")
-    public List<ProductionLine> productionLines;
+    private List<ProductionLine> productionLines;
     
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NPRODUCTS")
-    public List<Product> Products;
+    private List<Product> products;
     
     public ProductionLine getFirstLineAvailable() {
         ProductionLine plret=null;
@@ -78,7 +78,7 @@ public class Instance implements Serializable {
         orders = new ArrayList<>();
         products = new ArrayList<>();
         productionLines = new ArrayList<>();
-        Products = new ArrayList<>();
+        productTypes = new ArrayList<>();
     }
     
     public Instance () {
@@ -101,6 +101,14 @@ public class Instance implements Serializable {
             sumOrder += o.getPenalityCost();
         }
         return sumOrder;
+    }
+    
+    public Order getOrderById(int id) {
+        for (Order o : orders) {
+            if (o.getId()==id)
+                return o;
+        }
+        return null;
     }
     
     public int getBoxCost() {
@@ -155,8 +163,8 @@ public class Instance implements Serializable {
         return orders;
     }
 
-    public List<ProductType> getProducts() {
-        return products;
+    public List<ProductType> getProductTypes() {
+        return productTypes;
     }
 
     public List<ProductionLine> getProductionLines() {
@@ -183,6 +191,7 @@ public class Instance implements Serializable {
         this.productionLines = productionLines;
     }
 
-  
-    
+    public List<Product> getProducts() {
+        return products;
+    }
 }

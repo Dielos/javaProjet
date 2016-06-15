@@ -39,7 +39,7 @@ public class Scheduler {
         
         //instance.load();
         
-        for (Order o : instance.orders) {
+        for (Order o : instance.getOrders()) {
             System.out.println(o);
             
             for (OrderLine ol : o.getOrderLines()) {
@@ -53,7 +53,7 @@ public class Scheduler {
                     Box b = o.getBoxForItem(ol.getTypeProduct());
                     product.setBox(b);
                     b.addProduct(product);
-                    instance.Products.add(product);
+                    instance.getProducts().add(product);
                     System.out.println("        "+product);
                     x++;
                 }
@@ -66,6 +66,9 @@ public class Scheduler {
         System.out.println("Order cost : "+instance.getOrderCost());
         System.out.println("Boxes cost : "+instance.getBoxCost());
         System.out.println("Total cost : "+instance.getTotalCost());
+        
+        InstanceDao instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
+        instanceManager.update(instance);
         
         return true;
     }
