@@ -8,12 +8,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-    _jspx_page_context.findAttribute("perspectiveCount") 
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/style.css" rel="stylesheet"/>
         <title>Timeline</title>
     </head>
     <body>
@@ -45,17 +46,20 @@
         <div class="container">
         
             <c:forEach items="${lines}" var="line">
-                ${line.getId()}
                 <div class="row">
-			<label>Line ${line.getId()}</label>
+                    <label>Line ${line.getId()}</label>
                 </div>
-                <div class="row">
-                <div  style="margin: 0 0 0 20px; display:inline-block;"></div>
-			<c:forEach items="${products}" var="product">
-			    <c:if test="${line.getId() == product.getProductionLine().getId()}">
-				<div  style="margin: 0 0 0 -5px; width: ${product.getTypeProduct().getProdTime()}px; height: 20px; display:inline-block;background: ${colors[product.getOrderLine().getOrder().getId()%7]}; border:1px solid black "></div>
-			    </c:if>
-			</c:forEach>
+                <div class="row timeline">
+                    <div  style="margin: 0 0 0 20px; display:inline-block;"></div>
+                        <c:forEach items="${products}" var="product">
+                            <c:if test="${line.getId() == product.getProductionLine().getId()}">
+                                <c:if test="${product.getTypeProduct().getId() != idProduct}">
+                                      <div  style="margin: 0 0 0 -5px; width: ${product.getTypeProduct().getSetupTime()}px; height: 20px; display:inline-block;background: black; border:1px solid black "></div>
+                                </c:if>
+                                <c:set var="idProduct" value="${product.getTypeProduct().getId()}"/>
+                                <div  style="margin: 0 0 0 -5px; width: ${product.getTypeProduct().getProdTime()}px; height: 20px; display:inline-block;background: ${colors[product.getOrderLine().getOrder().getId()]}; border:1px solid black "></div>
+                            </c:if>
+                        </c:forEach>
                 </div>
             </c:forEach>
             
