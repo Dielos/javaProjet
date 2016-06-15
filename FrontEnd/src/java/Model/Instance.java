@@ -14,6 +14,7 @@ import DAO.JpaProductionLineDao;
 import DAO.OrderDao;
 import DAO.ProductTypeDao;
 import DAO.ProductionLineDao;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,7 +34,8 @@ import javax.persistence.OneToMany;
  */
 
 @Entity
-public class Instance {
+public class Instance implements Serializable {
+    //private static final long serialVersionUID = 42L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
@@ -88,6 +90,31 @@ public class Instance {
         this.instanceName = instanceName;
     }
     
+    public void addOrder(Order o) {
+        this.orders.add(o);
+        o.setInstance(this);
+    }
+    
+    public int getOrderCost() {
+        int sumOrder=0;
+        for (Order o: orders) {
+            sumOrder += o.getPenalityCost();
+        }
+        return sumOrder;
+    }
+    
+    public int getBoxCost() {
+        int sumBox=0;
+        for (BoxType b: boxTypes) {
+            sumBox += b.getTotalBoxesCost();
+        }
+        return sumBox;
+    }
+    
+    public int getTotalCost() {
+        return getOrderCost()+getBoxCost();
+    }
+    
     public void sortOrders() {
         Collections.sort(orders, new Comparator<Order>() {
                                                         @Override
@@ -108,5 +135,15 @@ public class Instance {
         products = new ArrayList(ProductTypeManager.findAll());
         productionLines = new ArrayList(productionLineManager.findAll());
     }
+
+    public List<BoxType> getBoxTypes() {
+        return boxTypes;
+    }
+
+    public void setBoxTypes(List<BoxType> boxTypes) {
+        this.boxTypes = boxTypes;
+    }
+    
+    
     
 }

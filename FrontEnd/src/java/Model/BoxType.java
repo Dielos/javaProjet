@@ -59,6 +59,23 @@ public class BoxType {
         init();
     }
     
+    public Box getNewBox () {
+        for (Box b : boxs) {
+            if (b.getOrder()==null) {
+                System.out.println("reUse");
+                return b;
+            }
+        }
+        Box b = new Box(boxs.toArray().length+1);
+        //b.setBoxType(this);
+        this.addBox(b);
+        return b;
+    }
+    
+    public float getTotalBoxesCost() {
+        return cost * boxs.toArray().length;
+    }
+    
     public boolean removeBox(Box obj) {
         return boxs.remove(obj);
     }
@@ -75,8 +92,6 @@ public class BoxType {
     public String getBoxName() {
         return boxName;
     }
-    
-    
 
     public int getId() {
         return id;

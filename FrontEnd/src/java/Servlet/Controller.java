@@ -12,6 +12,10 @@ import DAO.JpaOrderDao;
 import DAO.OrderDao;
 import Model.BoxType;
 import Model.Order;
+import DAO.JpaProductionLineDao;
+import DAO.ProductionLineDao;
+import Model.BoxType;
+import Model.ProductionLine;
 import backend.Parser;
 import backend.ReverseParser;
 import java.io.BufferedReader;
@@ -42,15 +46,18 @@ public class Controller extends HttpServlet {
     private String solutionString;
     private BoxTypeDao boxTypeManager;
     private OrderDao orderManager;
+    private ProductionLineDao productionLineManager;
     private String action = "";
     static final long serialVersionUID = 1L;
     private static final int BUFSIZE = 4096;
+    Collection<BoxType> tabBT;
     private String filePath;
 
     @Override
     public void init() {
         boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
         orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
+        productionLineManager = DaoFactoryJpa.getInstance(JpaProductionLineDao.class);
         filePath = getServletContext().getRealPath("") + File.separator + "data.txt";
     }
 
@@ -69,9 +76,9 @@ public class Controller extends HttpServlet {
 
                 case "timeline":
                     
-                    Collection<BoxType> products = boxTypeManager.findAll();
+                    Collection<ProductionLine> lines = productionLineManager.findAll();
                     
-                    request.setAttribute("products", products);
+                    request.setAttribute("lines", lines);
                     request.getRequestDispatcher("/view/timeline.jsp").forward(request, response);
                 break;
                 
@@ -98,7 +105,7 @@ public class Controller extends HttpServlet {
                 case "download":
                     
                     ReverseParser reverseParser = new ReverseParser();
-                    reverseParser.getTypeBoxInfos();
+                    solutionString = reverseParser.getTypeBoxInfos();
                     File file = new File(filePath);
                     int length = 0;
                     

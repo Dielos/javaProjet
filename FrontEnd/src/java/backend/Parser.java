@@ -111,6 +111,8 @@ public class Parser {
         BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
         ProductionLineDao productionLineManager = DaoFactoryJpa.getInstance(JpaProductionLineDao.class);*/
         InstanceDao instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
+        //Instance instance2 = instanceManager.getInstanceByName("FileName1");
+        System.out.println("topkek");
         Instance instance = new Instance(instanceName);
         
         ArrayList<ProductType> products = new ArrayList();
@@ -158,7 +160,7 @@ public class Parser {
                 cpt++;
             }
             //orderManager.create(order);
-            instance.orders.add(order);
+            instance.addOrder(order);
             for(OrderLine o: order.getOrderLines()){
                 //System.out.println(o);
             }
