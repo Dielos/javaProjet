@@ -55,7 +55,7 @@ public class Controller extends HttpServlet {
     private OrderDao orderManager;
     private ProductionLineDao productionLineManager;
     private String action = "";
-    private String id = "";
+    private int id;
     static final long serialVersionUID = 1L;
     private static final int BUFSIZE = 4096;
     Collection<BoxType> tabBT;
@@ -83,7 +83,7 @@ public class Controller extends HttpServlet {
         
 	action = request.getParameter("action");
         if(request.getParameter("id")!=null){
-            id = request.getParameter("id");
+            id = Integer.parseInt(request.getParameter("id"));
         }
         
         Instance instance = instanceManager.getInstanceByName(instanceName);

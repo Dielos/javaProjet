@@ -99,22 +99,22 @@
                     <c:forEach var="order" items="${orders}">
                         <tr>
                             <td>
-                                <c:out value="${order.orderName}"/>
+                                <c:out value="${order.getOrderName()}"/>
                             </td>
                             <td>
-                                <c:out value="${order.sendingDate}"/>
+                                <c:out value="${order.getDateLimit()}"/>
                             </td>
                             <td>
-                                <c:out value=""/>
+                                <c:out value="${order.getSendingDate()}"/>
                             </td>
                             <td>
-                                <c:out value="${order.penality}"/>
+                                <c:out value="${order.getPenality()}"/>
                             </td>
                             <td>
-                                <c:out value="0-${order.sendingDate}"/>
+                                <c:out value="0-${order.getSendingDate()-order.getDateLimit()}"/>
                             </td>
                             <td>
-                                <c:out value="${order.getBoxs().size()*0}€"/>
+                                <c:out value="${order.getBoxs().size()*order.getPenaityCost()}€"/>
                             </td>
                         </tr>
                     </c:forEach>
