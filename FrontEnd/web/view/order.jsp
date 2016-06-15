@@ -48,7 +48,7 @@
 
         <div class="row">
             <h2>Utilisation des box</h2>
-            <c:forEach var="box" items="${order.getBoxes()}">
+            <c:forEach var="box" items="${order.getBoxs()}">
                 <div class="row">
                     <c:out value="Box ${box.getBoxType().getBoxName()}_${box.getNum()}"/>
                 </div>
