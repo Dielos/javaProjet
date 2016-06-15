@@ -67,6 +67,16 @@ public class ProductType {
         this.width = width;
         this.empileMax = empileMax;
     }
+    
+    public int getEmpileMax(BoxType bt) {
+        int tmp = this.getHeight()*this.empileMax;
+        if (tmp>bt.getHeight()) {
+            tmp = (int)bt.getHeight()/this.getHeight();
+            return tmp;
+        }
+        else
+            return empileMax;
+    }
 
     public boolean removeProduct(Product obj) {
         return products.remove(obj);
