@@ -14,6 +14,7 @@
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/script.js"></script>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/style.css" rel="stylesheet"/>
         <title>Order</title>
     </head>
     <body>
@@ -56,10 +57,16 @@
                     </div>
                     <div class="col-10">
                         <div id="${box.getNum()}" style="width: ${box.getBoxType().getWidth()}px; height: ${box.getBoxType().getHeight()}px; border:black 1px solid; background-color:pink;">
-                            <c:forEach var="product" items="${box.getProducts()}">
-                                <div class="productBox" style="margin-left: ${margin}px;  border:black 1px solid;">
-
-                                </div>
+                            <c:forEach var="orderLine" items="${order.getOrderLines()}">
+         
+                                <c:forEach  var="product" items="${orderLine.getProducts()}">
+                                    <c:if test="${product.getBox().getBoxType().getBoxName()==box.getBoxType().getBoxName()}">
+                                        <c:if test="${product.getBox().getNum()==box.getNum()}">
+                                            <div class="productBox" style="position:absolute; bottom:0px; left:0px; background-color: white;  border:black 1px solid; width:${product.getTypeProduct().getWidth()}px; height:${product.getTypeProduct().getHeight()}px">
+                                            </div>
+                                        </c:if>
+                                    </c:if>
+                                </c:forEach>
                             </c:forEach>
                         </div>
                     </div>
