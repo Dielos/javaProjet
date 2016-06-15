@@ -79,16 +79,19 @@ public class Controller extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         instanceName="";
         //product
-        
+        System.out.println("Instance nadfdfdsfse: "+request.getParameter("instanceName"));
         // ----- //
         
 	action = request.getParameter("action");
         if(request.getParameter("id")!=null){
             id = Integer.parseInt(request.getParameter("id"));
         }
-        if(request.getParameter("instanceName")!=null){
+        request.getParameterMap();
+        String test = request.getParameter("instanceName");
+        if(request.getParameter("instanceName")!=null && request.getParameter("instanceName")!=""){
             instanceName = request.getParameter("instanceName");
             instance = instanceManager.getInstanceByName(instanceName);
+            System.out.println("Instance nae: "+request.getParameter("instanceName"));
             instance.sortOrdersByName();
             Collection<Order> navOrders = instance.getOrders();
             request.setAttribute("instance", instance);
@@ -99,7 +102,7 @@ public class Controller extends HttpServlet {
         request.setAttribute("instances", instances);
         System.out.println("instname"+instanceName);
         request.setAttribute("instanceName", instanceName);
-        if (action != null && instanceName!=null)
+        if (action != null && instanceName!="")
             {
             switch(action) {
 
