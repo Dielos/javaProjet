@@ -118,8 +118,8 @@ public class Parser {
         ArrayList<ProductType> products = new ArrayList();
         System.out.println("coucou");
         
-        for(int j=1; j<Integer.parseInt(generalInfos[3]);j++){
-            ProductionLine pl = new ProductionLine(j, 0);
+        for(int j=0; j<Integer.parseInt(generalInfos[3]);j++){
+            ProductionLine pl = new ProductionLine(j+1, 0);
             //productionLineManager.create(pl);
             instance.getProductionLines().add(pl);
         }

@@ -35,6 +35,15 @@ public class JpaInstanceDao extends JpaDao<Instance> implements InstanceDao {
         return var.get(0);   
     }
     
-    
+    @Override
+    public boolean create(Instance obj) {
+        et.begin();
+        Instance tmp = getInstanceByName(obj.getInstanceName());
+        if (tmp!=null)
+            this.delete(tmp);
+        em.persist(obj);
+        et.commit();
+        return true;
+    }
     
 }
