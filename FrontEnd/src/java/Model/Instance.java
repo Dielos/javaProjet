@@ -146,7 +146,7 @@ public class Instance implements Serializable {
         Collections.sort(orders, new Comparator<Order>() {
                                                         @Override
                                                         public int compare(Order o1, Order o2){
-                                                            return Integer.compare(o1.getDateLimit(), o2.getDateLimit());
+                                                            return Integer.compare(o1.getDateLimit()-o1.getStockMin(), o2.getDateLimit()-o2.getStockMin());
                                                         }
         });
     }

@@ -7,6 +7,8 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -85,6 +87,21 @@ public class Order {
         init();
     }
     
+    public void sortOrdersByName() {
+        Collections.sort(orderLines, new Comparator<OrderLine>() {
+                                                        @Override
+                                                        public int compare(OrderLine o1, OrderLine o2){
+                                                            return Integer.compare(o2.getQuantity()*o2.getTypeProduct().getProdTime(),
+                                                                    o1.getQuantity()*o1.getTypeProduct().getProdTime());
+                                                        }
+        });
+    }
+    
+    public List<OrderLine> getSortedOrderLines() {
+        sortOrdersByName();
+        return orderLines;
+    }
+    
     public void freeBoxes() {
         for (Box b : boxs)
             //b.setOrder(null);
@@ -125,13 +142,18 @@ public class Order {
             System.out.println("\t-------\n\tProduct : "+p.getId()+"\n\tN : "+table.get(p));
             
             maxHeight=p.getEmpileMax()*p.getHeight();
-            System.out.println("\tMax Height : " + maxHeight + "\n\tProduct height : "+p.getHeight());
-            System.out.println("\tProduct witdh : "+p.getWidth());
             
             if (maxHeight > b.getBoxType().getHeight()) {
+                if (b.getBoxType().getHeight()<p.getHeight()) {
+                    System.out.println("\naborting");
+                    return -1;
+                }
                 maxHeight=b.getBoxType().getHeight() - b.getBoxType().getHeight()%p.getHeight();
                 System.out.println("\tRedef : "+maxHeight);
+                System.out.println("\tbox Height : "+b.getBoxType().getHeight());
             }
+            System.out.println("\tMax Height : " + maxHeight + "\n\tProduct height : "+p.getHeight());
+            System.out.println("\tProduct witdh : "+p.getWidth());
  
             if ((table.get(p)*p.getHeight())%maxHeight>0) tmp = (table.get(p)*p.getHeight())/maxHeight +1;
             else tmp = (table.get(p)*p.getHeight())/maxHeight;
@@ -145,7 +167,15 @@ public class Order {
     }
     
     private Box getNewBox(ProductType p) {
-        for (BoxType bt : instance.getBoxTypes()) {
+        while (true) {
+            Box b = instance.getBoxTypes().get((int) (Math.random() * instance.getBoxTypes().size())).getNewBox();
+            if (p.getHeight()<=b.getBoxType().getHeight() && p.getWidth()<=b.getBoxType().getWidth()) {
+                boxs.add(b);
+                b.setOrder(this);
+                return b;
+            }
+        }
+        /*for (BoxType bt : instance.getBoxTypes()) {
             if (p.getHeight()<=bt.getHeight() && p.getWidth()<=bt.getWidth())
             {
                 Box b = bt.getNewBox();
@@ -155,7 +185,7 @@ public class Order {
             }
         }
 
-        return null; //not suppose to append
+        return null; //not suppose to append*/
     }
     
     public Box getBoxForItem(ProductType productType) {
@@ -167,7 +197,8 @@ public class Order {
                 addInHashTable(table, p.getTypeProduct());
             }
             
-            if (getBoxTotalWidth(table, b)<=b.getBoxType().getWidth()) {
+            int witdh = getBoxTotalWidth(table, b);
+            if (witdh!=-1 && witdh<=b.getBoxType().getWidth()) {
                 System.out.println("OK");
                 return b;
             }
