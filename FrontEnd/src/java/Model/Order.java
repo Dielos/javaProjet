@@ -90,6 +90,13 @@ public class Order {
             b.free();
     }
     
+    /*public int getProductionTime() {
+        int sum=0;
+        for (OrderLine ol : orderLines) {
+            ol.get
+        }
+    }*/
+    
     public float getPenalityCost() {
         if (sendingDate>dateLimit)
             return (sendingDate-dateLimit)*penality;
@@ -236,6 +243,9 @@ public class Order {
     public int getStartProductionDate() {
         return startProductionDate;
     }
+    
+    
+    
 
     public void setSendingDate(int sendingDate) {
         this.sendingDate = sendingDate;

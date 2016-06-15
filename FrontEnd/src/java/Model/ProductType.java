@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -39,6 +40,10 @@ public class ProductType {
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NPRODUCTTYPE")
     private List<Product> products;
+    
+    @OneToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+    @JoinColumn(name="NPRODUCTIONLINE")
+    private ProductionLine currentProductionLine;
     
     // other
     

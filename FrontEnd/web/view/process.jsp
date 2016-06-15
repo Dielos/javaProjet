@@ -28,7 +28,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <c:forEach var="order" items="${navOrders}">
-                        <li><a href="controller?action=order&name=${order.getOrderName()}">
+                        <li><a href="controller?action=order&id=${order.getId()}">
                                 <c:out value="${order.getOrderName()}"/>
                             </a>
                         </li>

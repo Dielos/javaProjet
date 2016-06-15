@@ -90,6 +90,25 @@ public class Instance implements Serializable {
         this.instanceName = instanceName;
     }
     
+    public int getTotalSetUpTime() {
+        int sum=0;
+        for (Product p : getSortedProducts()) {
+            sum += p.getProductionLine().setProductType(p.getTypeProduct());
+        }
+        
+        return sum;
+    }
+    
+    public int getTotalProductionTime() {
+        int sum = 0;
+        for (Order o : orders) {
+            for (OrderLine ol : o.getOrderLines()) {
+                sum += ol.getQuantity() * ol.getTypeProduct().getProdTime();
+            }
+        }
+        return sum;
+    }
+    
     public void addOrder(Order o) {
         this.orders.add(o);
         o.setInstance(this);
@@ -129,6 +148,24 @@ public class Instance implements Serializable {
                                                         public int compare(Order o1, Order o2){
                                                             return Integer.compare(o1.getDateLimit(), o2.getDateLimit());
                                                         }
+        });
+    }
+    
+    public void sortOrdersByName() {
+        Collections.sort(orders, new Comparator<Order>() {
+                                                        @Override
+                                                        public int compare(Order o1, Order o2){
+                                                            return o1.getOrderName().compareTo(o2.getOrderName());
+                                                        }
+        });
+    }
+    
+    public void sortProducts() {
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return Integer.compare(o1.getDateStart(), o2.getDateStart());
+            }
         });
     }
     
@@ -192,6 +229,11 @@ public class Instance implements Serializable {
     }
 
     public List<Product> getProducts() {
+        return products;
+    }
+    
+    public List<Product> getSortedProducts() {
+        sortProducts();
         return products;
     }
 }

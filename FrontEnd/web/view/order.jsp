@@ -29,7 +29,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <c:forEach var="order" items="${navOrders}">
-                        <li><a href="controller?action=order&name=${order.getOrderName()}">
+                        <li><a href="controller?action=order&id=${order.getId()}">
                                 <c:out value="${order.getOrderName()}"/>
                             </a>
                         </li>
@@ -50,7 +50,19 @@
             <h2>Utilisation des box</h2>
             <c:forEach var="box" items="${order.getBoxs()}">
                 <div class="row">
-                    <c:out value="Box ${box.getBoxType().getBoxName()}_${box.getNum()}"/>
+                    <div class="col-2">
+                        <c:set var="margin" scope="session" value="0"/>
+                        <c:out value="Box ${box.getBoxType().getBoxName()}_${box.getNum()}"/>
+                    </div>
+                    <div class="col-10">
+                        <div id="${box.getNum()}" style="width: ${box.getBoxType().getWidth()}px; height: ${box.getBoxType().getHeight()}px; border:black 1px solid; background-color:pink;">
+                            <c:forEach var="product" items="${box.getProducts()}">
+                                <div class="productBox" style="margin-left: ${margin}px;  border:black 1px solid;">
+
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
                 </div>
             </c:forEach>
         </div>

@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-$( document ).ready(function() {
-    //load navbar
-    /*$(function(){
-        $("#navbar").load("./view/navbar.jsp"); 
-    });*/
+$(document).ready(function() {
+  $('.dataTable').DataTable();
+  
 });
 
 

@@ -31,7 +31,7 @@
                 <ul class="dropdown-menu">
                     
                     <c:forEach var="order" items="${navOrders}">
-                        <li><a href="controller?action=order&name=${order.getOrderName()}">
+                        <li><a href="controller?action=order&id=${order.getId()}">
                                 <c:out value="${order.getOrderName()}"/>
                             </a>
                         </li>
@@ -46,15 +46,20 @@
         <div class ="container" id="homepage">
             <form action="controller" method="post" enctype="multipart/form-data">
               
-                    <div class="row">
-                        <h3><c:out value="${text}"/></h3>
-                    </div>
+                <div class="row">
+                    <h3><c:out value="${text}"/></h3>
+                </div>
                 
-                
+                <div class="row">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
+                        
+                    <li role="separator" class="divider"></li>
+                  </ul>
+                </div>
+
                 <div class="row">   
-                        
                         <input class="btn btn-lg btn-primary submit-button" type="file" name="file"/>
-                        
+
                     <div class="row">
                         <input class="btn btn-lg btn-primary submit-button" type="submit" value="OK"/>
                     </div>

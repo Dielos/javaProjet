@@ -16,8 +16,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+        
         <script type="text/javascript" src="js/script.js"></script>
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+        <script>
+            $(document).ready(function() {
+                $('.table').dataTable();
+            } );
+        </script>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
         <title>Stats</title>
     </head>
     <body>
@@ -33,6 +42,7 @@
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
                 <ul class="dropdown-menu">
+                    
                     <c:forEach var="order" items="${navOrders}">
                         <li><a href="controller?action=order&id=${order.getId()}">
                                 <c:out value="${order.getOrderName()}"/>
@@ -52,72 +62,93 @@
             </div>
             <div class="row">
                 <div class="col-8"></div>
-                <div class="col-2 text-right">Objectif calculé</div>
+                <div class="col-2 text-right"><b>Total coût instance:</b> ${instance.getTotalCost()}€</div>
                 <div class="col-2 text-right"></div>
             </div>
             <div class="row">
-                <table class="table table-hover">
-                    <tr>
-                        <th class="warning col-4">Type de box</th>
-                        <th class="warning col-2">Prix</th>
-                        <th class="warning col-2">Achat</th>
-                        <th class="warning col-2">Utilisés</th>
-                        <th class="warning col-2">Coût</th>
-                    </tr>
-                    
-                    <c:forEach var="boxType" items="${boxTypes}">
+                <div class="col-8"></div>
+                <div class="col-2 text-right"><b>Total coût boxs: </b>${instance.getBoxCost()}€</div>
+                <div class="col-2 text-right"></div>
+            </div>
+            <div class="row">
+                <div class="col-8"></div>
+                <div class="col-2 text-right"><b>Total coût commandes: </b>${instance.getOrderCost()}€</div>
+                <div class="col-2 text-right"></div>
+            </div>
+            <div class="row">
+                <table class="table table-hover dataTable info">
+                    <thead>
                         <tr>
-                            <td>
-                                <c:out value="${boxType.boxName}"/>
-                            </td>
-                            <td>
-                                <c:out value="${boxType.cost}"/>
-                            </td>
-                            <td>
-                                <c:out value="${boxType.getBoxs().size()}"/>
-                            </td>
-                            <td>
-                                <c:out value="${boxType.getBoxs().size()}"/>
-                            </td>
-                            <td>
-                                <c:out value="${boxType.getBoxs().size()*boxType.cost}€"/>
-                            </td>
+                            <th class="warning col-4">Type de box</th>
+                            <th class="warning col-2">Prix</th>
+                            <th class="warning col-2">Achat</th>
+                            <th class="warning col-2">Utilisés</th>
+                            <th class="warning col-2">Coût</th>
                         </tr>
-                    </c:forEach>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="boxType" items="${boxTypes}">
+                            <tr>
+                                <td>
+                                    <c:out value="${boxType.boxName}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${boxType.cost}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${boxType.getBoxs().size()}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${boxType.getBoxs().size()}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${boxType.getTotalBoxesCost()}€"/>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
                 </table>
             </div>
             <div class="row">
-                <table class="table table-hover">
-                    <tr>
-                        <th class="warning col-2">Commande</th>
-                        <th class="warning col-2">Envoi prévu</th>
-                        <th class="warning col-2">Envoi</th>
-                        <th class="warning col-2">Pénalité</th>
-                        <th class="warning col-2">Ecart</th>
-                        <th class="warning col-2">Coût</th>
-                    </tr>
-                    <c:forEach var="order" items="${orders}">
+                <table class="table table-hover dataTable info">
+                    <thead>
                         <tr>
-                            <td>
-                                <c:out value="${order.orderName}"/>
-                            </td>
-                            <td>
-                                <c:out value="${order.sendingDate}"/>
-                            </td>
-                            <td>
-                                <c:out value=""/>
-                            </td>
-                            <td>
-                                <c:out value="${order.penality}"/>
-                            </td>
-                            <td>
-                                <c:out value="0-${order.sendingDate}"/>
-                            </td>
-                            <td>
-                                <c:out value="${order.getBoxs().size()*0}€"/>
-                            </td>
+                            <th class="warning col-2">Commande</th>
+                            <th class="warning col-2">Envoi prévu</th>
+                            <th class="warning col-2">Envoi</th>
+                            <th class="warning col-1">Pénalité</th>
+                            <th class="warning col-1">Ecart</th>
+                            <th class="warning col-2">Nombre de box</th>
+                            <th class="warning col-2">Coût</th>
                         </tr>
-                    </c:forEach>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="order" items="${orders}">
+                            <tr>
+                                <td>
+                                    <c:out value="${order.getOrderName()}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${order.getDateLimit()}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${order.getSendingDate()}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${order.getPenality()}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${order.getSendingDate()-order.getDateLimit()}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${order.getBoxs().size()}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${order.getPenalityCost()}€"/>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
                 </table>
             </div>
         </div>
