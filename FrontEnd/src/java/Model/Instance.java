@@ -64,9 +64,11 @@ public class Instance implements Serializable {
     
     public ProductionLine getFirstLineAvailable() {
         ProductionLine plret=null;
+        System.out.println("-----"+productionLines.size());
         for (ProductionLine pl : productionLines) {
-            if (plret == null || pl.getDateAvailable() < plret.getDateAvailable())
+            if (plret == null || pl.getDateAvailable() < plret.getDateAvailable()) {
                 plret = pl;
+            }
         }
         return plret;
     }
