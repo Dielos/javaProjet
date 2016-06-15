@@ -71,8 +71,18 @@ public class Scheduler {
         System.out.println("Total setUp time : "+instance.getTotalSetUpTime());
         System.out.println("NProdLines : "+instance.getProductionLines().size());
         
+        /*for (Order o : instance.getOrders()) {
+            System.out.println(""+o.getBoxs());
+        }*/
+        
         InstanceDao instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
         instanceManager.update(instance);
+        
+        /*System.out.println("\n\n-----------------\n\n");
+        
+        for (Order o : instance.getOrders()) {
+            System.out.println(""+o.getBoxs());
+        }*/
         
         return true;
     }

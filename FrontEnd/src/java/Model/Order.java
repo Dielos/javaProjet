@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -42,7 +43,7 @@ public class Order {
     @JoinColumn(name="NORDER")
     private List<OrderLine> orderLines;
     
-    @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+    @ManyToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NASSOCIATEDORDER")
     private List<Box> boxs;
     
