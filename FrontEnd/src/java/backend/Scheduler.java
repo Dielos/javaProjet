@@ -67,6 +67,10 @@ public class Scheduler {
         System.out.println("Boxes cost : "+instance.getBoxCost());
         System.out.println("Total cost : "+instance.getTotalCost());
         
+        System.out.println("\nTotal production time : "+instance.getTotalProductionTime());
+        System.out.println("Total setUp time : "+instance.getTotalSetUpTime());
+        System.out.println("NProdLines : "+instance.getProductionLines().size());
+        
         InstanceDao instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
         instanceManager.update(instance);
         

@@ -55,10 +55,8 @@ public class ProductionLine {
     }
     
     public int produce(ProductType pt) {
-        if (currentProduction != pt) {
-            currentProduction = pt;
-            dateAvailable += pt.getSetupTime();
-        }
+        dateAvailable = setProductType(pt);
+        
         int tmp = dateAvailable;
         dateAvailable += pt.getProdTime();
         
@@ -85,8 +83,12 @@ public class ProductionLine {
         this.num = num;
     }
 
-    public void setProduct(ProductType currentProduction) {
-        this.currentProduction = currentProduction;
+    public int setProductType(ProductType currentProduction) {
+        if (this.currentProduction != currentProduction) {
+            this.currentProduction = currentProduction;
+            return currentProduction.getSetupTime();
+        }
+        return 0;
     }
 
     public void setDateAvailable(int dateAvailable) {
