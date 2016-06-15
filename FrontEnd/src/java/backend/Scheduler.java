@@ -171,7 +171,7 @@ public class Scheduler {
         InstanceDao instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
         Instance instance = instanceManager.getInstanceByName("FileName1");//(Instance)(instanceManager.findAll().toArray()[0]);
         
-        if (run(instance)) System.out.println("oki");
-        else System.out.println("nop");
+      //if (run(instance)) System.out.println("oki");
+      //else System.out.println("nop");
     } //Order{id=23, stockMin=13, dateLimit=4346, penality=9.45, startProductionDate=5809, sendingDate=6056}
 }

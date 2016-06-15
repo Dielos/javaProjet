@@ -19,6 +19,7 @@ import DAO.JpaProductionLineDao;
 import DAO.ProductionLineDao;
 import Model.BoxType;
 import Model.Instance;
+import Model.Product;
 import Model.ProductionLine;
 import backend.Parser;
 import backend.ReverseParser;
@@ -36,6 +37,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +49,9 @@ import javax.servlet.http.Part;
  * @author Dielos
  */
 @WebServlet(name = "controller", urlPatterns = {"/controller"})
+@MultipartConfig(fileSizeThreshold=1024*1024*10,    // 10 MB 
+                 maxFileSize=1024*1024*50,          // 50 MB
+                 maxRequestSize=1024*1024*100)
 public class Controller extends HttpServlet {
     
     private String solutionString;
@@ -62,6 +67,7 @@ public class Controller extends HttpServlet {
     private String filePath;
     private String instanceName;
     public Instance instance;
+    private Collection<Instance> instances;
 
     @Override
     public void init() {
@@ -74,9 +80,8 @@ public class Controller extends HttpServlet {
         
         
     }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    protected HttpServletRequest initInstances(HttpServletRequest request){
         instanceName="";
         //product
         System.out.println("Instance nadfdfdsfse: "+request.getParameter("instanceName"));
@@ -87,7 +92,6 @@ public class Controller extends HttpServlet {
             id = Integer.parseInt(request.getParameter("id"));
         }
         request.getParameterMap();
-        String test = request.getParameter("instanceName");
         if(request.getParameter("instanceName")!=null && request.getParameter("instanceName")!=""){
             instanceName = request.getParameter("instanceName");
             instance = instanceManager.getInstanceByName(instanceName);
@@ -98,10 +102,21 @@ public class Controller extends HttpServlet {
             request.setAttribute("navOrders", navOrders);
         }
        
-        Collection<Instance> instances = instanceManager.findAll();
+        instances = instanceManager.findAll();
         request.setAttribute("instances", instances);
         System.out.println("instname"+instanceName);
         request.setAttribute("instanceName", instanceName);
+        
+        return request;
+        
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        request = initInstances(request);
+        String text = "";
+        
         if (action != null && instanceName!="")
             {
             switch(action) {
@@ -109,14 +124,15 @@ public class Controller extends HttpServlet {
                 case "timeline":
                     
                     Collection<ProductionLine> lines = instance.getProductionLines();
+                    List<Product> products = instance.getSortedProducts();
                     
-                    List<String> colors = Arrays.asList("red", "black");
+                    List<String> colors = Arrays.asList("Aqua","Aquamarine","Azure","Bisque","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","ForestGreen","Fuchsia","Gainsboro","Gold","GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","Yellow","YellowGreen");
                     request.setAttribute("lines", lines);
                     request.setAttribute("colors", colors);
+                    request.setAttribute("instance", instance);
                     //get all orders to fill navbar
-                    
-                    Collection<BoxType> products = boxTypeManager.findAll();
                     request.setAttribute("products", products);
+                    request.setAttribute("idProduct", -1);
                     
                     request.getRequestDispatcher("/view/timeline.jsp").forward(request, response);
                 break;
@@ -141,10 +157,16 @@ public class Controller extends HttpServlet {
                 break;
                 
                 case "homepage":
+                    if(request.getParameter("text")!=null){
+                        text = request.getParameter("text");
+                    }
+                    request.setAttribute("text", text);
                     request.getRequestDispatcher("/view/homepage.jsp").forward(request, response);
                 break;
 
                 case "download":
+                    
+                    filePath = getServletContext().getRealPath("") + File.separator + instance.getInstanceName() + "_solution.txt";
                     
                     ReverseParser reverseParser = new ReverseParser();
                     solutionString = reverseParser.getTypeBoxInfos();
@@ -184,12 +206,20 @@ public class Controller extends HttpServlet {
                 break;
                 
                 default:
+                    if(request.getParameter("text")!=null){
+                        text = request.getParameter("text");
+                    }
+                    request.setAttribute("text", text);
                     request.getRequestDispatcher("/view/homepage.jsp").forward(request, response);
                     break;
 
               }
             }
         else
+            if(request.getParameter("text")!=null){
+                text = request.getParameter("text");
+            }
+            request.setAttribute("text", text);
             request.getRequestDispatcher("/view/homepage.jsp").forward(request, response);
         
     }
@@ -197,16 +227,18 @@ public class Controller extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+        request = initInstances(request);
+        
         Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
         String fileName = filePart.getSubmittedFileName();
         InputStream fileContent = filePart.getInputStream();
         String fileText = getStringFromInputStream(fileContent);
         
-        Parser test = new Parser();
-        test.getEntityInFile(fileText, fileName);
+        Parser parse = new Parser();
+        parse.getEntityInFile(fileText, fileName);
         
-        request.setAttribute("text", "Upload done");
-        request.getRequestDispatcher("/view/homepage.jsp").forward(request, response);
+        request.setAttribute("instances", instances);
+        response.sendRedirect("controller?action=homepage&instanceName=&text=Upload " + fileName + " done");
         
     }
     

@@ -23,6 +23,12 @@
     margin-top: 3%;
 }
 
+.timeline {
+    margin-top: 3%;
+    white-space: nowrap;
+    overflow: auto;
+}
+
 .form-control {
     width:50%!important;
     margin-left:auto;

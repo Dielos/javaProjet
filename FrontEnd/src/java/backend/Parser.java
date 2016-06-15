@@ -179,7 +179,10 @@ public class Parser {
         }
         
         
-        instanceManager.create(instance);
+        Scheduler.run(instance);
+        
+        //instanceManager.create(instance);
+        
     }
     
     public static void main(String[] args) {
