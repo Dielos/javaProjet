@@ -87,6 +87,23 @@ public class Order {
         init();
     }
     
+    public HashMap<Box, HashMap<ProductType, List<Product>>> getProductInBox() {
+        HashMap<Box, HashMap<ProductType, List<Product>>> map = new HashMap<Box, HashMap<ProductType, List<Product>>>();
+        for (Box b : boxs) {
+            map.put(b, new HashMap<ProductType, List<Product>>());
+        }
+        
+        for (OrderLine ol : orderLines) {
+            for (Product p : ol.getProducts()) {
+                Box b = p.getBox();
+                if (!map.get(b).containsKey(p.getTypeProduct()))
+                    map.get(b).put(p.getTypeProduct(), new ArrayList<Product>());
+                map.get(b).get(p.getTypeProduct()).add(p);
+            }
+        }
+        return map;
+    }
+    
     public void sortOrdersByName() {
         Collections.sort(orderLines, new Comparator<OrderLine>() {
                                                         @Override
