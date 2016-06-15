@@ -1,0 +1,24 @@
+/*input[type="file"] {
+    display: none;
+}
+*/
+#homepage {
+    text-align: center;
+    margin-top: 5%;
+}
+
+.custom-file-upload {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.submit-button {
+    margin-top: 2%;
+    width:400px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.link-to-download {
+    margin-top: 3%;
+}
