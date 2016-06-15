@@ -37,6 +37,7 @@
                         
                 </ul>
               </li>
+              <li id="instanceName"><a href="#">${instanceName}</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
       </nav>
