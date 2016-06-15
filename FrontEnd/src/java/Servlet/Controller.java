@@ -8,7 +8,13 @@ package Servlet;
 import DAO.BoxTypeDao;
 import DAO.DaoFactoryJpa;
 import DAO.InstanceDao;
+import DAO.JpaBoxTypeDao;
 import DAO.JpaInstanceDao;
+import DAO.JpaOrderDao;
+import DAO.OrderDao;
+import Model.BoxType;
+import Model.Instance;
+import Model.Order;
 import DAO.JpaProductionLineDao;
 import DAO.ProductionLineDao;
 import Model.BoxType;
@@ -44,20 +50,29 @@ import javax.servlet.http.Part;
 public class Controller extends HttpServlet {
     
     private String solutionString;
+    private BoxTypeDao boxTypeManager;
+    private InstanceDao instanceManager;
+    private OrderDao orderManager;
     private ProductionLineDao productionLineManager;
     private InstanceDao instanceManager;
     private String action = "";
+    private String name = "";
     static final long serialVersionUID = 1L;
     private static final int BUFSIZE = 4096;
-    BoxTypeDao boxTypeManager;
     Collection<BoxType> tabBT;
     private String filePath;
+    private String instanceName="FileName1";
 
     @Override
     public void init() {
+        boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
+        instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
+        orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
         productionLineManager = DaoFactoryJpa.getInstance(JpaProductionLineDao.class);
         instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
         filePath = getServletContext().getRealPath("") + File.separator + "data.txt";
+        
+        
     }
 
     @Override
@@ -68,7 +83,11 @@ public class Controller extends HttpServlet {
         // ----- //
         
 	action = request.getParameter("action");
-       
+        if(request.getParameter("name")!=null){
+            name = request.getParameter("name");
+        }
+        Instance instance = instanceManager.getInstanceByName(instanceName);
+       //Collection<Order> ordersName = instance.getOrders();
         if (action != null)
             {
             switch(action) {
@@ -83,25 +102,55 @@ public class Controller extends HttpServlet {
                     request.setAttribute("lines", lines);
                     request.setAttribute("colors", colors);
                     request.setAttribute("instances", instances);
+                    //get all orders to fill navbar
+                    Collection<Order> navOrders = orderManager.findAll();
+                    Collection<BoxType> products = boxTypeManager.findAll();
+                    request.setAttribute("products", products);
+                    request.setAttribute("navOrders", navOrders);
                     request.getRequestDispatcher("/view/timeline.jsp").forward(request, response);
                 break;
                 
                 case "stats":
+                    //get all orders to fill navbar
+                    navOrders = orderManager.findAll();
+                    Collection<BoxType> boxTypes = instance.getBoxTypes();
+                    Collection<Order> orders = instance.getOrders();
+                    request.setAttribute("boxTypes", boxTypes);
+                    request.setAttribute("instanceName", instanceName);
+                    request.setAttribute("orders", orders);
+                    request.setAttribute("navOrders", navOrders);
                     request.getRequestDispatcher("/view/stats.jsp").forward(request, response);
                 break;
                 
                 case "process":
+                    //get all orders to fill navbar
+                    navOrders = orderManager.findAll();
+                    request.setAttribute("navOrders", navOrders);
                     request.getRequestDispatcher("/view/process.jsp").forward(request, response);
                 break;
                 
-                case "order":
-                    request.getRequestDispatcher("/view/order.jsp").forward(request, response);
-                break;
                 
-                case "hompage":
-                    request.getRequestDispatcher("/view/hompage.jsp").forward(request, response);
-                break;
+               // for(Order orderName : ordersName){
+                    case "order":
+                        //get all orders to fill navbar
+                        navOrders = orderManager.findAll();
+                        request.setAttribute("navOrders", navOrders);
+                        Order order = orderManager.getOrderByName(name);
+                        //instance = instanceManager.getInstanceByName("FileName1");
+                        //orders = instance.getOrders();
+                        
+                        request.setAttribute("order", order);
+                        request.getRequestDispatcher("/view/order.jsp").forward(request, response);
+                    break;
+              //  }
                 
+                case "homepage":
+                    //get all orders to fill navbar
+                    navOrders = orderManager.findAll();
+                    request.setAttribute("navOrders", navOrders);
+                    request.getRequestDispatcher("/view/homepage.jsp").forward(request, response);
+                break;
+
                 case "download":
                     
                     ReverseParser reverseParser = new ReverseParser();

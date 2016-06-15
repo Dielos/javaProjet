@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface OrderDao extends Dao<Order>{
     public List<Order> findAllChrono();
+    public Order getOrderByName(String name);
 }

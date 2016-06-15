@@ -95,15 +95,24 @@ public class Instance implements Serializable {
         o.setInstance(this);
     }
     
-    public int getTotalCost() {
-        int sum=0;
+    public int getOrderCost() {
+        int sumOrder=0;
         for (Order o: orders) {
-            sum += o.getPenalityCost();
+            sumOrder += o.getPenalityCost();
         }
+        return sumOrder;
+    }
+    
+    public int getBoxCost() {
+        int sumBox=0;
         for (BoxType b: boxTypes) {
-            sum += b.getTotalBoxesCost();
+            sumBox += b.getTotalBoxesCost();
         }
-        return sum;
+        return sumBox;
+    }
+    
+    public int getTotalCost() {
+        return getOrderCost()+getBoxCost();
     }
     
     public void sortOrders() {
@@ -127,14 +136,53 @@ public class Instance implements Serializable {
         productionLines = new ArrayList(productionLineManager.findAll());
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public String getInstanceName() {
+        return instanceName;
+    }
+
+
     public List<BoxType> getBoxTypes() {
         return boxTypes;
+    }
+
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public List<ProductType> getProducts() {
+        return products;
+    }
+
+    public List<ProductionLine> getProductionLines() {
+        return productionLines;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setInstanceName(String instanceName) {
+        this.instanceName = instanceName;
     }
 
     public void setBoxTypes(List<BoxType> boxTypes) {
         this.boxTypes = boxTypes;
     }
-    
-    
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void setProductionLines(List<ProductionLine> productionLines) {
+        this.productionLines = productionLines;
+    }
+
+  
     
 }

@@ -27,15 +27,18 @@
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="controller?action=order&number=1">Order 1</a></li>
-                  <li><a href="controller?action=order&number=2">Order 2</a></li>
-                  <li><a href="controller?action=order&number=3">Order 3</a></li>
-                  <li><a href="controller?action=order&number=4">Order 4</a></li>
+                    <c:forEach var="order" items="${navOrders}">
+                        <li><a href="controller?action=order&name=${order.getOrderName()}">
+                                <c:out value="${order.getOrderName()}"/>
+                            </a>
+                        </li>
+                    </c:forEach>
+                        
                 </ul>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
-        </nav>
+      </nav>
        
         ${text}
         

@@ -13,6 +13,7 @@ import DAO.JpaOrderDao;
 import DAO.JpaProductionLineDao;
 import DAO.OrderDao;
 import DAO.ProductionLineDao;
+import Model.Box;
 import Model.Instance;
 import Model.Order;
 import Model.OrderLine;
@@ -49,16 +50,21 @@ public class Scheduler {
                     product = new Product();
                     product.setOrderLine(ol);
                     product.setProductionLine(pl);
-                    product.setBox(o.getBoxForItem(ol.getTypeProduct()));
+                    Box b = o.getBoxForItem(ol.getTypeProduct());
+                    product.setBox(b);
+                    b.addProduct(product);
                     instance.Products.add(product);
                     System.out.println("        "+product);
                     x++;
                 }
             }
             o.setSendingDate(o.getSendingDate()+o.getStockMin());
+            o.freeBoxes();
             System.out.println(o);
         }
         
+        System.out.println("Order cost : "+instance.getOrderCost());
+        System.out.println("Boxes cost : "+instance.getBoxCost());
         System.out.println("Total cost : "+instance.getTotalCost());
         
         return true;
