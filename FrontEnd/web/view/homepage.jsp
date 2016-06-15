@@ -18,6 +18,7 @@
 
     </head>
     <body>
+        <c:set var="instanceName" value="${instanceName}"/>
         <nav class="navbar navbar-inverse">
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -51,6 +52,7 @@
                     <option value="#">Veuillez choisir une instance à charger</option>
                     <c:forEach var="instanceName2" items="${instances}">
                         <option value="controller?action=homepage&instanceName=${instanceName2.getInstanceName()}">${instanceName2.getInstanceName()}</option>
+                        <c:set var="instanceName" value="${instanceName2.getInstanceName()}"/>
                     </c:forEach>
                 </select>
             </div>
