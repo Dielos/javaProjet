@@ -8,6 +8,7 @@ package DAO;
 import static DAO.JpaDao.em;
 import Model.Instance;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +26,15 @@ public class JpaInstanceDao extends JpaDao<Instance> implements InstanceDao {
         String strQuery = "SELECT obj FROM Instance obj WHERE obj.instanceName = :name";
         Query query = em.createQuery(strQuery);
         query.setParameter("name", name);
-        return (Instance)query.getSingleResult();   
+        List<Instance> var = query.getResultList();
+        System.out.println(name);
+        if(var.isEmpty()){
+            System.out.println("empty");
+            return null;
+        }
+        return var.get(0);   
     }
+    
+    
     
 }
