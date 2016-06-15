@@ -55,7 +55,7 @@ public class ProductionLine {
     }
     
     public int produce(ProductType pt) {
-        dateAvailable = setProductType(pt);
+        dateAvailable += setProductType(pt);
         
         int tmp = dateAvailable;
         dateAvailable += pt.getProdTime();

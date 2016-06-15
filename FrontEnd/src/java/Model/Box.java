@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,8 +37,11 @@ public class Box {
     private BoxType boxType;
     
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NASSOCIATEDORDER")
+    @JoinColumn(name="NASSOCIATEDORDER2")
     private Order order; //could be replaced by a boolean. Represent the order that is using the box (only used during scheduling, should be `null` after scheduling process)
+    
+    /*@Column(name="order_")
+    private boolean order;*/
     
     @OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NBOX")

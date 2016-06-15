@@ -47,7 +47,7 @@ import javax.servlet.http.Part;
  *
  * @author Dielos
  */
-@WebServlet(name = "controler", urlPatterns = {"/controler"})
+@WebServlet(name = "controller", urlPatterns = {"/controller"})
 public class Controller extends HttpServlet {
     
     private String solutionString;
@@ -61,7 +61,8 @@ public class Controller extends HttpServlet {
     private static final int BUFSIZE = 4096;
     Collection<BoxType> tabBT;
     private String filePath;
-    private String instanceName="FileName1";
+    private String instanceName;
+    public Instance instance;
 
     @Override
     public void init() {
@@ -77,7 +78,7 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        instanceName="";
         //product
         
         // ----- //
@@ -86,13 +87,20 @@ public class Controller extends HttpServlet {
         if(request.getParameter("id")!=null){
             id = Integer.parseInt(request.getParameter("id"));
         }
-        
-        Instance instance = instanceManager.getInstanceByName(instanceName);
-        Collection<Order> navOrders = instance.getOrders();
+        if(request.getParameter("instanceName")!=null){
+            instanceName = request.getParameter("instanceName");
+            instance = instanceManager.getInstanceByName(instanceName);
+            instance.sortOrdersByName();
+            Collection<Order> navOrders = instance.getOrders();
+            request.setAttribute("instance", instance);
+            request.setAttribute("navOrders", navOrders);
+        }
+       
         Collection<Instance> instances = instanceManager.findAll();
-        request.setAttribute("navOrders", navOrders);
+        request.setAttribute("instances", instances);
+        System.out.println("instname"+instanceName);
         request.setAttribute("instanceName", instanceName);
-        if (action != null)
+        if (action != null && instanceName!=null)
             {
             switch(action) {
 
@@ -116,7 +124,7 @@ public class Controller extends HttpServlet {
                     Collection<BoxType> boxTypes = instance.getBoxTypes();
                     Collection<Order> orders = instance.getOrders();
                     request.setAttribute("boxTypes", boxTypes);
-                    request.setAttribute("instance", instance);
+
                     request.setAttribute("orders", orders);
                     request.getRequestDispatcher("/view/stats.jsp").forward(request, response);
                 break;
@@ -127,15 +135,11 @@ public class Controller extends HttpServlet {
                 
                 case "order":
                     Order order = instance.getOrderById(id);
-                    //instance = instanceManager.getInstanceByName("FileName1");
-                    //orders = instance.getOrders();
-
                     request.setAttribute("order", order);
                     request.getRequestDispatcher("/view/order.jsp").forward(request, response);
                 break;
                 
                 case "homepage":
-                    request.setAttribute("instances", instances);
                     request.getRequestDispatcher("/view/homepage.jsp").forward(request, response);
                 break;
 
