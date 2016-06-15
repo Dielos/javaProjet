@@ -29,7 +29,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <c:forEach var="order" items="${navOrders}">
-                        <li><a href="controller.jsp?action=order&name=${order.getOrderName()}">
+                        <li><a href="controller?action=order&name=${order.getOrderName()}">
                                 <c:out value="${order.getOrderName()}"/>
                             </a>
                         </li>
@@ -48,7 +48,7 @@
 
         <div class="row">
             <h2>Utilisation des box</h2>
-            <c:forEach var="box" items="${order.getBoxes()}">
+            <c:forEach var="box" items="${order.getBoxs()}">
                 <div class="row">
                     <c:out value="Box ${box.getBoxType().getBoxName()}_${box.getNum()}"/>
                 </div>

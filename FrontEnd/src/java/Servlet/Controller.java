@@ -54,7 +54,6 @@ public class Controller extends HttpServlet {
     private InstanceDao instanceManager;
     private OrderDao orderManager;
     private ProductionLineDao productionLineManager;
-    private InstanceDao instanceManager;
     private String action = "";
     private String name = "";
     static final long serialVersionUID = 1L;

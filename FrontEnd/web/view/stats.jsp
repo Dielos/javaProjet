@@ -114,7 +114,7 @@
                                 <c:out value="0-${order.sendingDate}"/>
                             </td>
                             <td>
-                                <c:out value="${order.getBoxes().size()*0}€"/>
+                                <c:out value="${order.getBoxs().size()*0}€"/>
                             </td>
                         </tr>
                     </c:forEach>
