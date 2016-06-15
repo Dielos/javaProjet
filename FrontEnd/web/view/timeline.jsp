@@ -8,6 +8,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+    _jspx_page_context.findAttribute("perspectiveCount") 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery.js"></script>
@@ -41,20 +42,22 @@
       </nav>
        
         ${text}
+        <div class="container">
         
-        
-        
-        <c:forEach items="${lines}" var="line">
-            <label>Line ${line.getId()}</label>
-            </br>
-            <div  style="margin: 0 0 0 20px; display:inline-block;"></div>
-            <c:forEach items="${colors}" var="color">
-                <div  style="margin: 0 0 0 -5px; width: 30px; height: 20px; display:inline-block;background: ${color}; border:1px solid black "></div>
+            <c:forEach items="${lines}" var="line">
+                ${line.getId()}
+                <label>Line ${line.getId()}</label>
+                </br>
+                <div  style="margin: 0 0 0 20px; display:inline-block;"></div>
+                <c:forEach items="${products}" var="product">
+                    <c:if test="${line.getId() == product.getProductionLine().getId()}">
+                        <div  style="margin: 0 0 0 -5px; width: ${product.getTypeProduct().getProdTime()}px; height: 20px; display:inline-block;background: ${colors[product.getOrderLine().getOrder().getId()%7]}; border:1px solid black "></div>
+                    </c:if>
+                </c:forEach>
+                </br>
             </c:forEach>
-            </br>
-        </c:forEach>
             
-           
+        </div>
             
     </body>
 </html>

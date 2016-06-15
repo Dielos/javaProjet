@@ -19,6 +19,7 @@ import DAO.JpaProductionLineDao;
 import DAO.ProductionLineDao;
 import Model.BoxType;
 import Model.Instance;
+import Model.Product;
 import Model.ProductionLine;
 import backend.Parser;
 import backend.ReverseParser;
@@ -97,16 +98,14 @@ public class Controller extends HttpServlet {
                 case "timeline":
                     
                     Collection<ProductionLine> lines = instance.getProductionLines();
+                    List<Product> products = instance.getProducts();
                    
-                    Collection<Instance> instances = instanceManager.findAll();
                     
-                    List<String> colors = Arrays.asList("red", "black");
+                    List<String> colors = Arrays.asList("red", "black", "blue", "green", "yellow", "purple", "orange");
                     request.setAttribute("lines", lines);
                     request.setAttribute("colors", colors);
-                    request.setAttribute("instances", instances);
+                    request.setAttribute("instances", instance);
                     //get all orders to fill navbar
-                    
-                    Collection<BoxType> products = boxTypeManager.findAll();
                     request.setAttribute("products", products);
                     
                     request.getRequestDispatcher("/view/timeline.jsp").forward(request, response);
@@ -139,6 +138,8 @@ public class Controller extends HttpServlet {
                 break;
 
                 case "download":
+                    
+                    filePath = getServletContext().getRealPath("") + File.separator + instance.getInstanceName() + "_solution.txt";
                     
                     ReverseParser reverseParser = new ReverseParser();
                     solutionString = reverseParser.getTypeBoxInfos();
