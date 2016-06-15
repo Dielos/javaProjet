@@ -68,7 +68,6 @@
                     <option class="option" value="#">Veuillez choisir une instance à charger ou uploader un fichier</option>
                     <c:forEach var="instanceName2" items="${instances}">
                         <option class="option" value="controller?action=homepage&instanceName=${instanceName2.getInstanceName()}">${instanceName2.getInstanceName()}</option>
-                        <c:set var="instanceName" value="${instanceName2.getInstanceName()}"/>
                     </c:forEach>
                 </select>
             </div>
