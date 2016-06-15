@@ -147,10 +147,6 @@ public class Controller extends HttpServlet {
                     request.getRequestDispatcher("/view/stats.jsp").forward(request, response);
                 break;
                 
-                case "process":
-                    request.getRequestDispatcher("/view/process.jsp").forward(request, response);
-                break;
-                
                 case "order":
                     Order order = instance.getOrderById(id);
                     request.setAttribute("order", order);

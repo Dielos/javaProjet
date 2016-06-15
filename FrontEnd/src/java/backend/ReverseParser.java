@@ -47,9 +47,8 @@ public class ReverseParser {
         Collection<BoxType> tabBT = boxTypeManager.findAll();
         String sol="";
         for(BoxType bt: tabBT){
-            sol = sol+"\n"+bt.getBoxName()+" "+bt.getBoxs().size();
+            sol = sol+bt.getBoxName()+" "+bt.getBoxs().size()+"\n";
         }
-        sol=sol+"\n";
         
         OrderDao orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
         Collection<Order> tabOrder = orderManager.findAll();
