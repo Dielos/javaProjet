@@ -38,18 +38,19 @@
                         
                 </ul>
               </li>
+              <li id="instanceName"><a href="#">${instanceName}</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
       </nav>
        
         ${text}
-        <div class="container">
+        <div class="container timeline">
         
-            <c:forEach items="${lines}" var="line">
+            <c:forEach items="${instance.getProductionLines()}" var="line">
                 <div class="row">
-                    <label>Line ${line.getId()}</label>
+                    <label>Line ${line.getNum()}</label>
                 </div>
-                <div class="row timeline">
+                <div class="row">
                     <div  style="margin: 0 0 0 20px; display:inline-block;"></div>
                         <c:forEach items="${products}" var="product">
                             <c:if test="${line.getId() == product.getProductionLine().getId()}">
@@ -57,10 +58,11 @@
                                       <div  style="margin: 0 0 0 -5px; width: ${product.getTypeProduct().getSetupTime()}px; height: 20px; display:inline-block;background: black; border:1px solid black "></div>
                                 </c:if>
                                 <c:set var="idProduct" value="${product.getTypeProduct().getId()}"/>
-                                <div  style="margin: 0 0 0 -5px; width: ${product.getTypeProduct().getProdTime()}px; height: 20px; display:inline-block;background: ${colors[product.getOrderLine().getOrder().getId()]}; border:1px solid black "></div>
+                                <div  style="margin: 0 0 0 -5px; width: ${product.getTypeProduct().getProdTime()}px; height: 20px; display:inline-block;background: ${colors[product.getOrderLine().getOrder().getId()%136]}; border:1px solid black "></div>
                             </c:if>
                         </c:forEach>
                 </div>
+                <div class="row"></div>
             </c:forEach>
             
         </div>

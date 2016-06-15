@@ -5,14 +5,15 @@
         <param-value>Development</param-value>
     </context-param>
     <servlet>
+        
         <servlet-name>Controller</servlet-name>
         <servlet-class>Servlet.Controller</servlet-class>
         <load-on-startup>1</load-on-startup>
         <multipart-config>
-        <location>/tmp</location>
-        <max-file-size>20848820</max-file-size>
-        <max-request-size>418018841</max-request-size>
-	    <file-size-threshold>1048576</file-size-threshold>
+            <location>/tmp</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
 	</multipart-config>
     </servlet>
     <servlet-mapping>

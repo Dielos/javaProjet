@@ -12,26 +12,43 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script>
+            /*$(document).ready(function() {
+                $('nav li').click(function() { return false; });
+                $('#selectInstance').click(function(e){
+                    if($( "#selectInstance option:selected" ).text()===$( "#selectInstance option:first" ).text()){
+                        $('.disable').bind("click.myclick",(function(e){
+                             e.preventDefault();
+                        });
+                    }
+                    else{
+                         $('.disable').unbind(".myclick");
+                    }
+                });
+            } );*/
+        </script>
+         
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
         <link href="css/style.css" rel="stylesheet"/>
         <title>Homepage</title>
 
     </head>
     <body>
+        <c:set var="instanceName" value="${instanceName}"/>
         <nav class="navbar navbar-inverse">
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="controller?action=homepage&instanceName=${instanceName}">HomePage<span class="sr-only">(current)</span></a></li>
-              <li><a href="controller?action=process&instanceName=${instanceName}">Process</a></li>
-              <li><a href="controller?action=stats&instanceName=${instanceName}">Stats</a></li>
-              <li><a href="controller?action=timeline&instanceName=${instanceName}">Timeline</a></li>
+              <li class="active"><a class="disable" href="controller?action=homepage&instanceName=${instanceName}">HomePage<span class="sr-only">(current)</span></a></li>
+              <li><a class="disable" href="controller?action=process&instanceName=${instanceName}">Process</a></li>
+              <li><a class="disable" href="controller?action=stats&instanceName=${instanceName}">Stats</a></li>
+              <li><a class="disable" href="controller?action=timeline&instanceName=${instanceName}">Timeline</a></li>
               <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
+                <a class="disable" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     
                     <c:forEach var="order" items="${navOrders}">
-                        <li><a href="controller?action=order&id=${order.getId()}&instanceName=${instanceName}">
+                        <li><a class="disable" href="controller?action=order&id=${order.getId()}&instanceName=${instanceName}">
                                 <c:out value="${order.getOrderName()}"/>
                             </a>
                         </li>
@@ -47,10 +64,11 @@
         <div class ="container" id="homepage">
             
             <div class="row">
-                <select class="form-control" onChange="window.location.href=this.value">
-                    <option value="#">Veuillez choisir une instance à charger</option>
+                <select id="selectInstance" class="form-control" onChange="window.location.href=this.value">
+                    <option class="option" value="#">Veuillez choisir une instance à charger ou uploader un fichier</option>
                     <c:forEach var="instanceName2" items="${instances}">
-                        <option value="controller?action=homepage&instanceName=${instanceName2.getInstanceName()}">${instanceName2.getInstanceName()}</option>
+                        <option class="option" value="controller?action=homepage&instanceName=${instanceName2.getInstanceName()}">${instanceName2.getInstanceName()}</option>
+                        <c:set var="instanceName" value="${instanceName2.getInstanceName()}"/>
                     </c:forEach>
                 </select>
             </div>
@@ -70,7 +88,7 @@
             </form>
 
             <div class="row">
-                <a class="btn btn-lg btn-link link-to-download" href="controller?action=download">Download the solution</a>
+                <a class="btn btn-lg btn-link link-to-download" href="controller?action=download&instanceName=${instanceName}">Download the solution</a>
             </div>
         </div>
         

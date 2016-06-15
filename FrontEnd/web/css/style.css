@@ -24,10 +24,9 @@
 }
 
 .timeline {
-    height: 40px;
+    margin-top: 3%;
     white-space: nowrap;
-    overflow: scroll;
-    
+    overflow: auto;
 }
 
 .form-control {
