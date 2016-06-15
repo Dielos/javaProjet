@@ -50,6 +50,7 @@ public class Order {
     @JoinColumn(name="NORDERS")
     private Instance instance;
 
+
     // other
     private int startProductionDate;
     private int sendingDate;
@@ -201,6 +202,9 @@ public class Order {
         return id;
     }
 
+
+    
+
     public String getOrderName() {
         return orderName;
     }
@@ -246,6 +250,11 @@ public class Order {
     public void setDateLimit(int dateLimit) {
         this.dateLimit = dateLimit;
     }
+
+    public void setOrderLines(List<OrderLine> orderLines) {
+        this.orderLines = orderLines;
+    }
+    
 
     public void setPenality(float penality) {
         this.penality = penality;
