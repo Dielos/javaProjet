@@ -14,11 +14,21 @@
 
 .submit-button {
     margin-top: 2%;
-    width:400px;
+    width:50%;
     margin-left:auto;
     margin-right:auto;
 }
 
 .link-to-download {
     margin-top: 3%;
+}
+
+.form-control {
+    width:50%!important;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#instanceName{
+    margin-left: 500px;
 }
