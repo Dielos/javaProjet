@@ -43,12 +43,12 @@ public class Product {
     private Box box;
     
     @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="NORDER")
+    @JoinColumn(name="NPRODUCTEDONLINE")
     private ProductionLine productionLine;
     
-    @OneToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+    /*@OneToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="NPRODUCTIONLINE")
-    private Product product;
+    private Product product;*/
     
     // other
     private int DateStart;
@@ -60,7 +60,7 @@ public class Product {
         typeProduct = null;
         box = null;
         productionLine = null;
-        product = null;
+        //product = null;
     }
 
     public Product(int DateStart) {
@@ -93,9 +93,9 @@ public class Product {
         return productionLine;
     }
 
-    public Product getProduct() {
+    /*public Product getProduct() {
         return product;
-    }
+    }*/
 
     public int getDateStart() {
         return DateStart;
@@ -123,9 +123,9 @@ public class Product {
             orderLine.getOrder().setSendingDate(DateStart);
     }
 
-    public void setProduct(Product product) {
+    /*public void setProduct(Product product) {
         this.product = product;
-    }
+    }*/
 
     public void setDateStart(int DateStart) {
         this.DateStart = DateStart;
@@ -133,14 +133,13 @@ public class Product {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 17 * hash + this.id;
-        hash = 17 * hash + Objects.hashCode(this.orderLine);
-        hash = 17 * hash + Objects.hashCode(this.typeProduct);
-        hash = 17 * hash + Objects.hashCode(this.box);
-        hash = 17 * hash + Objects.hashCode(this.productionLine);
-        hash = 17 * hash + Objects.hashCode(this.product);
-        hash = 17 * hash + this.DateStart;
+        int hash = 7;
+        hash = 29 * hash + this.id;
+        hash = 29 * hash + Objects.hashCode(this.orderLine);
+        hash = 29 * hash + Objects.hashCode(this.typeProduct);
+        hash = 29 * hash + Objects.hashCode(this.box);
+        hash = 29 * hash + Objects.hashCode(this.productionLine);
+        hash = 29 * hash + this.DateStart;
         return hash;
     }
 
@@ -174,17 +173,15 @@ public class Product {
         if (!Objects.equals(this.productionLine, other.productionLine)) {
             return false;
         }
-        if (!Objects.equals(this.product, other.product)) {
+        /*if (!Objects.equals(this.product, other.product)) {
             return false;
-        }
+        }*/
         return true;
     }
 
-    
-
     @Override
     public String toString() {
-        return "Product{" + "id=" + id + ", orderLine=" + orderLine + ", typeProduct=" + typeProduct + ", box=" + box + ", productionLine=" + productionLine + ", product=" + product + ", DateStart=" + DateStart + '}';
+        return "Product{" + "id=" + id + ", orderLine=" + orderLine + ", typeProduct=" + typeProduct + ", box=" + box + ", productionLine=" + productionLine + ", DateStart=" + DateStart + '}';
     }
     
     
