@@ -87,7 +87,8 @@ public class Controller extends HttpServlet {
         }
         
         Instance instance = instanceManager.getInstanceByName(instanceName);
-        Collection<Order> navOrders = orderManager.findAll();
+        Collection<Order> navOrders = instance.getOrders();
+        Collection<Instance> instances = instanceManager.findAll();
         request.setAttribute("navOrders", navOrders);
         request.setAttribute("instanceName", instanceName);
         if (action != null)
@@ -98,7 +99,7 @@ public class Controller extends HttpServlet {
                     
                     Collection<ProductionLine> lines = instance.getProductionLines();
                    
-                    Collection<Instance> instances = instanceManager.findAll();
+                    instances = instanceManager.findAll();
                     
                     List<String> colors = Arrays.asList("red", "black");
                     request.setAttribute("lines", lines);
@@ -116,7 +117,7 @@ public class Controller extends HttpServlet {
                     Collection<BoxType> boxTypes = instance.getBoxTypes();
                     Collection<Order> orders = instance.getOrders();
                     request.setAttribute("boxTypes", boxTypes);
-                    
+                    request.setAttribute("instance", instance);
                     request.setAttribute("orders", orders);
                     request.getRequestDispatcher("/view/stats.jsp").forward(request, response);
                 break;
@@ -135,6 +136,7 @@ public class Controller extends HttpServlet {
                 break;
                 
                 case "homepage":
+                    request.setAttribute("instances", instances);
                     request.getRequestDispatcher("/view/homepage.jsp").forward(request, response);
                 break;
 

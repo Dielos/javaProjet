@@ -51,13 +51,13 @@
             <c:forEach var="box" items="${order.getBoxs()}">
                 <div class="row">
                     <div class="col-2">
-                        <c:set property="margin" value="0"></c:set>
+                        <c:set var="margin" scope="session" value="0"/>
                         <c:out value="Box ${box.getBoxType().getBoxName()}_${box.getNum()}"/>
                     </div>
                     <div class="col-10">
-                        <div id="${box.getNum()}" style="width: ${box.getBoxType().getWidth()}px; height: ${box.getBoxType().getHeight()}px;">
-                            <c:forEach var="product" items="${box.getProducs()}">
-                                <div class="productBox" style="margin-left: ${margin}px">
+                        <div id="${box.getNum()}" style="width: ${box.getBoxType().getWidth()}px; height: ${box.getBoxType().getHeight()}px; border:black 1px solid; background-color:pink;">
+                            <c:forEach var="product" items="${box.getProducts()}">
+                                <div class="productBox" style="margin-left: ${margin}px;  border:black 1px solid;">
 
                                 </div>
                             </c:forEach>
