@@ -36,7 +36,6 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <li><a href="controller?action=homepage&instanceName=${instanceName}">HomePage<span class="sr-only">(current)</span></a></li>
-              <li><a href="controller?action=process&instanceName=${instanceName}">Process</a></li>
               <li class="active"><a href="controller?action=stats&instanceName=${instanceName}">Stats</a></li>
               <li><a href="controller?action=timeline&instanceName=${instanceName}">Timeline</a></li>
               <li class="dropdown">

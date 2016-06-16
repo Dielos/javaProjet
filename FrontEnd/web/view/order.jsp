@@ -23,7 +23,6 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <li><a href="controller?action=homepage&instanceName=${instanceName}">HomePage<span class="sr-only">(current)</span></a></li>
-              <li><a href="controller?action=process&instanceName=${instanceName}">Process</a></li>
               <li><a href="controller?action=stats&instanceName=${instanceName}">Stats</a></li>
               <li><a href="controller?action=timeline&instanceName=${instanceName}">Timeline</a></li>
               <li class="dropdown active">
@@ -53,42 +52,47 @@
             <c:forEach items="${order.getProductInBox()}" var="entry">
                 <div class="row">
                     <div class="col-2">
-                        <c:out value="Box ${entry.key.getBoxType().getBoxName()}_${entry.key.getNum()}"/>
-                        Key = ${entry.key}, value = ${entry.value}<br>
+                     <c:out value="Box ${entry.key.getBoxType().getBoxName()}_${entry.key.getNum()}"/>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-10">
-                        <div id="${entry.key.getNum()}" style="width: ${entry.key.getBoxType().getWidth
-()}px; height: ${entry.key.getBoxType().getHeight()}px; border:black 1px solid; background-color:pink;">
+                        <div id="${entry.key.getNum()}" style="position:relative; width: ${entry.key.getBoxType().getWidth()}px; height: ${entry.key.getBoxType().getHeight()}px; border:black 1px solid; background-color:pink;">
+                            <c:set var="y" value="${0}"/>
+                            <c:forEach items="${entry.value}" var="entry2">
+
+                                 <c:set var="maxEmpile" value="${entry2.key.getEmpileMax(entry.key.getBoxType())}"/>
+                                 <c:set var="cpt" value="${0}"/>
+                                 <c:set var="x" value="${0}"/>
+
+                                 <c:forEach items="${entry2.value}" var="product">
+                                     <c:if test="${cpt != maxEmpile}">
+                                         <div class="productBox" style="position:absolute; 
+                                              background-color: ${colors[entry2.key.getId()%136]};
+             bottom:${x}px; left:${y}px; border:black 1px solid; width:
+             ${product.getTypeProduct().getWidth()}px; height:${product.getTypeProduct().getHeight()}px">
+                                             <c:set var="x" value="${product.getTypeProduct().getHeight()+x}"/>
+                                         </div>
+                                     </c:if>
+                                     <c:if test="${cpt == maxEmpile}">
+                                         <c:set var="x" value="${0}"/>
+                                         <c:set var="cpt" value="${0}"/>
+                                         <c:set var="y" value="${entry2.key.getWidth()+y}"/>
+                                         <div class="productBox" style="position:absolute; 
+                                              background-color: ${colors[entry2.key.getId()%136]};
+             bottom:${x}px; left:${y}px; border:black 1px solid; width:
+             ${product.getTypeProduct().getWidth()}px; height:${product.getTypeProduct().getHeight()}px">
+                                             <c:set var="x" value="${product.getTypeProduct().getHeight()+x}"/>
+                                         </div>
+                                     </c:if>
+                                     <c:set var="cpt" value="${cpt=cpt+1}"/>
+                                 </c:forEach>
+                                 <c:set var="y" value="${entry2.key.getWidth()+y}"/>
+                             </c:forEach>
+                        </div>
                     </div>
-                    <c:set var="y" value="${0}"/>
-                    <c:forEach items="${entry.value}" var="entry2">
-                        <c:set var="maxEmpile" value="${entry2.key.getEmpileMax(entry.key.getBoxType())}"/>
-                        <c:set var="cpt" value="${0}"/>
-                        <c:set var="x" value="${0}"/>
-                        
-                        <c:forEach items="${entry2.value}" var="product">
-                            <c:set var="cpt" value="${cpt=cpt+1}"/>
-                            
-                            <c:if test="${cpt != maxEmpile}">
-                                <div class="productBox" style="position:absolute; 
-    bottom:${x}px; left:${y}px; background-color: white;  border:black 1px solid; width:
-    ${product.getTypeProduct().getWidth()}px; height:${product.getTypeProduct().getHeight()}px">
-                                    <c:set var="x" value="${product.getTypeProduct().getHeight()+x}"/>
-                                </div>
-                            </c:if>
-                            <c:if test="${cpt == maxEmpile}">
-                                <c:set var="x" value="${0}"/>
-                                <c:set var="y" value="${entry.key.getBoxType().getWidth()+y}"/>
-                                <div class="productBox" style="position:absolute; 
-    bottom:${x}px; left:${y}px; background-color: white;  border:black 1px solid; width:
-    ${product.getTypeProduct().getWidth()}px; height:${product.getTypeProduct().getHeight()}px">
-                                    <c:set var="x" value="${product.getTypeProduct().getHeight()+x}"/>
-                                </div>
-                            </c:if>
-                        </c:forEach>
-                    </c:forEach>
+                </div>
             </c:forEach>
         </div>
-    </div>
     </body>
 </html>
