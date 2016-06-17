@@ -15,6 +15,7 @@ import DAO.OrderDao;
 import DAO.ProductDao;
 import DAO.ProductTypeDao;
 import Model.BoxType;
+import Model.Instance;
 import Model.Order;
 import Model.Product;
 import java.io.FileNotFoundException;
@@ -41,7 +42,36 @@ public class ReverseParser {
         } 
     }
     
-    public String getTypeBoxInfos(){
+    public String getTypeBoxInfos(Instance instance){
+        //getTypeBoxInfos
+        //BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
+        //Collection<BoxType> tabBT = boxTypeManager.findAll();
+        String sol="";
+        for(BoxType bt: instance.getBoxTypes()){
+            sol = sol+bt.getBoxName()+" "+bt.getBoxs().size()+"\n";
+        }
+        
+        //OrderDao orderManager = DaoFactoryJpa.getInstance(JpaOrderDao.class);
+        //Collection<Order> tabOrder = orderManager.findAll();
+        for(Order o: instance.getOrders()){
+            sol = sol+"\n"+o.getOrderName()+" "+o.getSendingDate();
+        }
+        sol=sol+"\n";
+        
+        //ProductDao productManager = DaoFactoryJpa.getInstance(JpaProductDao.class);
+        //Collection<Product> tabProduct = productManager.findAll();
+        for(Product p: instance.getProducts()){
+            sol = sol+"\n"+p.getOrderLine().getOrder().getOrderName()+" "+
+                    p.getProductionLine().getNum()+" "+p.getDateStart()+" "+
+                    p.getBox().getBoxType().getBoxName()+" "+p.getBox().getNum();
+        }
+        sol=sol+"\n";
+        
+        return sol;
+        
+    }
+    
+    /*public String getTypeBoxInfos(){
         //getTypeBoxInfos
         BoxTypeDao boxTypeManager = DaoFactoryJpa.getInstance(JpaBoxTypeDao.class);
         Collection<BoxType> tabBT = boxTypeManager.findAll();
@@ -68,7 +98,7 @@ public class ReverseParser {
         
         return sol;
         
-    }
+    }*/
 
     
     public void writeInFile() throws FileNotFoundException, UnsupportedEncodingException{
@@ -78,10 +108,10 @@ public class ReverseParser {
         writer.close();
     }
     
-    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+    /*public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
         ReverseParser test = new ReverseParser();
         test.getTypeBoxInfos();
        // test.createFile();
        // test.writeInFile();
-    }
+    }*/
 }

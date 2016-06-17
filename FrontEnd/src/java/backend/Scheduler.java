@@ -154,7 +154,7 @@ public class Scheduler {
         }
         
         InstanceDao instanceManager = DaoFactoryJpa.getInstance(JpaInstanceDao.class);
-        instanceManager.update(instance);
+        instanceManager.create(instance);
         
         /*System.out.println("\n\n-----------------\n\n");
         

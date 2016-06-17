@@ -148,6 +148,7 @@ public class Controller extends HttpServlet {
                 break;
                 
                 case "order":
+                    System.out.println("In order");
                     Order order = instance.getOrderById(id);
                     colors = Arrays.asList("Aqua","Aquamarine","Azure","Bisque","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","ForestGreen","Fuchsia","Gainsboro","Gold","GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","Yellow","YellowGreen");
                     request.setAttribute("colors", colors);
@@ -168,7 +169,7 @@ public class Controller extends HttpServlet {
                     filePath = getServletContext().getRealPath("") + File.separator + instance.getInstanceName() + "_solution.txt";
                     
                     ReverseParser reverseParser = new ReverseParser();
-                    solutionString = reverseParser.getTypeBoxInfos();
+                    solutionString = reverseParser.getTypeBoxInfos(instance);
                     File file = new File(filePath);
                     int length = 0;
                     
@@ -214,12 +215,13 @@ public class Controller extends HttpServlet {
 
               }
             }
-        else
+        else {
             if(request.getParameter("text")!=null){
                 text = request.getParameter("text");
             }
             request.setAttribute("text", text);
             request.getRequestDispatcher("/view/homepage.jsp").forward(request, response);
+        }
         
     }
     
